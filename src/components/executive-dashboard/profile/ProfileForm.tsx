@@ -6,7 +6,7 @@ interface ProfileFormProps {
     name: string;
     email: string;
     phone: string;
-    company: string;
+    address: string;
     position: string;
     bio: string;
   };
@@ -46,11 +46,11 @@ export default function ProfileForm({ profile, isEditing, setProfile }: ProfileF
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="company">Company</Label>
+        <Label htmlFor="address">Address</Label>
         <Input
-          id="company"
-          value={profile.company}
-          onChange={(e) => setProfile({ ...profile, company: e.target.value })}
+          id="address"
+          value={profile.address}
+          onChange={(e) => setProfile({ ...profile, address: e.target.value })}
           disabled={!isEditing}
         />
       </div>

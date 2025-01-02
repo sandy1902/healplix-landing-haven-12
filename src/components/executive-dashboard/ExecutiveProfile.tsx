@@ -16,7 +16,7 @@ export default function ExecutiveProfile() {
     name: "John Executive",
     email: "john@executive.com",
     phone: "+1 234 567 8900",
-    company: "Health Solutions Inc.",
+    address: "123 Healthcare Street, Medical District",
     position: "Senior Executive",
     bio: "Healthcare executive with 10+ years of experience"
   });
