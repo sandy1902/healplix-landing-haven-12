@@ -67,23 +67,6 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
             />
           </div>
 
-          <div className="flex justify-end space-x-3 border-t pt-2">
-            <Button
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-              className="hover:bg-gray-100"
-            >
-              Cancel
-            </Button>
-            <Button 
-              className="bg-secondary hover:bg-secondary/90 text-white font-semibold shadow-lg"
-              disabled={!date || !selectedTime}
-              onClick={handleConfirmBooking}
-            >
-              Confirm Booking
-            </Button>
-          </div>
-
           <DateTimeSection
             date={date}
             setDate={setDate}
@@ -100,6 +83,23 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
             selectedTime={selectedTime}
             dependents={dependents}
           />
+
+          <div className="flex justify-end space-x-3 border-t pt-2 mt-0">
+            <Button
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              className="hover:bg-gray-100"
+            >
+              Cancel
+            </Button>
+            <Button 
+              className="bg-secondary hover:bg-secondary/90 text-white font-semibold shadow-lg"
+              disabled={!date || !selectedTime}
+              onClick={handleConfirmBooking}
+            >
+              Confirm Booking
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
