@@ -3,11 +3,16 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Calendar } from "@/components/ui/calendar";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
+import { addDays, format } from "date-fns";
 
 interface TimeSlot {
   time: string;
   available: boolean;
+  videoConsultation: boolean;
+  clinicAppointment: boolean;
 }
 
 interface DaySchedule {
@@ -22,12 +27,15 @@ export default function DoctorSchedule() {
     "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"
   ];
   
+  const [date, setDate] = useState<Date>(new Date());
   const [schedule, setSchedule] = useState<DaySchedule[]>(
     ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(day => ({
       day,
       slots: defaultSlots.map(time => ({
         time,
-        available: true
+        available: true,
+        videoConsultation: false,
+        clinicAppointment: true
       }))
     }))
   );
@@ -44,30 +52,90 @@ export default function DoctorSchedule() {
     });
   };
 
+  const handleToggleAppointmentType = (
+    dayIndex: number, 
+    slotIndex: number, 
+    type: 'videoConsultation' | 'clinicAppointment'
+  ) => {
+    const newSchedule = [...schedule];
+    newSchedule[dayIndex].slots[slotIndex][type] = 
+      !newSchedule[dayIndex].slots[slotIndex][type];
+    setSchedule(newSchedule);
+
+    toast({
+      title: "Appointment Type Updated",
+      description: `${type === 'videoConsultation' ? 'Video consultation' : 'Clinic appointment'} ${newSchedule[dayIndex].slots[slotIndex][type] ? 'enabled' : 'disabled'} for ${schedule[dayIndex].slots[slotIndex].time} on ${schedule[dayIndex].day}.`,
+    });
+  };
+
+  const selectedDayIndex = schedule.findIndex(
+    day => day.day === format(date, 'EEE')
+  );
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Schedule & Availability</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-6">
-          {schedule.map((day, dayIndex) => (
-            <div key={day.day} className="space-y-4">
-              <h3 className="font-semibold">{day.day}</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {day.slots.map((slot, slotIndex) => (
-                  <div key={slot.time} className="flex items-center space-x-2">
-                    <Switch
-                      id={`${day.day}-${slot.time}`}
-                      checked={slot.available}
-                      onCheckedChange={() => handleToggleSlot(dayIndex, slotIndex)}
-                    />
-                    <Label htmlFor={`${day.day}-${slot.time}`}>{slot.time}</Label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <h3 className="font-semibold">Select Date</h3>
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={(newDate) => newDate && setDate(newDate)}
+              disabled={(date) => date < new Date()}
+              className="rounded-md border"
+            />
+          </div>
+
+          <div className="space-y-6">
+            <h3 className="font-semibold">Time Slots for {format(date, 'EEEE, MMMM d')}</h3>
+            {selectedDayIndex !== -1 && (
+              <div className="space-y-4">
+                {schedule[selectedDayIndex].slots.map((slot, slotIndex) => (
+                  <div key={slot.time} className="flex flex-col space-y-2 p-4 border rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor={`${schedule[selectedDayIndex].day}-${slot.time}`}>
+                        {slot.time}
+                      </Label>
+                      <Switch
+                        id={`${schedule[selectedDayIndex].day}-${slot.time}`}
+                        checked={slot.available}
+                        onCheckedChange={() => handleToggleSlot(selectedDayIndex, slotIndex)}
+                      />
+                    </div>
+                    
+                    {slot.available && (
+                      <div className="flex flex-col space-y-2 mt-2">
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`video-${slotIndex}`}
+                            checked={slot.videoConsultation}
+                            onCheckedChange={() => 
+                              handleToggleAppointmentType(selectedDayIndex, slotIndex, 'videoConsultation')
+                            }
+                          />
+                          <Label htmlFor={`video-${slotIndex}`}>Video Consultation</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`clinic-${slotIndex}`}
+                            checked={slot.clinicAppointment}
+                            onCheckedChange={() => 
+                              handleToggleAppointmentType(selectedDayIndex, slotIndex, 'clinicAppointment')
+                            }
+                          />
+                          <Label htmlFor={`clinic-${slotIndex}`}>Clinic Appointment</Label>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
-            </div>
-          ))}
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>
