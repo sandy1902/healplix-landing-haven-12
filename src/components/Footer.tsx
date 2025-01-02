@@ -5,7 +5,7 @@ export const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           <div>
             <img 
-              src="/lovable-uploads/8e3afadf-e6ef-4bd1-bc6a-974cb21eb2d7.png" 
+              src="/lovable-uploads/09637a17-236d-44c0-8a5f-aa2d26ea3cd2.png" 
               alt="Healplix Logo" 
               className="h-12 w-auto mb-4"
             />
