@@ -76,7 +76,26 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
                   mode="single"
                   selected={date}
                   onSelect={setDate}
-                  className="w-full [&_.rdp-months]:space-y-0 [&_.rdp-caption]:pb-2 [&_.rdp-cell]:p-0 [&_.rdp-button]:w-8 [&_.rdp-button]:h-8"
+                  className="w-full"
+                  classNames={{
+                    months: "space-y-4",
+                    month: "space-y-4",
+                    caption: "flex justify-center pt-1 relative items-center",
+                    caption_label: "text-sm font-medium",
+                    nav: "space-x-1 flex items-center",
+                    table: "w-full border-collapse space-y-1",
+                    head_row: "flex",
+                    head_cell: "text-muted-foreground rounded-md w-8 font-normal text-[0.8rem]",
+                    row: "flex w-full mt-2",
+                    cell: "text-center text-sm relative p-0 hover:bg-accent",
+                    day: "h-8 w-8 p-0 font-normal",
+                    day_range_end: "day-range-end",
+                    day_selected: "bg-primary text-primary-foreground hover:bg-primary",
+                    day_today: "bg-accent text-accent-foreground",
+                    day_outside: "text-muted-foreground opacity-50",
+                    day_disabled: "text-muted-foreground opacity-50",
+                    day_hidden: "invisible",
+                  }}
                   disabled={(date) => date < new Date()}
                 />
               </div>
@@ -119,6 +138,7 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
           </div>
         </div>
 
+        {/* Dialog Actions */}
         <div className="mt-4 flex justify-end space-x-2">
           <Button
             variant="outline"
