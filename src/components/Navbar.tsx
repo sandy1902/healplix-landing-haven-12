@@ -6,7 +6,11 @@ export const Navbar = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <img src="/lovable-uploads/719ebe3c-450b-43b2-beb7-24a67b55231c.png" alt="Healplix Logo" className="h-8" />
+            <img 
+              src="/lovable-uploads/719ebe3c-450b-43b2-beb7-24a67b55231c.png" 
+              alt="Healplix Logo" 
+              className="h-12 w-auto" // Increased from h-8 to h-12
+            />
           </div>
           <div className="hidden md:flex items-center space-x-8">
             <a href="#features" className="text-primary hover:text-secondary transition-colors">Features</a>
