@@ -9,6 +9,7 @@ interface UserData {
   name: string;
   email: string;
   subscriptionStatus: "active" | "inactive";
+  subscriptionPaid: boolean;
   joinDate: string;
 }
 
@@ -20,6 +21,7 @@ export default function UsersList() {
       name: "John Doe",
       email: "john@example.com",
       subscriptionStatus: "active",
+      subscriptionPaid: false,
       joinDate: "2024-03-15"
     },
     {
@@ -27,14 +29,33 @@ export default function UsersList() {
       name: "Jane Smith",
       email: "jane@example.com",
       subscriptionStatus: "inactive",
+      subscriptionPaid: false,
       joinDate: "2024-03-10"
     }
   ]);
 
-  const handleSubscribe = (userId: string) => {
+  const handleSubscriptionPayment = (userId: string) => {
+    // Here you would typically integrate with a payment gateway
     toast({
-      title: "Subscription Updated",
-      description: "User has been successfully subscribed.",
+      title: "Processing Payment",
+      description: "Initiating subscription payment...",
+    });
+  };
+
+  const handleViewUser = (userId: string) => {
+    const user = users.find(u => u.id === userId);
+    if (!user?.subscriptionPaid) {
+      toast({
+        variant: "destructive",
+        title: "Access Denied",
+        description: "Please complete the subscription payment to view user details.",
+      });
+      return;
+    }
+    // Handle viewing user details
+    toast({
+      title: "Success",
+      description: "Accessing user details...",
     });
   };
 
@@ -71,13 +92,21 @@ export default function UsersList() {
                 }`}>
                   {user.subscriptionStatus === "active" ? "Subscribed" : "Not Subscribed"}
                 </span>
-                {user.subscriptionStatus === "inactive" && (
+                {!user.subscriptionPaid ? (
                   <Button
                     variant="secondary"
                     size="sm"
-                    onClick={() => handleSubscribe(user.id)}
+                    onClick={() => handleSubscriptionPayment(user.id)}
                   >
-                    Subscribe
+                    Pay Subscription
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleViewUser(user.id)}
+                  >
+                    View Details
                   </Button>
                 )}
               </div>
