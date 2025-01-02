@@ -35,15 +35,21 @@ export default function Prescription() {
   const handleChange = (field: string, value: string) => {
     if (field.includes('.')) {
       const [parent, child] = field.split('.');
-      setPrescription((prev: PrescriptionData) => ({
-        ...prev,
-        [parent]: {
-          ...prev[parent as keyof typeof prev],
-          [child]: value
+      setPrescription((prev) => {
+        const parentKey = parent as keyof PrescriptionData;
+        if (typeof prev[parentKey] === 'object' && prev[parentKey] !== null) {
+          return {
+            ...prev,
+            [parentKey]: {
+              ...prev[parentKey],
+              [child]: value
+            }
+          };
         }
-      }));
+        return prev;
+      });
     } else {
-      setPrescription((prev: PrescriptionData) => ({
+      setPrescription((prev) => ({
         ...prev,
         [field]: value
       }));
