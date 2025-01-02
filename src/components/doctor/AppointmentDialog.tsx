@@ -50,7 +50,7 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
           </DialogTitle>
         </DialogHeader>
         
-        <div className="space-y-6 mt-4">
+        <div className="space-y-4 mt-4">
           <div className="grid grid-cols-2 gap-4">
             <PatientSelectionSection
               selectedPatient={selectedPatient}
@@ -80,23 +80,23 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
             selectedTime={selectedTime}
             dependents={dependents}
           />
-        </div>
 
-        <div className="mt-6 flex justify-end space-x-3 pt-4 border-t">
-          <Button
-            variant="outline"
-            onClick={() => onOpenChange(false)}
-            className="hover:bg-gray-100"
-          >
-            Cancel
-          </Button>
-          <Button 
-            className="bg-secondary hover:bg-secondary/90 text-white font-semibold shadow-lg"
-            disabled={!date || !selectedTime}
-            onClick={handleConfirmBooking}
-          >
-            Confirm Booking
-          </Button>
+          <div className="flex justify-end space-x-3 border-t pt-3">
+            <Button
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              className="hover:bg-gray-100"
+            >
+              Cancel
+            </Button>
+            <Button 
+              className="bg-secondary hover:bg-secondary/90 text-white font-semibold shadow-lg"
+              disabled={!date || !selectedTime}
+              onClick={handleConfirmBooking}
+            >
+              Confirm Booking
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
