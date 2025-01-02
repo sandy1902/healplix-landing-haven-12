@@ -14,9 +14,9 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
   return (
     <Card className="hover:shadow-xl transition-shadow duration-300 border-0 bg-white/90 backdrop-blur-sm animate-fade-up">
       <CardContent className="p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           {/* Section 1: Profile Image */}
-          <div className="lg:col-span-2 flex justify-center items-start">
+          <div className="lg:col-span-2 flex justify-center items-center">
             <Avatar className="h-24 w-24 rounded-lg">
               <AvatarImage src={doctor.image} alt={doctor.name} />
               <AvatarFallback>DR</AvatarFallback>
@@ -24,8 +24,8 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
           </div>
 
           {/* Section 2: Doctor's Details */}
-          <div className="lg:col-span-4 flex flex-col justify-start">
-            <div className="space-y-3">
+          <div className="lg:col-span-4 flex flex-col justify-center">
+            <div className="space-y-2">
               <h3 className="text-2xl font-bold text-[#1A1F2C]">{doctor.name}</h3>
               <p className="text-[#8E9196]">{doctor.qualification}</p>
               <p className="text-[#7E69AB] font-medium">{doctor.specialization}</p>
@@ -38,7 +38,7 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
           </div>
 
           {/* Section 3: Clinic Information */}
-          <div className="lg:col-span-2 flex items-start">
+          <div className="lg:col-span-2 flex items-center">
             <div className="w-full p-4 bg-[#F8F9FA] rounded-lg">
               <h4 className="font-semibold text-[#1A1F2C] mb-3">{doctor.clinicName}</h4>
               <p className="text-[#8E9196] flex items-center gap-2">
