@@ -2,13 +2,13 @@ export function filterAppointmentsByDate(appointment: { date: string }, type: "u
   const appointmentDate = new Date(appointment.date);
   const today = new Date();
   
-  // Set both dates to midnight for accurate date comparison
-  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-  const appointmentStart = new Date(appointmentDate.getFullYear(), appointmentDate.getMonth(), appointmentDate.getDate());
+  // Reset time portions to midnight for accurate date comparison
+  today.setHours(0, 0, 0, 0);
+  appointmentDate.setHours(0, 0, 0, 0);
   
   if (type === "upcoming") {
-    return appointmentStart >= todayStart;
+    return appointmentDate.getTime() >= today.getTime();
   } else {
-    return appointmentStart < todayStart;
+    return appointmentDate.getTime() < today.getTime();
   }
 }
