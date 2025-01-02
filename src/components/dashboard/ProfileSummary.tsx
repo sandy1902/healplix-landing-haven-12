@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Camera, Upload } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function ProfileSummary() {
   const { toast } = useToast();
@@ -11,6 +11,13 @@ export default function ProfileSummary() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [showCamera, setShowCamera] = useState(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
+
+  // Effect to handle video stream initialization
+  useEffect(() => {
+    if (showCamera && videoRef.current && stream) {
+      videoRef.current.srcObject = stream;
+    }
+  }, [showCamera, stream]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -39,21 +46,22 @@ export default function ProfileSummary() {
   const startCamera = async () => {
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: "user" },
+        video: { 
+          facingMode: "user",
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        },
         audio: false 
       });
       setStream(mediaStream);
       setShowCamera(true);
-      
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
-      }
       
       toast({
         title: "Camera Started",
         description: "Camera is now active. Click 'Capture' to take a photo.",
       });
     } catch (err) {
+      console.error('Camera error:', err);
       toast({
         variant: "destructive",
         title: "Camera Error",
@@ -138,7 +146,8 @@ export default function ProfileSummary() {
               ref={videoRef}
               autoPlay
               playsInline
-              className="w-full rounded-lg mb-4"
+              muted
+              className="w-full h-[400px] rounded-lg mb-4 object-cover"
             />
             <div className="flex justify-end gap-2">
               <Button
