@@ -35,7 +35,7 @@ export default function Prescription() {
   const handleChange = (field: string, value: string) => {
     if (field.includes('.')) {
       const [parent, child] = field.split('.');
-      setPrescription(prev => ({
+      setPrescription((prev: PrescriptionData) => ({
         ...prev,
         [parent]: {
           ...prev[parent as keyof typeof prev],
@@ -43,7 +43,7 @@ export default function Prescription() {
         }
       }));
     } else {
-      setPrescription(prev => ({
+      setPrescription((prev: PrescriptionData) => ({
         ...prev,
         [field]: value
       }));
