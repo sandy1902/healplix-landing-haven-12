@@ -11,13 +11,22 @@ export default function QuickStats() {
     rewardPoints: 500,
     upcomingAppointments: 2,
     dependants: 3,
-    favorites: 5
+    favorites: 5,
+    // Added transaction history for demonstration
+    transactions: [
+      { type: 'appointment', amount: 1000, date: '2024-03-15' },
+      { type: 'subscription', amount: 2000, date: '2024-03-10' },
+    ]
   });
+
+  // Calculate total rewards (10% of spent amount)
+  const totalSpent = stats.transactions.reduce((acc, curr) => acc + curr.amount, 0);
+  const calculatedRewards = Math.floor(totalSpent * 0.1); // 10% of spent amount
 
   const handleRedeemPoints = () => {
     toast({
       title: "Reward Points",
-      description: "Your points can be redeemed during your next appointment booking. Each point is worth ₹1.",
+      description: `Your points (₹${calculatedRewards}) can be redeemed during your next appointment booking. You earn 10% rewards on all spending.`,
     });
   };
 
@@ -31,7 +40,10 @@ export default function QuickStats() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-2xl font-bold mb-2">₹{stats.rewardPoints}</p>
+          <p className="text-2xl font-bold mb-2">₹{calculatedRewards}</p>
+          <p className="text-xs text-muted-foreground mb-2">
+            10% of total spent (₹{totalSpent})
+          </p>
           <Button 
             variant="outline" 
             size="sm" 
