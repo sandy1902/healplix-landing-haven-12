@@ -68,6 +68,46 @@ export default function DoctorAppointments() {
         }
       ],
       medicalFiles: []
+    },
+    {
+      id: 3,
+      patientName: "Dr. Sarah Wilson",
+      date: "2025-05-25",
+      time: "10:00 AM",
+      type: "Cardiologist Consultation",
+      appointmentMode: "clinic",
+      patientRecords: [
+        {
+          id: "4",
+          name: "ECG Report",
+          date: "2024-03-10",
+          type: "Medical Report",
+          description: "Normal sinus rhythm. No significant abnormalities detected."
+        },
+        {
+          id: "5",
+          name: "Stress Test Results",
+          date: "2024-03-08",
+          type: "Test Results",
+          description: "Exercise tolerance test completed. Normal cardiovascular response."
+        }
+      ],
+      medicalFiles: [
+        {
+          id: "3",
+          name: "ECG Report.pdf",
+          date: "2024-03-10",
+          type: "PDF",
+          size: "1.8 MB"
+        },
+        {
+          id: "4",
+          name: "Stress Test Report.pdf",
+          date: "2024-03-08",
+          type: "PDF",
+          size: "3.2 MB"
+        }
+      ]
     }
   ];
 
