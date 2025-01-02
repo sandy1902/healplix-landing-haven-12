@@ -16,13 +16,24 @@ export default function ProfileSummary() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
+        toast({
+          title: "Profile Picture Updated",
+          description: "Your profile picture has been successfully updated.",
+        });
       };
       reader.readAsDataURL(file);
-      
-      toast({
-        title: "Profile Picture Updated",
-        description: "Your profile picture has been successfully updated.",
-      });
+    }
+  };
+
+  const handleCameraClick = () => {
+    if (cameraInputRef.current) {
+      cameraInputRef.current.click();
+    }
+  };
+
+  const handleUploadClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
   };
 
@@ -34,20 +45,27 @@ export default function ProfileSummary() {
           <AvatarFallback>UN</AvatarFallback>
         </Avatar>
         <div className="absolute -bottom-2 -right-2 flex gap-2">
-          <label htmlFor="avatar-upload" className="cursor-pointer">
-            <div className="rounded-full bg-primary p-1.5 hover:bg-primary/90 transition-colors">
-              <Upload className="h-4 w-4 text-white" />
-            </div>
-          </label>
-          <label htmlFor="camera-upload" className="cursor-pointer">
-            <div className="rounded-full bg-primary p-1.5 hover:bg-primary/90 transition-colors">
-              <Camera className="h-4 w-4 text-white" />
-            </div>
-          </label>
+          <Button
+            type="button"
+            size="icon"
+            variant="secondary"
+            className="h-8 w-8 rounded-full"
+            onClick={handleUploadClick}
+          >
+            <Upload className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            size="icon"
+            variant="secondary"
+            className="h-8 w-8 rounded-full"
+            onClick={handleCameraClick}
+          >
+            <Camera className="h-4 w-4" />
+          </Button>
         </div>
         <input
           type="file"
-          id="avatar-upload"
           ref={fileInputRef}
           className="hidden"
           accept="image/*"
@@ -55,7 +73,6 @@ export default function ProfileSummary() {
         />
         <input
           type="file"
-          id="camera-upload"
           ref={cameraInputRef}
           className="hidden"
           accept="image/*"

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText, Upload } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
 interface MedicalRecord {
@@ -14,6 +14,7 @@ interface MedicalRecord {
 
 export default function MedicalRecords() {
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [records, setRecords] = useState<MedicalRecord[]>([
     {
       id: "1",
@@ -31,11 +32,17 @@ export default function MedicalRecords() {
     }
   ]);
 
+  const handleUploadClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const newRecord: MedicalRecord = {
-        id: (records.length + 1).toString(),
+        id: Date.now().toString(),
         name: file.name,
         date: new Date().toISOString().split('T')[0],
         type: file.type.split('/')[1].toUpperCase(),
@@ -44,9 +51,13 @@ export default function MedicalRecords() {
       
       setRecords([...records, newRecord]);
       toast({
-        title: "File Upload",
+        title: "File Upload Successful",
         description: "Your medical record has been successfully uploaded.",
       });
+      
+      if (event.target) {
+        event.target.value = '';
+      }
     }
   };
 
@@ -61,23 +72,19 @@ export default function MedicalRecords() {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Medical Records</CardTitle>
-        <div>
-          <label htmlFor="file-upload">
-            <Button variant="secondary" className="cursor-pointer">
-              <Upload className="h-4 w-4 mr-2" />
-              Upload Record
-            </Button>
-          </label>
-          <input
-            type="file"
-            id="file-upload"
-            className="hidden"
-            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-            onChange={handleFileUpload}
-          />
-        </div>
+        <Button variant="secondary" onClick={handleUploadClick}>
+          <Upload className="h-4 w-4 mr-2" />
+          Upload Record
+        </Button>
       </CardHeader>
       <CardContent>
+        <input
+          type="file"
+          ref={fileInputRef}
+          className="hidden"
+          accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+          onChange={handleFileUpload}
+        />
         {records.length > 0 ? (
           <div className="space-y-4">
             {records.map((record) => (
