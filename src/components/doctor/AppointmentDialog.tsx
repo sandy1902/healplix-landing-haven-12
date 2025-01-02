@@ -17,7 +17,7 @@ interface AppointmentDialogProps {
 export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDialogProps) {
   const { toast } = useToast();
   const [date, setDate] = useState<Date>();
-  const [selectedTime, setSelectedTime] = useState<string>();
+  const [selectedTime, setSelectedTime] = useState<string>("10:30 AM");
   const [selectedPatient, setSelectedPatient] = useState("self");
   const [consultationType, setConsultationType] = useState("clinic");
 
