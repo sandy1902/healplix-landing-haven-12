@@ -5,9 +5,9 @@ export const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           <div>
             <img 
-              src="/lovable-uploads/719ebe3c-450b-43b2-beb7-24a67b55231c.png" 
+              src="/lovable-uploads/8e3afadf-e6ef-4bd1-bc6a-974cb21eb2d7.png" 
               alt="Healplix Logo" 
-              className="h-12 w-auto mb-4" // Increased from h-8 to h-12
+              className="h-12 w-auto mb-4"
             />
             <p className="text-gray-400">
               Making healthcare accessible and convenient for everyone.

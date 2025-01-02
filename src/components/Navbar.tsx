@@ -7,9 +7,9 @@ export const Navbar = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <img 
-              src="/lovable-uploads/719ebe3c-450b-43b2-beb7-24a67b55231c.png" 
+              src="/lovable-uploads/8e3afadf-e6ef-4bd1-bc6a-974cb21eb2d7.png" 
               alt="Healplix Logo" 
-              className="h-12 w-auto" // Increased from h-8 to h-12
+              className="h-12 w-auto"
             />
           </div>
           <div className="hidden md:flex items-center space-x-8">
