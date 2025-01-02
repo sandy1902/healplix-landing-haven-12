@@ -14,25 +14,69 @@ export default function HospitalSearch() {
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
   const [isEnquiryFormOpen, setIsEnquiryFormOpen] = useState(false);
   const { toast } = useToast();
-  
+
   const [hospitals] = useState<Hospital[]>([
     {
       id: "1",
       name: "General Hospital",
       image: "https://images.unsplash.com/photo-1587351021355-a479a299d2f9",
+      images: [
+        "https://images.unsplash.com/photo-1586773860418-d37222d8fce3",
+        "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d",
+        "https://images.unsplash.com/photo-1516549655169-df83a0774514"
+      ],
       location: "Los Angeles, CA",
       specialities: ["Cardiology", "Neurology", "Orthopedics"],
       insuranceProviders: ["Blue Cross", "Aetna", "United Healthcare"],
-      rating: 4.8
+      rating: 4.8,
+      doctors: [
+        {
+          name: "Dr. John Smith",
+          qualification: "MD, FACC",
+          speciality: "Cardiology"
+        },
+        {
+          name: "Dr. Sarah Johnson",
+          qualification: "MD, FAAN",
+          speciality: "Neurology"
+        },
+        {
+          name: "Dr. Michael Brown",
+          qualification: "MD, FAAOS",
+          speciality: "Orthopedics"
+        }
+      ]
     },
     {
       id: "2",
       name: "City Medical Center",
       image: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3",
+      images: [
+        "https://images.unsplash.com/photo-1587351021355-a479a299d2f9",
+        "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d",
+        "https://images.unsplash.com/photo-1516549655169-df83a0774514"
+      ],
       location: "San Francisco, CA",
       specialities: ["Pediatrics", "Oncology", "Dermatology"],
       insuranceProviders: ["Kaiser", "Cigna", "Blue Shield"],
-      rating: 4.5
+      rating: 4.5,
+      doctors: [
+        {
+          name: "Dr. Emily Davis",
+          qualification: "MD, FAAP",
+          speciality: "Pediatrics"
+        },
+        {
+          name: "Dr. Robert Wilson",
+          qualification: "MD, FASCO",
+          speciality: "Oncology"
+        },
+        {
+          name: "Dr. Lisa Chen",
+          qualification: "MD, FAAD",
+          speciality: "Dermatology"
+        }
+      ]
     }
   ]);
 

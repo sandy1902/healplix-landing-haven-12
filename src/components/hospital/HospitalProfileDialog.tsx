@@ -6,6 +6,13 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Hospital } from "@/types/hospital";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 interface HospitalProfileDialogProps {
   hospital: Hospital;
@@ -31,21 +38,42 @@ export function HospitalProfileDialog({
           </DialogTitle>
         </DialogHeader>
 
-        {/* Hospital Images */}
+        {/* Hospital Images Carousel */}
         <div className="mt-6">
-          <img
-            src={hospital.image}
-            alt={hospital.name}
-            className="w-full h-64 object-cover rounded-lg"
-          />
+          <Carousel className="w-full">
+            <CarouselContent>
+              {[hospital.image, ...(hospital.images || [])].map((image, index) => (
+                <CarouselItem key={index}>
+                  <div className="p-1">
+                    <img
+                      src={image}
+                      alt={`${hospital.name} - Image ${index + 1}`}
+                      className="w-full h-64 object-cover rounded-lg"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
 
         {/* Doctors Section */}
         <div className="mt-6">
           <h3 className="text-xl font-semibold text-[#1A1F2C] mb-3">Our Doctors</h3>
-          <p className="text-[#8E9196]">
-            Our hospital features a team of highly qualified medical professionals dedicated to providing exceptional care.
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {hospital.doctors?.map((doctor, index) => (
+              <div 
+                key={index}
+                className="p-4 bg-[#9b87f5]/10 rounded-lg"
+              >
+                <h4 className="font-semibold text-[#1A1F2C]">{doctor.name}</h4>
+                <p className="text-[#8E9196] text-sm">{doctor.qualification}</p>
+                <p className="text-[#9b87f5] text-sm mt-1">{doctor.speciality}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Specialities Section */}
