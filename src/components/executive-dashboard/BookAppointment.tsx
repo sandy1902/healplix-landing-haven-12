@@ -2,7 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useState } from "react";
 
 export default function BookAppointment() {
@@ -12,14 +13,14 @@ export default function BookAppointment() {
     doctorName: "",
     date: "",
     time: "",
-    type: "consultation"
+    appointmentType: "video-consultation"
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
       title: "Appointment Booked",
-      description: "The appointment has been successfully booked.",
+      description: `The ${formData.appointmentType.replace('-', ' ')} has been successfully booked.`,
     });
   };
 
@@ -77,17 +78,25 @@ export default function BookAppointment() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="type">Appointment Type</Label>
-            <select
-              id="type"
-              className="w-full h-10 px-3 rounded-md border border-input bg-background"
-              value={formData.type}
-              onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+            <Label>Appointment Type</Label>
+            <RadioGroup
+              value={formData.appointmentType}
+              onValueChange={(value) => setFormData({ ...formData, appointmentType: value })}
+              className="flex flex-col space-y-2"
             >
-              <option value="consultation">Consultation</option>
-              <option value="followup">Follow-up</option>
-              <option value="checkup">Regular Checkup</option>
-            </select>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="video-consultation" id="video" />
+                <Label htmlFor="video">Video Consultation</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="clinic-visit" id="clinic" />
+                <Label htmlFor="clinic">Clinic Visit</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="follow-up" id="followup" />
+                <Label htmlFor="followup">Follow-up</Label>
+              </div>
+            </RadioGroup>
           </div>
 
           <Button type="submit" className="w-full">Book Appointment</Button>
