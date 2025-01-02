@@ -1,21 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileText, Upload, Camera } from "lucide-react";
+import { Upload, Camera } from "lucide-react";
 import { useState, useRef } from "react";
 import { useToast } from "@/components/ui/use-toast";
-
-interface MedicalRecord {
-  id: string;
-  name: string;
-  date: string;
-  type: string;
-  size: string;
-}
+import { CameraModal } from "./CameraModal";
+import { RecordsList } from "./RecordsList";
+import { MedicalRecord } from "./types";
 
 export default function MedicalRecords() {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [showCamera, setShowCamera] = useState(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [records, setRecords] = useState<MedicalRecord[]>([
@@ -75,9 +69,6 @@ export default function MedicalRecords() {
         audio: false 
       });
       
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
-      }
       setStream(mediaStream);
       setShowCamera(true);
       
@@ -95,46 +86,34 @@ export default function MedicalRecords() {
     }
   };
 
-  const stopCamera = () => {
+  const handleCameraCapture = (imageDataUrl: string) => {
+    fetch(imageDataUrl)
+      .then(res => res.blob())
+      .then(blob => {
+        const file = new File([blob], `captured-image-${Date.now()}.jpg`, { type: 'image/jpeg' });
+        const newRecord: MedicalRecord = {
+          id: Date.now().toString(),
+          name: file.name,
+          date: new Date().toISOString().split('T')[0],
+          type: 'JPG',
+          size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`
+        };
+        
+        setRecords([...records, newRecord]);
+        handleCloseCamera();
+        toast({
+          title: "Photo Captured",
+          description: "Your medical record has been captured successfully.",
+        });
+      });
+  };
+
+  const handleCloseCamera = () => {
     if (stream) {
       stream.getTracks().forEach(track => track.stop());
       setStream(null);
     }
     setShowCamera(false);
-  };
-
-  const capturePhoto = () => {
-    if (videoRef.current) {
-      const canvas = document.createElement('canvas');
-      canvas.width = videoRef.current.videoWidth;
-      canvas.height = videoRef.current.videoHeight;
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.drawImage(videoRef.current, 0, 0);
-        const imageDataUrl = canvas.toDataURL('image/jpeg');
-        
-        // Convert base64 to blob
-        fetch(imageDataUrl)
-          .then(res => res.blob())
-          .then(blob => {
-            const file = new File([blob], `captured-image-${Date.now()}.jpg`, { type: 'image/jpeg' });
-            const newRecord: MedicalRecord = {
-              id: Date.now().toString(),
-              name: file.name,
-              date: new Date().toISOString().split('T')[0],
-              type: 'JPG',
-              size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`
-            };
-            
-            setRecords([...records, newRecord]);
-            stopCamera();
-            toast({
-              title: "Photo Captured",
-              description: "Your medical record has been captured successfully.",
-            });
-          });
-      }
-    }
   };
 
   const handleDownload = (record: MedicalRecord) => {
@@ -167,48 +146,13 @@ export default function MedicalRecords() {
           accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
           onChange={handleFileUpload}
         />
-        {records.length > 0 ? (
-          <div className="space-y-4">
-            {records.map((record) => (
-              <div
-                key={record.id}
-                className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent transition-colors"
-              >
-                <div className="flex items-center gap-4">
-                  <FileText className="h-6 w-6 text-secondary" />
-                  <div>
-                    <h3 className="font-semibold">{record.name}</h3>
-                    <p className="text-sm text-gray-500">
-                      Uploaded on {record.date} • {record.type} • {record.size}
-                    </p>
-                  </div>
-                </div>
-                <Button variant="outline" onClick={() => handleDownload(record)}>
-                  Download
-                </Button>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-500">No medical records uploaded</p>
-        )}
-
+        <RecordsList records={records} onDownload={handleDownload} />
         {showCamera && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
-              <video
-                ref={videoRef}
-                autoPlay
-                playsInline
-                muted
-                className="w-full h-[400px] rounded-lg mb-4 object-cover"
-              />
-              <div className="flex justify-end gap-2">
-                <Button variant="outline" onClick={stopCamera}>Cancel</Button>
-                <Button onClick={capturePhoto}>Capture Photo</Button>
-              </div>
-            </div>
-          </div>
+          <CameraModal
+            stream={stream}
+            onCapture={handleCameraCapture}
+            onClose={handleCloseCamera}
+          />
         )}
       </CardContent>
     </Card>
