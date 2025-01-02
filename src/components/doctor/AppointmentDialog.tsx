@@ -76,7 +76,7 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
                   mode="single"
                   selected={date}
                   onSelect={setDate}
-                  className="bg-white rounded-md shadow-sm [&_.rdp-months]:p-0 [&_.rdp-caption]:p-1 [&_.rdp]:p-0 [&_.rdp-table]:w-full [&_.rdp-cell]:p-0 [&_.rdp-button]:p-1 [&_.rdp-nav]:p-0"
+                  className="bg-white rounded-md shadow-sm [&_.rdp-months]:p-0 [&_.rdp-caption]:p-1 [&_.rdp]:p-0 [&_.rdp-table]:w-full [&_.rdp-cell]:p-1 [&_.rdp-button]:w-8 h-8 [&_.rdp-nav]:p-0"
                   disabled={(date) => date < new Date()}
                 />
               </div>
