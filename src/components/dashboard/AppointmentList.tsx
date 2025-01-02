@@ -24,7 +24,7 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
       id: "1",
       doctorName: "Dr. Sarah Wilson",
       specialty: "Cardiologist",
-      date: "2024-04-25", // Updated to April
+      date: "2024-04-25",
       time: "10:00 AM",
       location: "Medical Center, Room 302"
     },
@@ -32,7 +32,7 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
       id: "2",
       doctorName: "Dr. Michael Chen",
       specialty: "Dermatologist",
-      date: "2024-04-28", // Updated to April
+      date: "2024-04-28",
       time: "2:30 PM",
       location: "Health Clinic, Room 105"
     },
@@ -40,7 +40,7 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
       id: "3",
       doctorName: "Dr. Emily Rodriguez",
       specialty: "Neurologist",
-      date: "2024-04-30", // Updated to April
+      date: "2024-04-30",
       time: "11:15 AM",
       location: "Neurology Center, Room 405"
     },
@@ -58,13 +58,11 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
     const appointmentDate = new Date(appointment.date);
     const today = new Date();
     
-    // Reset time part for accurate date comparison
-    today.setHours(0, 0, 0, 0);
-    appointmentDate.setHours(0, 0, 0, 0);
-    
-    return type === "upcoming" 
-      ? appointmentDate >= today 
-      : appointmentDate < today;
+    if (type === "upcoming") {
+      return appointmentDate >= today;
+    } else {
+      return appointmentDate < today;
+    }
   });
 
   const handleShareRecords = (appointment: Appointment) => {
