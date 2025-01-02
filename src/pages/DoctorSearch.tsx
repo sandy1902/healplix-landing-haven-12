@@ -4,12 +4,15 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { DoctorCard } from "@/components/doctor/DoctorCard";
+import { AppointmentDialog } from "@/components/doctor/AppointmentDialog";
 import { Doctor } from "@/types/doctor";
 
 export default function DoctorSearch() {
   const { toast } = useToast();
   const [location, setLocation] = useState<string>("");
   const [speciality, setSpeciality] = useState<string>("");
+  const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   
   const [doctors] = useState<Doctor[]>([
     {
@@ -53,10 +56,8 @@ export default function DoctorSearch() {
   ]);
 
   const handleBookAppointment = (doctor: Doctor) => {
-    toast({
-      title: "Booking Initiated",
-      description: `Initiating booking process with ${doctor.name}`,
-    });
+    setSelectedDoctor(doctor);
+    setIsDialogOpen(true);
   };
 
   const filteredDoctors = doctors.filter(doctor => {
@@ -131,6 +132,14 @@ export default function DoctorSearch() {
           )}
         </div>
       </div>
+
+      {selectedDoctor && (
+        <AppointmentDialog
+          doctor={selectedDoctor}
+          open={isDialogOpen}
+          onOpenChange={setIsDialogOpen}
+        />
+      )}
     </div>
   );
 }
