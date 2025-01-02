@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Home, Info, Search, Mail, LogIn, UserPlus } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export const Navbar = () => {
@@ -34,31 +34,47 @@ export const Navbar = () => {
             </div>
           ) : (
             <div className="flex items-center space-x-4">
-              <Link to="/" className="text-gray-600 hover:text-primary">
+              <Link to="/" className="text-gray-600 hover:text-primary flex items-center gap-2">
+                <Home className="h-4 w-4" />
                 Home
               </Link>
-              <Link to="/about" className="text-gray-600 hover:text-primary">
-                About
+              <Link to="/about-us" className="text-gray-600 hover:text-primary flex items-center gap-2">
+                <Info className="h-4 w-4" />
+                About Us
               </Link>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost">Services</Button>
+                  <Button variant="ghost" className="flex items-center gap-2">
+                    <Search className="h-4 w-4" />
+                    Search
+                  </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-48 bg-white shadow-lg rounded-lg p-2">
                   <DropdownMenuItem>
-                    <Link to="/service1" className="w-full">
-                      Service 1
+                    <Link to="/search-doctors" className="w-full">
+                      Find Doctors
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Link to="/service2" className="w-full">
-                      Service 2
+                    <Link to="/search-hospitals" className="w-full">
+                      Find Hospitals
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+              <Link to="/contact" className="text-gray-600 hover:text-primary flex items-center gap-2">
+                <Mail className="h-4 w-4" />
+                Contact Us
+              </Link>
+              <Link to="/login" className="text-gray-600 hover:text-primary flex items-center gap-2">
+                <LogIn className="h-4 w-4" />
+                Login
+              </Link>
               <Link to="/signup">
-                <Button>Sign Up</Button>
+                <Button className="flex items-center gap-2">
+                  <UserPlus className="h-4 w-4" />
+                  Sign Up
+                </Button>
               </Link>
             </div>
           )}
@@ -69,38 +85,61 @@ export const Navbar = () => {
             <div className="flex flex-col space-y-2">
               <Link
                 to="/"
-                className="text-gray-600 hover:text-primary px-4 py-2"
+                className="text-gray-600 hover:text-primary px-4 py-2 flex items-center gap-2"
                 onClick={toggleMenu}
               >
+                <Home className="h-4 w-4" />
                 Home
               </Link>
               <Link
-                to="/about"
-                className="text-gray-600 hover:text-primary px-4 py-2"
+                to="/about-us"
+                className="text-gray-600 hover:text-primary px-4 py-2 flex items-center gap-2"
                 onClick={toggleMenu}
               >
-                About
+                <Info className="h-4 w-4" />
+                About Us
               </Link>
               <Link
-                to="/service1"
-                className="text-gray-600 hover:text-primary px-4 py-2"
+                to="/search-doctors"
+                className="text-gray-600 hover:text-primary px-4 py-2 flex items-center gap-2"
                 onClick={toggleMenu}
               >
-                Service 1
+                <Search className="h-4 w-4" />
+                Find Doctors
               </Link>
               <Link
-                to="/service2"
-                className="text-gray-600 hover:text-primary px-4 py-2"
+                to="/search-hospitals"
+                className="text-gray-600 hover:text-primary px-4 py-2 flex items-center gap-2"
                 onClick={toggleMenu}
               >
-                Service 2
+                <Search className="h-4 w-4" />
+                Find Hospitals
+              </Link>
+              <Link
+                to="/contact"
+                className="text-gray-600 hover:text-primary px-4 py-2 flex items-center gap-2"
+                onClick={toggleMenu}
+              >
+                <Mail className="h-4 w-4" />
+                Contact Us
+              </Link>
+              <Link
+                to="/login"
+                className="text-gray-600 hover:text-primary px-4 py-2 flex items-center gap-2"
+                onClick={toggleMenu}
+              >
+                <LogIn className="h-4 w-4" />
+                Login
               </Link>
               <Link
                 to="/signup"
                 className="px-4 py-2"
                 onClick={toggleMenu}
               >
-                <Button className="w-full">Sign Up</Button>
+                <Button className="w-full flex items-center gap-2">
+                  <UserPlus className="h-4 w-4" />
+                  Sign Up
+                </Button>
               </Link>
             </div>
           </div>
