@@ -39,17 +39,17 @@ export function HospitalCard({
         </div>
         <div className="flex items-center justify-between">
           <span className="text-[#1A1F2C] font-semibold">Rating: {hospital.rating}/5</span>
-          <div className="space-x-4">
+          <div className="flex flex-col gap-3">
             <Button 
               onClick={() => onRequestCallback(hospital)}
               variant="outline"
-              className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10"
+              className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10 w-full"
             >
               Request Callback
             </Button>
             <Button 
               onClick={() => onAdmissionEnquiry(hospital)}
-              className="bg-[#9b87f5] hover:bg-[#8b77e5] text-white"
+              className="bg-[#9b87f5] hover:bg-[#8b77e5] text-white w-full"
             >
               Send Admission Enquiry
             </Button>
