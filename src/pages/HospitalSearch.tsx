@@ -50,6 +50,13 @@ export default function HospitalSearch() {
     setIsEnquiryFormOpen(true);
   };
 
+  const handleRequestCallback = (hospital: Hospital) => {
+    toast({
+      title: "Callback Requested",
+      description: "We will contact you shortly regarding your inquiry.",
+    });
+  };
+
   const filteredHospitals = hospitals.filter(hospital => {
     const matchesLocation = !location || hospital.location.toLowerCase().includes(location.toLowerCase());
     const matchesSpeciality = !speciality || hospital.specialities.includes(speciality);
@@ -153,12 +160,21 @@ export default function HospitalSearch() {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-[#1A1F2C] font-semibold">Rating: {hospital.rating}/5</span>
-                      <Button 
-                        onClick={() => handleAdmissionEnquiry(hospital)}
-                        className="bg-[#9b87f5] hover:bg-[#8b77e5] text-white"
-                      >
-                        Send Admission Enquiry
-                      </Button>
+                      <div className="space-x-4">
+                        <Button 
+                          onClick={() => handleRequestCallback(hospital)}
+                          variant="outline"
+                          className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10"
+                        >
+                          Request Callback
+                        </Button>
+                        <Button 
+                          onClick={() => handleAdmissionEnquiry(hospital)}
+                          className="bg-[#9b87f5] hover:bg-[#8b77e5] text-white"
+                        >
+                          Send Admission Enquiry
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
