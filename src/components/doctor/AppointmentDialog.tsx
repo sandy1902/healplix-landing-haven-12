@@ -27,11 +27,28 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
     { id: "2", name: "Mary Doe", relation: "Daughter", status: "approved" as const },
   ];
 
-  // Example time slots - in a real app, these would come from an API
-  const timeSlots = [
-    "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
-    "14:00", "14:30", "15:00", "15:30", "16:00", "16:30"
-  ];
+  // Generate time slots from 10:30 AM to 6:00 PM with 15-minute intervals
+  const generateTimeSlots = () => {
+    const slots = [];
+    let hour = 10;
+    let minute = 30;
+    
+    while (hour < 18 || (hour === 18 && minute === 0)) {
+      const period = hour >= 12 ? 'PM' : 'AM';
+      const displayHour = hour > 12 ? hour - 12 : hour;
+      const timeString = `${displayHour}:${minute.toString().padStart(2, '0')} ${period}`;
+      slots.push(timeString);
+      
+      minute += 15;
+      if (minute >= 60) {
+        minute = 0;
+        hour += 1;
+      }
+    }
+    return slots;
+  };
+
+  const timeSlots = generateTimeSlots();
 
   const handleConfirmBooking = () => {
     toast({
