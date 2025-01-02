@@ -64,23 +64,6 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
             />
           </div>
 
-          <DateTimeSection
-            date={date}
-            setDate={setDate}
-            selectedTime={selectedTime}
-            setSelectedTime={setSelectedTime}
-            timeSlots={timeSlots}
-          />
-
-          <AppointmentSummary
-            doctor={doctor}
-            selectedPatient={selectedPatient}
-            consultationType={consultationType}
-            date={date}
-            selectedTime={selectedTime}
-            dependents={dependents}
-          />
-
           <div className="flex justify-end space-x-3 border-t pt-3">
             <Button
               variant="outline"
@@ -97,6 +80,23 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
               Confirm Booking
             </Button>
           </div>
+
+          <DateTimeSection
+            date={date}
+            setDate={setDate}
+            selectedTime={selectedTime}
+            setSelectedTime={setSelectedTime}
+            timeSlots={timeSlots}
+          />
+
+          <AppointmentSummary
+            doctor={doctor}
+            selectedPatient={selectedPatient}
+            consultationType={consultationType}
+            date={date}
+            selectedTime={selectedTime}
+            dependents={dependents}
+          />
         </div>
       </DialogContent>
     </Dialog>
