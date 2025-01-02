@@ -84,25 +84,25 @@ export default function DoctorSearch() {
   });
 
   return (
-    <div className="min-h-screen bg-accent">
-      <div className="container mx-auto py-8 px-4">
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Find a Doctor</CardTitle>
+    <div className="min-h-screen bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10">
+      <div className="container mx-auto py-12 px-4">
+        <Card className="mb-8 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl font-bold text-[#1A1F2C]">Find a Doctor</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <Input
                   placeholder="Search by location..."
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="w-full"
+                  className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20"
                 />
               </div>
               <div>
                 <Select value={speciality} onValueChange={setSpeciality}>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20">
                     <SelectValue placeholder="Select Speciality" />
                   </SelectTrigger>
                   <SelectContent>
@@ -117,48 +117,48 @@ export default function DoctorSearch() {
           </CardContent>
         </Card>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           {filteredDoctors.map((doctor) => (
-            <Card key={doctor.id} className="hover:shadow-lg transition-shadow">
+            <Card key={doctor.id} className="hover:shadow-xl transition-shadow duration-300 border-0 bg-white/90 backdrop-blur-sm animate-fade-up">
               <CardContent className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-semibold">{doctor.name}</h3>
-                    <p className="text-sm text-gray-600">{doctor.qualification}</p>
-                    <p className="text-sm text-gray-600">{doctor.specialization}</p>
-                    <p className="text-sm text-gray-600">{doctor.experience} experience</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="space-y-3">
+                    <h3 className="text-2xl font-bold text-[#1A1F2C]">{doctor.name}</h3>
+                    <p className="text-[#8E9196]">{doctor.qualification}</p>
+                    <p className="text-[#7E69AB] font-medium">{doctor.specialization}</p>
+                    <p className="text-[#8E9196] font-medium">{doctor.experience} experience</p>
                   </div>
 
-                  <div className="space-y-2">
-                    <p className="font-medium">{doctor.clinicName}</p>
-                    <p className="text-sm text-gray-600 flex items-center gap-1">
-                      <MapPin className="h-4 w-4" /> {doctor.location}
+                  <div className="space-y-3">
+                    <p className="font-semibold text-[#1A1F2C]">{doctor.clinicName}</p>
+                    <p className="text-[#8E9196] flex items-center gap-2">
+                      <MapPin className="h-4 w-4 text-[#9b87f5]" /> {doctor.location}
                     </p>
-                    <div className="flex items-center gap-1">
-                      <Star className="h-4 w-4 text-yellow-400" />
-                      <span>{doctor.rating}</span>
+                    <div className="flex items-center gap-2">
+                      <Star className="h-5 w-5 text-yellow-400" />
+                      <span className="font-medium">{doctor.rating}</span>
                     </div>
                   </div>
 
                   <div className="space-y-4">
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       {doctor.videoConsultation.available && (
-                        <div className="flex items-center justify-between">
-                          <Badge variant="outline" className="flex items-center gap-1">
-                            <Video className="h-4 w-4" /> Video Consultation
+                        <div className="flex items-center justify-between p-3 bg-[#9b87f5]/10 rounded-lg">
+                          <Badge variant="outline" className="flex items-center gap-2 border-[#9b87f5]">
+                            <Video className="h-4 w-4 text-[#9b87f5]" /> Video Consultation
                           </Badge>
-                          <span className="flex items-center">
+                          <span className="flex items-center text-[#1A1F2C] font-medium">
                             <IndianRupee className="h-4 w-4" />
                             {doctor.videoConsultation.charges}
                           </span>
                         </div>
                       )}
                       {doctor.clinicVisit.available && (
-                        <div className="flex items-center justify-between">
-                          <Badge variant="outline" className="flex items-center gap-1">
-                            <Clock className="h-4 w-4" /> Clinic Visit
+                        <div className="flex items-center justify-between p-3 bg-[#7E69AB]/10 rounded-lg">
+                          <Badge variant="outline" className="flex items-center gap-2 border-[#7E69AB]">
+                            <Clock className="h-4 w-4 text-[#7E69AB]" /> Clinic Visit
                           </Badge>
-                          <span className="flex items-center">
+                          <span className="flex items-center text-[#1A1F2C] font-medium">
                             <IndianRupee className="h-4 w-4" />
                             {doctor.clinicVisit.charges}
                           </span>
@@ -166,7 +166,7 @@ export default function DoctorSearch() {
                       )}
                     </div>
                     <Button 
-                      className="w-full"
+                      className="w-full bg-[#9b87f5] hover:bg-[#7E69AB] text-white transition-colors"
                       onClick={() => handleBookAppointment(doctor)}
                     >
                       Book Appointment
@@ -178,8 +178,8 @@ export default function DoctorSearch() {
           ))}
 
           {filteredDoctors.length === 0 && (
-            <Card>
-              <CardContent className="p-6 text-center text-gray-500">
+            <Card className="border-0 bg-white/90 backdrop-blur-sm">
+              <CardContent className="p-8 text-center text-[#8E9196]">
                 No doctors found matching your criteria
               </CardContent>
             </Card>
