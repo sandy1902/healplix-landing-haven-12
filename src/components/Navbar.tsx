@@ -47,7 +47,7 @@ export const Navbar = () => {
                     Search
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[200px] gap-3 p-4">
+                    <ul className="grid w-[200px] gap-3 p-4 bg-white shadow-lg rounded-md">
                       <li>
                         <NavigationMenuLink
                           className={cn(
