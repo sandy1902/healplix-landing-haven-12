@@ -48,6 +48,12 @@ export function HospitalCard({
       {/* Section 4: Action Buttons */}
       <div className="flex flex-col gap-3 justify-center">
         <Button 
+          variant="outline"
+          className="bg-white border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10 w-full"
+        >
+          View Profile
+        </Button>
+        <Button 
           onClick={() => onRequestCallback(hospital)}
           variant="outline"
           className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10 w-full"
