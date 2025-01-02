@@ -15,55 +15,64 @@ export default function PatientRecordsDialog({ selectedPatient }: PatientRecords
   if (!selectedPatient) return null;
 
   return (
-    <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
-      <DialogHeader>
-        <DialogTitle>
+    <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto bg-white">
+      <DialogHeader className="border-b pb-4">
+        <DialogTitle className="text-xl font-bold text-primary">
           Patient Records - {selectedPatient.patientName}
         </DialogTitle>
       </DialogHeader>
-      <Tabs defaultValue="consultations" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="consultations">Consultation Notes</TabsTrigger>
-          <TabsTrigger value="files">Medical Files</TabsTrigger>
+      <Tabs defaultValue="consultations" className="w-full mt-4">
+        <TabsList className="grid w-full grid-cols-2 mb-6">
+          <TabsTrigger value="consultations" className="text-sm font-medium">
+            Consultation Notes
+          </TabsTrigger>
+          <TabsTrigger value="files" className="text-sm font-medium">
+            Medical Files
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="consultations">
-          <div className="space-y-4 mt-4">
+          <div className="space-y-4">
             {selectedPatient.patientRecords.map((record) => (
               <div
                 key={record.id}
-                className="p-4 border rounded-lg hover:bg-accent transition-colors"
+                className="p-6 border rounded-lg bg-accent/50 hover:bg-accent transition-colors duration-200"
               >
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold">{record.name}</h3>
-                  <span className="text-sm text-gray-500">{record.date}</span>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-lg font-semibold text-primary">{record.name}</h3>
+                  <span className="text-sm text-gray-600 bg-white px-3 py-1 rounded-full">
+                    {record.date}
+                  </span>
                 </div>
-                <p className="text-sm text-gray-500 mb-1">{record.type}</p>
-                <p className="text-sm">{record.description}</p>
+                <p className="text-sm font-medium text-secondary mb-2">{record.type}</p>
+                <p className="text-gray-700 leading-relaxed">{record.description}</p>
               </div>
             ))}
             {selectedPatient.patientRecords.length === 0 && (
-              <p className="text-center text-gray-500">No consultation records found for this patient.</p>
+              <p className="text-center text-gray-500 py-8">No consultation records found for this patient.</p>
             )}
           </div>
         </TabsContent>
         <TabsContent value="files">
-          <div className="space-y-4 mt-4">
+          <div className="space-y-4">
             {selectedPatient.medicalFiles.map((file) => (
               <div
                 key={file.id}
-                className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent transition-colors"
+                className="flex items-center justify-between p-6 border rounded-lg bg-accent/50 hover:bg-accent transition-colors duration-200"
               >
                 <div className="flex items-center gap-4">
-                  <FileText className="h-6 w-6 text-secondary" />
+                  <div className="p-2 bg-secondary/10 rounded-lg">
+                    <FileText className="h-6 w-6 text-secondary" />
+                  </div>
                   <div>
-                    <h3 className="font-semibold">{file.name}</h3>
-                    <p className="text-sm text-gray-500">
+                    <h3 className="font-semibold text-primary mb-1">{file.name}</h3>
+                    <p className="text-sm text-gray-600">
                       Uploaded on {file.date} • {file.type} • {file.size}
                     </p>
                   </div>
                 </div>
                 <Button 
                   variant="outline"
+                  className="hover:bg-secondary hover:text-white transition-colors"
                   onClick={() => {
                     toast({
                       title: "File Download Started",
@@ -76,7 +85,7 @@ export default function PatientRecordsDialog({ selectedPatient }: PatientRecords
               </div>
             ))}
             {selectedPatient.medicalFiles.length === 0 && (
-              <p className="text-center text-gray-500">No medical files found for this patient.</p>
+              <p className="text-center text-gray-500 py-8">No medical files found for this patient.</p>
             )}
           </div>
         </TabsContent>
