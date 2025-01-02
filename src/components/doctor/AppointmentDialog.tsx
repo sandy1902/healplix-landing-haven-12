@@ -101,7 +101,7 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
             dependents={dependents}
           />
 
-          <div className="flex justify-end space-x-3 border-t pt-2 mt-[-12px]">
+          <div className="flex justify-end space-x-3 border-t pt-2 mt-[-25px]">
             <Button
               variant="outline"
               onClick={() => onOpenChange(false)}
