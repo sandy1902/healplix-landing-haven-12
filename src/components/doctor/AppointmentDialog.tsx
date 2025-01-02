@@ -71,15 +71,13 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
             {/* Calendar Section */}
             <div className="bg-accent rounded-lg p-3">
               <h3 className="text-lg font-semibold mb-2 text-primary">Select Date</h3>
-              <div className="overflow-hidden">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  className="bg-white rounded-md shadow-sm [&_.rdp-months]:p-0 [&_.rdp-caption]:p-1 [&_.rdp]:p-0 [&_.rdp-table]:w-full [&_.rdp-cell]:p-1 [&_.rdp-button]:w-8 h-8 [&_.rdp-nav]:p-0"
-                  disabled={(date) => date < new Date()}
-                />
-              </div>
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                className="bg-white rounded-md"
+                disabled={(date) => date < new Date()}
+              />
             </div>
 
             {/* Time Slots Section */}
