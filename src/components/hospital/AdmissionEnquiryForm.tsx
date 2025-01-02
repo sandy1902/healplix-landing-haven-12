@@ -64,14 +64,16 @@ export function AdmissionEnquiryForm({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle>Admission Enquiry - {hospitalName}</DialogTitle>
+      <DialogContent className="sm:max-w-[600px] bg-white p-6 rounded-lg shadow-xl">
+        <DialogHeader className="mb-6">
+          <DialogTitle className="text-2xl font-bold text-primary bg-accent/50 p-4 rounded-lg">
+            Admission Enquiry - {hospitalName}
+          </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-4">
-            <div>
-              <Label>Patient</Label>
+          <div className="space-y-6">
+            <div className="form-float">
+              <Label className="text-sm font-semibold mb-2 block text-primary">Patient</Label>
               <PatientSelector
                 selectedPatient={selectedPatient}
                 onPatientSelect={setSelectedPatient}
@@ -79,21 +81,25 @@ export function AdmissionEnquiryForm({
               />
             </div>
 
-            <div>
-              <Label htmlFor="diagnosis">Diagnosis/Symptoms</Label>
+            <div className="form-float">
+              <Label htmlFor="diagnosis" className="text-sm font-semibold mb-2 block text-primary">
+                Diagnosis/Symptoms
+              </Label>
               <Textarea
                 id="diagnosis"
                 value={diagnosis}
                 onChange={(e) => setDiagnosis(e.target.value)}
                 placeholder="Please describe the diagnosis or symptoms"
-                className="min-h-[100px]"
+                className="min-h-[100px] w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-secondary/50 focus:border-secondary resize-none"
               />
             </div>
 
-            <div>
-              <Label htmlFor="insurance">Insurance Provider</Label>
+            <div className="form-float">
+              <Label htmlFor="insurance" className="text-sm font-semibold mb-2 block text-primary">
+                Insurance Provider
+              </Label>
               <Select value={insuranceProvider} onValueChange={setInsuranceProvider}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full border border-gray-200 rounded-lg focus:ring-2 focus:ring-secondary/50 focus:border-secondary">
                   <SelectValue placeholder="Select insurance provider" />
                 </SelectTrigger>
                 <SelectContent>
@@ -106,10 +112,12 @@ export function AdmissionEnquiryForm({
               </Select>
             </div>
 
-            <div>
-              <Label htmlFor="admissionType">Admission Type</Label>
+            <div className="form-float">
+              <Label htmlFor="admissionType" className="text-sm font-semibold mb-2 block text-primary">
+                Admission Type
+              </Label>
               <Select value={admissionType} onValueChange={setAdmissionType}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full border border-gray-200 rounded-lg focus:ring-2 focus:ring-secondary/50 focus:border-secondary">
                   <SelectValue placeholder="Select admission type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -119,8 +127,8 @@ export function AdmissionEnquiryForm({
               </Select>
             </div>
 
-            <div>
-              <Label>Medical Records</Label>
+            <div className="form-float">
+              <Label className="text-sm font-semibold mb-2 block text-primary">Medical Records</Label>
               <div className="mt-2">
                 <input
                   type="file"
@@ -132,7 +140,7 @@ export function AdmissionEnquiryForm({
                 <Button
                   type="button"
                   variant="outline"
-                  className="w-full"
+                  className="w-full border border-gray-200 hover:bg-accent/50 transition-colors"
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <Upload className="h-4 w-4 mr-2" />
@@ -142,7 +150,12 @@ export function AdmissionEnquiryForm({
             </div>
           </div>
 
-          <Button type="submit" className="w-full">Submit Enquiry</Button>
+          <Button 
+            type="submit" 
+            className="w-full bg-secondary hover:bg-secondary/90 text-white font-semibold py-3 rounded-lg transition-colors"
+          >
+            Submit Enquiry
+          </Button>
         </form>
       </DialogContent>
     </Dialog>
