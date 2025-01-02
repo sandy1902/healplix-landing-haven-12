@@ -24,7 +24,7 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
       id: "1",
       doctorName: "Dr. Sarah Wilson",
       specialty: "Cardiologist",
-      date: "2024-03-25",
+      date: "2024-04-25", // Updated to April
       time: "10:00 AM",
       location: "Medical Center, Room 302"
     },
@@ -32,7 +32,7 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
       id: "2",
       doctorName: "Dr. Michael Chen",
       specialty: "Dermatologist",
-      date: "2024-03-28",
+      date: "2024-04-28", // Updated to April
       time: "2:30 PM",
       location: "Health Clinic, Room 105"
     },
@@ -40,7 +40,7 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
       id: "3",
       doctorName: "Dr. Emily Rodriguez",
       specialty: "Neurologist",
-      date: "2024-03-30",
+      date: "2024-04-30", // Updated to April
       time: "11:15 AM",
       location: "Neurology Center, Room 405"
     },
