@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import ProfileImage from "./profile/ProfileImage";
 import ProfileForm from "./profile/ProfileForm";
-import PatientRecords from "./patient/PatientRecords";
-import Prescription from "./patient/Prescription";
 
 export default function DoctorProfile() {
   const { toast } = useToast();
@@ -33,36 +31,29 @@ export default function DoctorProfile() {
   };
 
   return (
-    <div className="space-y-6">
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>Doctor Profile</CardTitle>
-          <Button 
-            variant={isEditing ? "default" : "secondary"}
-            onClick={() => isEditing ? handleSave() : setIsEditing(true)}
-          >
-            {isEditing ? "Save Changes" : "Edit Profile"}
-          </Button>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="flex items-center space-x-4">
-            <ProfileImage 
-              imagePreview={imagePreview} 
-              onImageUpdate={setImagePreview} 
-            />
-          </div>
-          <ProfileForm 
-            profile={profile}
-            isEditing={isEditing}
-            setProfile={setProfile}
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle>Doctor Profile</CardTitle>
+        <Button 
+          variant={isEditing ? "default" : "secondary"}
+          onClick={() => isEditing ? handleSave() : setIsEditing(true)}
+        >
+          {isEditing ? "Save Changes" : "Edit Profile"}
+        </Button>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="flex items-center space-x-4">
+          <ProfileImage 
+            imagePreview={imagePreview} 
+            onImageUpdate={setImagePreview} 
           />
-        </CardContent>
-      </Card>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <PatientRecords />
-        <Prescription />
-      </div>
-    </div>
+        </div>
+        <ProfileForm 
+          profile={profile}
+          isEditing={isEditing}
+          setProfile={setProfile}
+        />
+      </CardContent>
+    </Card>
   );
 }

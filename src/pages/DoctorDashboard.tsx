@@ -3,16 +3,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   UserCog, 
   Calendar, 
-  Award, 
-  FileText, 
-  Stethoscope,
   Clock,
-  DollarSign
+  DollarSign,
+  FileText,
+  Stethoscope
 } from "lucide-react";
 import DoctorProfile from "@/components/doctor-dashboard/DoctorProfile";
 import DoctorSchedule from "@/components/doctor-dashboard/DoctorSchedule";
 import DoctorAppointments from "@/components/doctor-dashboard/DoctorAppointments";
 import DoctorRevenue from "@/components/doctor-dashboard/DoctorRevenue";
+import PatientRecords from "@/components/doctor-dashboard/patient/PatientRecords";
+import Prescription from "@/components/doctor-dashboard/patient/Prescription";
 
 export default function DoctorDashboard() {
   return (
@@ -32,6 +33,14 @@ export default function DoctorDashboard() {
               <Clock className="h-4 w-4" />
               Schedule
             </TabsTrigger>
+            <TabsTrigger value="records" className="flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              Records
+            </TabsTrigger>
+            <TabsTrigger value="prescriptions" className="flex items-center gap-2">
+              <Stethoscope className="h-4 w-4" />
+              Prescriptions
+            </TabsTrigger>
             <TabsTrigger value="revenue" className="flex items-center gap-2">
               <DollarSign className="h-4 w-4" />
               Revenue
@@ -49,6 +58,14 @@ export default function DoctorDashboard() {
 
             <TabsContent value="schedule" className="mt-0">
               <DoctorSchedule />
+            </TabsContent>
+
+            <TabsContent value="records" className="mt-0">
+              <PatientRecords />
+            </TabsContent>
+
+            <TabsContent value="prescriptions" className="mt-0">
+              <Prescription />
             </TabsContent>
 
             <TabsContent value="revenue" className="mt-0">
