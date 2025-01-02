@@ -5,10 +5,12 @@ import { Menu, X, Home, Info, Mail, LogIn, UserPlus } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileMenu } from "./navbar/MobileMenu";
 import { SearchDropdown } from "./navbar/SearchDropdown";
+import { useAuth } from "@/contexts/AuthContext";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useIsMobile();
+  const { isAuthenticated } = useAuth();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -38,21 +40,29 @@ export const Navbar = () => {
                 <Info className="h-4 w-4" />
                 About Us
               </Link>
-              <SearchDropdown />
+              {isAuthenticated && <SearchDropdown />}
               <Link to="/contact" className="text-gray-600 hover:text-primary flex items-center gap-2">
                 <Mail className="h-4 w-4" />
                 Contact Us
               </Link>
-              <Link to="/login" className="text-gray-600 hover:text-primary flex items-center gap-2">
-                <LogIn className="h-4 w-4" />
-                Login
-              </Link>
-              <Link to="/signup">
-                <Button className="flex items-center gap-2">
-                  <UserPlus className="h-4 w-4" />
-                  Sign Up
+              {!isAuthenticated ? (
+                <>
+                  <Link to="/login" className="text-gray-600 hover:text-primary flex items-center gap-2">
+                    <LogIn className="h-4 w-4" />
+                    Login
+                  </Link>
+                  <Link to="/signup">
+                    <Button className="flex items-center gap-2">
+                      <UserPlus className="h-4 w-4" />
+                      Sign Up
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <Button variant="ghost" onClick={() => {}}>
+                  Logout
                 </Button>
-              </Link>
+              )}
             </div>
           )}
         </div>
