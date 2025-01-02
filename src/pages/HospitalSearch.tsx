@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { AdmissionEnquiryForm } from "@/components/hospital/AdmissionEnquiryForm";
 
 interface Hospital {
   id: string;
@@ -19,6 +20,8 @@ export default function HospitalSearch() {
   const [location, setLocation] = useState<string>("");
   const [speciality, setSpeciality] = useState<string>("");
   const [insuranceProvider, setInsuranceProvider] = useState<string>("");
+  const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
+  const [isEnquiryFormOpen, setIsEnquiryFormOpen] = useState(false);
   const { toast } = useToast();
   
   const [hospitals] = useState<Hospital[]>([
@@ -42,11 +45,9 @@ export default function HospitalSearch() {
     }
   ]);
 
-  const handleAdmissionEnquiry = (hospitalName: string) => {
-    toast({
-      title: "Admission Enquiry Sent",
-      description: `Your enquiry for ${hospitalName} has been received. We'll contact you soon.`,
-    });
+  const handleAdmissionEnquiry = (hospital: Hospital) => {
+    setSelectedHospital(hospital);
+    setIsEnquiryFormOpen(true);
   };
 
   const filteredHospitals = hospitals.filter(hospital => {
@@ -153,7 +154,7 @@ export default function HospitalSearch() {
                     <div className="flex items-center justify-between">
                       <span className="text-[#1A1F2C] font-semibold">Rating: {hospital.rating}/5</span>
                       <Button 
-                        onClick={() => handleAdmissionEnquiry(hospital.name)}
+                        onClick={() => handleAdmissionEnquiry(hospital)}
                         className="bg-[#9b87f5] hover:bg-[#8b77e5] text-white"
                       >
                         Send Admission Enquiry
@@ -174,6 +175,15 @@ export default function HospitalSearch() {
           )}
         </div>
       </div>
+
+      {selectedHospital && (
+        <AdmissionEnquiryForm
+          open={isEnquiryFormOpen}
+          onOpenChange={setIsEnquiryFormOpen}
+          hospitalName={selectedHospital.name}
+          insuranceProviders={selectedHospital.insuranceProviders}
+        />
+      )}
     </div>
   );
 }
