@@ -16,6 +16,11 @@ export function DateTimeSection({
   setSelectedTime,
   timeSlots,
 }: DateTimeSectionProps) {
+  // Set default time to 10:30 AM if no time is selected
+  if (!selectedTime) {
+    setSelectedTime("10:30 AM");
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div className="bg-accent rounded-lg p-3">
