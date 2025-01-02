@@ -16,37 +16,40 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
       <CardContent className="p-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Section 1: Doctor's Personal Information */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="flex gap-4 items-start">
-              <Avatar className="h-24 w-24">
+          <div className="lg:col-span-5">
+            <div className="flex items-start gap-6">
+              <Avatar className="h-24 w-24 rounded-lg">
                 <AvatarImage src={doctor.image} alt={doctor.name} />
                 <AvatarFallback>DR</AvatarFallback>
               </Avatar>
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold text-[#1A1F2C]">{doctor.name}</h3>
-                <p className="text-[#8E9196]">{doctor.qualification}</p>
-                <p className="text-[#7E69AB] font-medium">{doctor.specialization}</p>
-                <p className="text-[#8E9196] font-medium">{doctor.experience} experience</p>
-                <div className="flex items-center gap-2">
-                  <Star className="h-5 w-5 text-yellow-400" />
-                  <span className="font-medium">{doctor.rating}</span>
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-[#1A1F2C] mb-2">{doctor.name}</h3>
+                <div className="space-y-1.5">
+                  <p className="text-[#8E9196]">{doctor.qualification}</p>
+                  <p className="text-[#7E69AB] font-medium">{doctor.specialization}</p>
+                  <p className="text-[#8E9196] font-medium">{doctor.experience} experience</p>
+                  <div className="flex items-center gap-1.5">
+                    <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+                    <span className="font-medium">{doctor.rating}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Section 2: Clinic Information */}
-          <div className="lg:col-span-3 space-y-4">
-            <div className="p-4 bg-[#F8F9FA] rounded-lg">
-              <h4 className="font-semibold text-[#1A1F2C] mb-2">{doctor.clinicName}</h4>
+          <div className="lg:col-span-3 flex items-center">
+            <div className="w-full p-4 bg-[#F8F9FA] rounded-lg">
+              <h4 className="font-semibold text-[#1A1F2C] mb-3">{doctor.clinicName}</h4>
               <p className="text-[#8E9196] flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-[#9b87f5]" /> {doctor.location}
+                <MapPin className="h-4 w-4 text-[#9b87f5]" /> 
+                <span className="flex-1">{doctor.location}</span>
               </p>
             </div>
           </div>
 
           {/* Section 3: Appointment Details */}
-          <div className="lg:col-span-4 space-y-4">
+          <div className="lg:col-span-4 flex flex-col justify-center space-y-4">
             {doctor.videoConsultation.available && (
               <div className="flex items-center justify-between p-3 bg-[#9b87f5]/10 rounded-lg">
                 <Badge variant="outline" className="flex items-center gap-2 border-[#9b87f5]">
