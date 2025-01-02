@@ -54,9 +54,12 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
     }
   ]);
 
-  const filteredAppointments = appointments.filter(appointment => 
-    filterAppointmentsByDate(appointment, type)
-  );
+  // Add console.log to debug filtering
+  const filteredAppointments = appointments.filter(appointment => {
+    const isFiltered = filterAppointmentsByDate(appointment, type);
+    console.log(`Filtering appointment ${appointment.id}:`, isFiltered);
+    return isFiltered;
+  });
 
   const handleShareRecords = (appointment: Appointment) => {
     setSelectedAppointment(appointment);
