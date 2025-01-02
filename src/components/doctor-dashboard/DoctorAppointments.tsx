@@ -4,6 +4,7 @@ import { Calendar, Clock, User, FileText } from "lucide-react";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface PatientRecord {
   id: string;
@@ -11,6 +12,14 @@ interface PatientRecord {
   date: string;
   type: string;
   description: string;
+}
+
+interface MedicalFile {
+  id: string;
+  name: string;
+  date: string;
+  type: string;
+  size: string;
 }
 
 interface Appointment {
@@ -21,6 +30,7 @@ interface Appointment {
   type: string;
   appointmentMode: "clinic" | "video";
   patientRecords: PatientRecord[];
+  medicalFiles: MedicalFile[];
 }
 
 export default function DoctorAppointments() {
@@ -51,6 +61,22 @@ export default function DoctorAppointments() {
           date: "2024-02-10",
           type: "Lab Report",
           description: "All parameters within normal range."
+        }
+      ],
+      medicalFiles: [
+        {
+          id: "1",
+          name: "Blood Test Report.pdf",
+          date: "2024-02-10",
+          type: "PDF",
+          size: "2.5 MB"
+        },
+        {
+          id: "2",
+          name: "X-Ray Image.jpg",
+          date: "2024-02-10",
+          type: "Image",
+          size: "5.1 MB"
         }
       ]
     },
@@ -123,30 +149,72 @@ export default function DoctorAppointments() {
       </Card>
 
       <Dialog open={showRecords} onOpenChange={setShowRecords}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
               Patient Records - {selectedPatient?.patientName}
             </DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
-            {selectedPatient?.patientRecords.map((record) => (
-              <div
-                key={record.id}
-                className="p-4 border rounded-lg hover:bg-accent transition-colors"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold">{record.name}</h3>
-                  <span className="text-sm text-gray-500">{record.date}</span>
-                </div>
-                <p className="text-sm text-gray-500 mb-1">{record.type}</p>
-                <p className="text-sm">{record.description}</p>
+          <Tabs defaultValue="consultations" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="consultations">Consultation Notes</TabsTrigger>
+              <TabsTrigger value="files">Medical Files</TabsTrigger>
+            </TabsList>
+            <TabsContent value="consultations">
+              <div className="space-y-4 mt-4">
+                {selectedPatient?.patientRecords.map((record) => (
+                  <div
+                    key={record.id}
+                    className="p-4 border rounded-lg hover:bg-accent transition-colors"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-semibold">{record.name}</h3>
+                      <span className="text-sm text-gray-500">{record.date}</span>
+                    </div>
+                    <p className="text-sm text-gray-500 mb-1">{record.type}</p>
+                    <p className="text-sm">{record.description}</p>
+                  </div>
+                ))}
+                {(!selectedPatient?.patientRecords || selectedPatient.patientRecords.length === 0) && (
+                  <p className="text-center text-gray-500">No consultation records found for this patient.</p>
+                )}
               </div>
-            ))}
-            {selectedPatient?.patientRecords.length === 0 && (
-              <p className="text-center text-gray-500">No records found for this patient.</p>
-            )}
-          </div>
+            </TabsContent>
+            <TabsContent value="files">
+              <div className="space-y-4 mt-4">
+                {selectedPatient?.medicalFiles.map((file) => (
+                  <div
+                    key={file.id}
+                    className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent transition-colors"
+                  >
+                    <div className="flex items-center gap-4">
+                      <FileText className="h-6 w-6 text-secondary" />
+                      <div>
+                        <h3 className="font-semibold">{file.name}</h3>
+                        <p className="text-sm text-gray-500">
+                          Uploaded on {file.date} • {file.type} • {file.size}
+                        </p>
+                      </div>
+                    </div>
+                    <Button 
+                      variant="outline"
+                      onClick={() => {
+                        toast({
+                          title: "File Download Started",
+                          description: `Downloading ${file.name}...`,
+                        });
+                      }}
+                    >
+                      Download
+                    </Button>
+                  </div>
+                ))}
+                {(!selectedPatient?.medicalFiles || selectedPatient.medicalFiles.length === 0) && (
+                  <p className="text-center text-gray-500">No medical files found for this patient.</p>
+                )}
+              </div>
+            </TabsContent>
+          </Tabs>
         </DialogContent>
       </Dialog>
     </>
