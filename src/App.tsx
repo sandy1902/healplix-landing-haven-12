@@ -6,6 +6,7 @@ import UserDashboard from "./pages/UserDashboard";
 import DoctorDashboard from "./pages/DoctorDashboard";
 import ExecutiveDashboard from "./pages/ExecutiveDashboard";
 import DoctorSearch from "./pages/DoctorSearch";
+import HospitalSearch from "./pages/HospitalSearch";
 import ForgotPassword from "./pages/ForgotPassword";
 import AboutUs from "./pages/AboutUs";
 import { Toaster } from "./components/ui/toaster";
@@ -24,6 +25,7 @@ function App() {
         <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
         <Route path="/executive-dashboard" element={<ExecutiveDashboard />} />
         <Route path="/search-doctors" element={<DoctorSearch />} />
+        <Route path="/search-hospitals" element={<HospitalSearch />} />
       </Routes>
       <Toaster />
     </Router>
