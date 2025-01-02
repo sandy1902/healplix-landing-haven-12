@@ -5,10 +5,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
+import GeneralExaminationForm from "./GeneralExaminationForm";
+import MedicalHistoryForm from "./MedicalHistoryForm";
+import { PrescriptionData } from "../types/prescription";
 
 export default function Prescription() {
   const { toast } = useToast();
-  const [prescription, setPrescription] = useState({
+  const [prescription, setPrescription] = useState<PrescriptionData>({
     complaints: "",
     pastMedicalHistory: "",
     pastSurgicalHistory: "",
@@ -61,112 +64,19 @@ export default function Prescription() {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Chief Complaints */}
-          <div className="space-y-2">
-            <Label htmlFor="complaints">Chief Complaints</Label>
-            <Textarea
-              id="complaints"
-              placeholder="Enter patient's complaints..."
-              value={prescription.complaints}
-              onChange={(e) => handleChange('complaints', e.target.value)}
-            />
-          </div>
+          <MedicalHistoryForm
+            complaints={prescription.complaints}
+            pastMedicalHistory={prescription.pastMedicalHistory}
+            pastSurgicalHistory={prescription.pastSurgicalHistory}
+            drugAllergies={prescription.drugAllergies}
+            onChange={handleChange}
+          />
 
-          {/* Medical History */}
-          <div className="space-y-2">
-            <Label htmlFor="pastMedicalHistory">Past Medical History</Label>
-            <Textarea
-              id="pastMedicalHistory"
-              placeholder="Enter past medical history..."
-              value={prescription.pastMedicalHistory}
-              onChange={(e) => handleChange('pastMedicalHistory', e.target.value)}
-            />
-          </div>
+          <GeneralExaminationForm
+            data={prescription.generalExamination}
+            onChange={handleChange}
+          />
 
-          {/* Surgical History */}
-          <div className="space-y-2">
-            <Label htmlFor="pastSurgicalHistory">Past Surgical History</Label>
-            <Textarea
-              id="pastSurgicalHistory"
-              placeholder="Enter past surgical history..."
-              value={prescription.pastSurgicalHistory}
-              onChange={(e) => handleChange('pastSurgicalHistory', e.target.value)}
-            />
-          </div>
-
-          {/* Drug Allergies */}
-          <div className="space-y-2">
-            <Label htmlFor="drugAllergies">Drug Allergies</Label>
-            <Textarea
-              id="drugAllergies"
-              placeholder="Enter drug allergies..."
-              value={prescription.drugAllergies}
-              onChange={(e) => handleChange('drugAllergies', e.target.value)}
-            />
-          </div>
-
-          {/* General Examination */}
-          <div className="space-y-4">
-            <h3 className="font-semibold">General Examination</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="pr">Pulse Rate</Label>
-                <Input
-                  id="pr"
-                  placeholder="PR"
-                  value={prescription.generalExamination.pr}
-                  onChange={(e) => handleChange('generalExamination.pr', e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="bp">Blood Pressure</Label>
-                <Input
-                  id="bp"
-                  placeholder="BP"
-                  value={prescription.generalExamination.bp}
-                  onChange={(e) => handleChange('generalExamination.bp', e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="temperature">Temperature</Label>
-                <Input
-                  id="temperature"
-                  placeholder="Temperature"
-                  value={prescription.generalExamination.temperature}
-                  onChange={(e) => handleChange('generalExamination.temperature', e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="cvs">CVS</Label>
-                <Input
-                  id="cvs"
-                  placeholder="CVS"
-                  value={prescription.generalExamination.cvs}
-                  onChange={(e) => handleChange('generalExamination.cvs', e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="rs">RS</Label>
-                <Input
-                  id="rs"
-                  placeholder="RS"
-                  value={prescription.generalExamination.rs}
-                  onChange={(e) => handleChange('generalExamination.rs', e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="perAbdomen">Per Abdomen</Label>
-                <Input
-                  id="perAbdomen"
-                  placeholder="Per Abdomen"
-                  value={prescription.generalExamination.perAbdomen}
-                  onChange={(e) => handleChange('generalExamination.perAbdomen', e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Impression */}
           <div className="space-y-2">
             <Label htmlFor="impression">Impression</Label>
             <Textarea
@@ -177,7 +87,6 @@ export default function Prescription() {
             />
           </div>
 
-          {/* Medicines */}
           <div className="space-y-2">
             <Label htmlFor="medicines">Medicines</Label>
             <Textarea
