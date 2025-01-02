@@ -24,7 +24,7 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
           </div>
 
           {/* Section 2: Doctor's Details */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-4">
             <div className="space-y-2">
               <h3 className="text-2xl font-bold text-[#1A1F2C]">{doctor.name}</h3>
               <p className="text-[#8E9196]">{doctor.qualification}</p>
@@ -49,7 +49,7 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
           </div>
 
           {/* Section 4: Appointment Details */}
-          <div className="lg:col-span-3 flex flex-col justify-center space-y-4">
+          <div className="lg:col-span-4 flex flex-col justify-center space-y-4">
             {doctor.videoConsultation.available && (
               <div className="flex items-center justify-between p-3 bg-[#9b87f5]/10 rounded-lg">
                 <Badge variant="outline" className="flex items-center gap-2 border-[#9b87f5]">
