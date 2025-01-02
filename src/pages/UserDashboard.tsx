@@ -2,12 +2,14 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock, History, FileText, UserCog } from "lucide-react";
+import { Clock, History, FileText, UserCog, Users, Heart } from "lucide-react";
 import ProfileSummary from "@/components/dashboard/ProfileSummary";
 import QuickStats from "@/components/dashboard/QuickStats";
 import ProfileForm from "@/components/dashboard/ProfileForm";
 import AppointmentList from "@/components/dashboard/AppointmentList";
 import MedicalRecords from "@/components/dashboard/MedicalRecords";
+import Dependents from "@/components/dashboard/Dependents";
+import Favorites from "@/components/dashboard/Favorites";
 
 export default function UserDashboard() {
   const navigate = useNavigate();
@@ -53,6 +55,14 @@ export default function UserDashboard() {
                   <FileText className="h-4 w-4" />
                   Medical Records
                 </TabsTrigger>
+                <TabsTrigger value="dependents" className="flex items-center gap-2">
+                  <Users className="h-4 w-4" />
+                  Dependents
+                </TabsTrigger>
+                <TabsTrigger value="favorites" className="flex items-center gap-2">
+                  <Heart className="h-4 w-4" />
+                  Favorites
+                </TabsTrigger>
                 <TabsTrigger value="profile" className="flex items-center gap-2">
                   <UserCog className="h-4 w-4" />
                   Profile Settings
@@ -69,6 +79,14 @@ export default function UserDashboard() {
 
               <TabsContent value="records">
                 <MedicalRecords />
+              </TabsContent>
+
+              <TabsContent value="dependents">
+                <Dependents />
+              </TabsContent>
+
+              <TabsContent value="favorites">
+                <Favorites />
               </TabsContent>
 
               <TabsContent value="profile">

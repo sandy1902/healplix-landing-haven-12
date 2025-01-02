@@ -14,8 +14,7 @@ interface MedicalRecord {
 
 export default function MedicalRecords() {
   const { toast } = useToast();
-  // In a real application, this would come from your backend
-  const [records] = useState<MedicalRecord[]>([
+  const [records, setRecords] = useState<MedicalRecord[]>([
     {
       id: "1",
       name: "Blood Test Results",
@@ -35,13 +34,27 @@ export default function MedicalRecords() {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Here you would typically handle the file upload to your backend
-      console.log('Uploading file:', file);
+      const newRecord: MedicalRecord = {
+        id: (records.length + 1).toString(),
+        name: file.name,
+        date: new Date().toISOString().split('T')[0],
+        type: file.type.split('/')[1].toUpperCase(),
+        size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`
+      };
+      
+      setRecords([...records, newRecord]);
       toast({
         title: "File Upload",
         description: "Your medical record has been successfully uploaded.",
       });
     }
+  };
+
+  const handleDownload = (record: MedicalRecord) => {
+    toast({
+      title: "Download Started",
+      description: `Downloading ${record.name}...`,
+    });
   };
 
   return (
@@ -81,7 +94,9 @@ export default function MedicalRecords() {
                     </p>
                   </div>
                 </div>
-                <Button variant="outline">Download</Button>
+                <Button variant="outline" onClick={() => handleDownload(record)}>
+                  Download
+                </Button>
               </div>
             ))}
           </div>
