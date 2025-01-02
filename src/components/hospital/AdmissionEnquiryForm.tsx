@@ -39,6 +39,13 @@ export function AdmissionEnquiryForm({
   const [admissionType, setAdmissionType] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+  // Dummy dependents data
+  const dependents = [
+    { id: "1", name: "Sarah Smith", relation: "Spouse", status: "approved" as const },
+    { id: "2", name: "Tommy Smith", relation: "Son", status: "approved" as const },
+    { id: "3", name: "Emily Smith", relation: "Daughter", status: "approved" as const },
+  ];
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
@@ -68,7 +75,7 @@ export function AdmissionEnquiryForm({
               <PatientSelector
                 selectedPatient={selectedPatient}
                 onPatientSelect={setSelectedPatient}
-                dependents={[]}
+                dependents={dependents}
               />
             </div>
 
