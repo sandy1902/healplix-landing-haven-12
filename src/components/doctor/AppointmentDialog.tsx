@@ -47,13 +47,13 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px] bg-white shadow-2xl border-2 border-secondary/20">
-        <DialogHeader className="border-b pb-4">
-          <DialogTitle className="text-2xl font-bold text-primary bg-gradient-to-r from-secondary/10 to-transparent p-2 rounded-lg">
-            Book Appointment with {doctor.name}
-          </DialogTitle>
-        </DialogHeader>
-        
-        <div className="space-y-4 mt-4">
+        <div className="space-y-4">
+          <DialogHeader className="border-b pb-4 mt-4">
+            <DialogTitle className="text-2xl font-bold text-primary bg-gradient-to-r from-secondary/10 to-transparent p-2 rounded-lg">
+              Book Appointment with {doctor.name}
+            </DialogTitle>
+          </DialogHeader>
+          
           <div className="grid grid-cols-2 gap-4">
             <PatientSelectionSection
               selectedPatient={selectedPatient}
@@ -65,6 +65,23 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
               setConsultationType={setConsultationType}
               doctor={doctor}
             />
+          </div>
+
+          <div className="flex justify-end space-x-3 border-t pt-2">
+            <Button
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              className="hover:bg-gray-100"
+            >
+              Cancel
+            </Button>
+            <Button 
+              className="bg-secondary hover:bg-secondary/90 text-white font-semibold shadow-lg"
+              disabled={!date || !selectedTime}
+              onClick={handleConfirmBooking}
+            >
+              Confirm Booking
+            </Button>
           </div>
 
           <DateTimeSection
@@ -83,23 +100,6 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
             selectedTime={selectedTime}
             dependents={dependents}
           />
-
-          <div className="flex justify-end space-x-3 border-t pt-2 mt-2">
-            <Button
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-              className="hover:bg-gray-100"
-            >
-              Cancel
-            </Button>
-            <Button 
-              className="bg-secondary hover:bg-secondary/90 text-white font-semibold shadow-lg"
-              disabled={!date || !selectedTime}
-              onClick={handleConfirmBooking}
-            >
-              Confirm Booking
-            </Button>
-          </div>
         </div>
       </DialogContent>
     </Dialog>
