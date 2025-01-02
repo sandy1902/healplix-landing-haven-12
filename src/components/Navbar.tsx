@@ -1,4 +1,14 @@
 import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
+import { Search } from "lucide-react";
 
 export const Navbar = () => {
   return (
@@ -13,9 +23,64 @@ export const Navbar = () => {
             />
           </div>
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="text-primary hover:text-secondary transition-colors">Features</a>
-            <a href="#how-it-works" className="text-primary hover:text-secondary transition-colors">How it Works</a>
-            <a href="#testimonials" className="text-primary hover:text-secondary transition-colors">Testimonials</a>
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuLink 
+                    className="text-primary hover:text-secondary transition-colors"
+                    href="/"
+                  >
+                    Home
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink 
+                    className="text-primary hover:text-secondary transition-colors"
+                    href="/about"
+                  >
+                    About Us
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-primary hover:text-secondary transition-colors">
+                    <Search className="mr-2 h-4 w-4" />
+                    Search
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[200px] gap-3 p-4">
+                      <li>
+                        <NavigationMenuLink
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          )}
+                          href="/search/doctors"
+                        >
+                          Find Doctors
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          )}
+                          href="/search/hospitals"
+                        >
+                          Find Hospitals
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink 
+                    className="text-primary hover:text-secondary transition-colors"
+                    href="/contact"
+                  >
+                    Contact Us
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
           </div>
           <div className="flex items-center space-x-4">
             <Button variant="outline">Log In</Button>
