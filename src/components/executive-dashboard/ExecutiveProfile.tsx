@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import ProfileImageUpload from "./profile/ProfileImageUpload";
 import CameraCapture from "./profile/CameraCapture";
 import ProfileForm from "./profile/ProfileForm";
@@ -34,7 +34,7 @@ export default function ExecutiveProfile() {
       case 'pending':
         return <Badge variant="secondary">Pending Approval</Badge>;
       case 'approved':
-        return <Badge variant="success">Approved</Badge>;
+        return <Badge variant="default">Approved</Badge>;
       case 'rejected':
         return <Badge variant="destructive">Rejected</Badge>;
       default:
