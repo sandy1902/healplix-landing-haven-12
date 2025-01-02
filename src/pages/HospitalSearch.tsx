@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 interface Hospital {
   id: string;
@@ -17,6 +19,7 @@ export default function HospitalSearch() {
   const [location, setLocation] = useState<string>("");
   const [speciality, setSpeciality] = useState<string>("");
   const [insuranceProvider, setInsuranceProvider] = useState<string>("");
+  const { toast } = useToast();
   
   const [hospitals] = useState<Hospital[]>([
     {
@@ -38,6 +41,13 @@ export default function HospitalSearch() {
       rating: 4.5
     }
   ]);
+
+  const handleAdmissionEnquiry = (hospitalName: string) => {
+    toast({
+      title: "Admission Enquiry Sent",
+      description: `Your enquiry for ${hospitalName} has been received. We'll contact you soon.`,
+    });
+  };
 
   const filteredHospitals = hospitals.filter(hospital => {
     const matchesLocation = !location || hospital.location.toLowerCase().includes(location.toLowerCase());
@@ -140,8 +150,14 @@ export default function HospitalSearch() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-between">
                       <span className="text-[#1A1F2C] font-semibold">Rating: {hospital.rating}/5</span>
+                      <Button 
+                        onClick={() => handleAdmissionEnquiry(hospital.name)}
+                        className="bg-[#9b87f5] hover:bg-[#8b77e5] text-white"
+                      >
+                        Send Admission Enquiry
+                      </Button>
                     </div>
                   </div>
                 </div>
