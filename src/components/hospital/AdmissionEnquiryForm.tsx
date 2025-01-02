@@ -53,6 +53,7 @@ export function AdmissionEnquiryForm({
     toast({
       title: "Enquiry Submitted Successfully",
       description: "We will review your details and get back to you shortly.",
+      className: "bg-secondary text-secondary-foreground border-none",
     });
     onOpenChange(false);
     // Reset form
