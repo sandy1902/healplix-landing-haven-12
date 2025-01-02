@@ -6,6 +6,8 @@ import { Clock, History, FileText, UserCog } from "lucide-react";
 import ProfileSummary from "@/components/dashboard/ProfileSummary";
 import QuickStats from "@/components/dashboard/QuickStats";
 import ProfileForm from "@/components/dashboard/ProfileForm";
+import AppointmentList from "@/components/dashboard/AppointmentList";
+import MedicalRecords from "@/components/dashboard/MedicalRecords";
 
 export default function UserDashboard() {
   const navigate = useNavigate();
@@ -58,36 +60,15 @@ export default function UserDashboard() {
               </TabsList>
 
               <TabsContent value="appointments">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Upcoming Appointments</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-500">No upcoming appointments</p>
-                  </CardContent>
-                </Card>
+                <AppointmentList type="upcoming" />
               </TabsContent>
 
               <TabsContent value="history">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Past Appointments</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-500">No past appointments</p>
-                  </CardContent>
-                </Card>
+                <AppointmentList type="past" />
               </TabsContent>
 
               <TabsContent value="records">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Medical Records</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-500">No medical records uploaded</p>
-                  </CardContent>
-                </Card>
+                <MedicalRecords />
               </TabsContent>
 
               <TabsContent value="profile">
