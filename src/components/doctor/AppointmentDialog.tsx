@@ -41,17 +41,18 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
         </DialogHeader>
         
         <div className="space-y-4">
-          <PatientSelectionSection
-            selectedPatient={selectedPatient}
-            setSelectedPatient={setSelectedPatient}
-            dependents={dependents}
-          />
-
-          <ConsultationTypeSection
-            consultationType={consultationType}
-            setConsultationType={setConsultationType}
-            doctor={doctor}
-          />
+          <div className="grid grid-cols-2 gap-4">
+            <PatientSelectionSection
+              selectedPatient={selectedPatient}
+              setSelectedPatient={setSelectedPatient}
+              dependents={dependents}
+            />
+            <ConsultationTypeSection
+              consultationType={consultationType}
+              setConsultationType={setConsultationType}
+              doctor={doctor}
+            />
+          </div>
 
           <DateTimeSection
             date={date}
