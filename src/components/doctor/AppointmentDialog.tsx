@@ -6,6 +6,7 @@ import { PatientSelectionSection } from "./appointment/PatientSelectionSection";
 import { ConsultationTypeSection } from "./appointment/ConsultationTypeSection";
 import { DateTimeSection } from "./appointment/DateTimeSection";
 import { AppointmentSummary } from "./appointment/AppointmentSummary";
+import { useToast } from "@/hooks/use-toast";
 
 interface AppointmentDialogProps {
   doctor: Doctor;
@@ -14,6 +15,7 @@ interface AppointmentDialogProps {
 }
 
 export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDialogProps) {
+  const { toast } = useToast();
   const [date, setDate] = useState<Date>();
   const [selectedTime, setSelectedTime] = useState<string>();
   const [selectedPatient, setSelectedPatient] = useState("self");
@@ -30,6 +32,14 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
     "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
     "14:00", "14:30", "15:00", "15:30", "16:00", "16:30"
   ];
+
+  const handleConfirmBooking = () => {
+    toast({
+      title: "Appointment Booked!",
+      description: `Your appointment with ${doctor.name} has been confirmed.`,
+    });
+    onOpenChange(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -82,6 +92,7 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
           <Button 
             className="bg-[#9b87f5] hover:bg-[#7E69AB]"
             disabled={!date || !selectedTime}
+            onClick={handleConfirmBooking}
           >
             Confirm Booking
           </Button>
