@@ -1,5 +1,5 @@
-export function filterAppointmentsByDate(appointments: Array<{ date: string }>, type: "upcoming" | "past"): boolean {
-  const appointmentDate = new Date(appointments.date);
+export function filterAppointmentsByDate(appointment: { date: string }, type: "upcoming" | "past"): boolean {
+  const appointmentDate = new Date(appointment.date);
   const today = new Date();
   
   const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
