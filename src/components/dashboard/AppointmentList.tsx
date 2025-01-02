@@ -4,13 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { AppointmentCard } from "./AppointmentCard";
 import { ShareRecordsDialog } from "./ShareRecordsDialog";
 import { filterAppointmentsByDate } from "@/utils/dateUtils";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { PatientSelector } from "./PatientSelector";
 
 interface Appointment {
   id: string;
@@ -36,7 +30,7 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
   const [showShareDialog, setShowShareDialog] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [selectedPatient, setSelectedPatient] = useState<string>("self");
-  
+
   // This would typically come from your state management system
   const [dependents] = useState<Dependent[]>([
     {
@@ -110,35 +104,27 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
     setSelectedPatient(value);
     toast({
       title: "Patient Selected",
-      description: `Appointment will be booked for ${value === 'self' ? 'yourself' : dependents.find(d => d.id === value)?.name}`,
+      description: `Appointment will be booked for ${
+        value === "self" ? "yourself" : dependents.find((d) => d.id === value)?.name
+      }`,
     });
   };
 
   return (
     <>
       {type === "upcoming" && (
-        <div className="mb-4">
-          <Select value={selectedPatient} onValueChange={handlePatientSelect}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select patient" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="self">Self</SelectItem>
-              {dependents
-                .filter(dep => dep.status === "approved")
-                .map(dependent => (
-                  <SelectItem key={dependent.id} value={dependent.id}>
-                    {dependent.name} ({dependent.relation})
-                  </SelectItem>
-                ))}
-            </SelectContent>
-          </Select>
-        </div>
+        <PatientSelector
+          selectedPatient={selectedPatient}
+          onPatientSelect={handlePatientSelect}
+          dependents={dependents}
+        />
       )}
 
       <Card>
         <CardHeader>
-          <CardTitle>{type === "upcoming" ? "Upcoming Appointments" : "Past Appointments"}</CardTitle>
+          <CardTitle>
+            {type === "upcoming" ? "Upcoming Appointments" : "Past Appointments"}
+          </CardTitle>
         </CardHeader>
         <CardContent>
           {filteredAppointments.length > 0 ? (
