@@ -1,0 +1,81 @@
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Video, MapPin, Star, Clock, IndianRupee } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Doctor } from "@/types/doctor";
+
+interface DoctorCardProps {
+  doctor: Doctor;
+  onBookAppointment: (doctor: Doctor) => void;
+}
+
+export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
+  return (
+    <Card className="hover:shadow-xl transition-shadow duration-300 border-0 bg-white/90 backdrop-blur-sm animate-fade-up">
+      <CardContent className="p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Left section: Doctor info */}
+          <div className="lg:col-span-4 flex flex-col md:flex-row lg:flex-col gap-4">
+            <Avatar className="h-24 w-24">
+              <AvatarImage src={doctor.image} alt={doctor.name} />
+              <AvatarFallback>DR</AvatarFallback>
+            </Avatar>
+            <div className="space-y-2">
+              <h3 className="text-2xl font-bold text-[#1A1F2C]">{doctor.name}</h3>
+              <p className="text-[#8E9196]">{doctor.qualification}</p>
+              <p className="text-[#7E69AB] font-medium">{doctor.specialization}</p>
+              <p className="text-[#8E9196] font-medium">{doctor.experience} experience</p>
+            </div>
+          </div>
+
+          {/* Middle section: Clinic info */}
+          <div className="lg:col-span-4 space-y-4">
+            <div>
+              <h4 className="font-semibold text-[#1A1F2C] mb-2">{doctor.clinicName}</h4>
+              <p className="text-[#8E9196] flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-[#9b87f5]" /> {doctor.location}
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Star className="h-5 w-5 text-yellow-400" />
+              <span className="font-medium">{doctor.rating}</span>
+            </div>
+          </div>
+
+          {/* Right section: Consultation options */}
+          <div className="lg:col-span-4 space-y-4">
+            {doctor.videoConsultation.available && (
+              <div className="flex items-center justify-between p-3 bg-[#9b87f5]/10 rounded-lg">
+                <Badge variant="outline" className="flex items-center gap-2 border-[#9b87f5]">
+                  <Video className="h-4 w-4 text-[#9b87f5]" /> Video Consultation
+                </Badge>
+                <span className="flex items-center text-[#1A1F2C] font-medium">
+                  <IndianRupee className="h-4 w-4" />
+                  {doctor.videoConsultation.charges}
+                </span>
+              </div>
+            )}
+            {doctor.clinicVisit.available && (
+              <div className="flex items-center justify-between p-3 bg-[#7E69AB]/10 rounded-lg">
+                <Badge variant="outline" className="flex items-center gap-2 border-[#7E69AB]">
+                  <Clock className="h-4 w-4 text-[#7E69AB]" /> Clinic Visit
+                </Badge>
+                <span className="flex items-center text-[#1A1F2C] font-medium">
+                  <IndianRupee className="h-4 w-4" />
+                  {doctor.clinicVisit.charges}
+                </span>
+              </div>
+            )}
+            <Button 
+              className="w-full bg-[#9b87f5] hover:bg-[#7E69AB] text-white transition-colors"
+              onClick={() => onBookAppointment(doctor)}
+            >
+              Book Appointment
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
