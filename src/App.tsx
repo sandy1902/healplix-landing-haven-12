@@ -4,6 +4,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Login from "@/pages/Login";
 import Signup from "@/pages/Signup";
 import DoctorSearch from "@/pages/DoctorSearch";
+import HospitalSearch from "@/pages/HospitalSearch";
 import Index from "@/pages/Index";
 import AboutUs from "@/pages/AboutUs";
 import { Navbar } from "./components/Navbar";
@@ -21,6 +22,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/search-doctors" element={<DoctorSearch />} />
+            <Route path="/search-hospitals" element={<HospitalSearch />} />
           </Routes>
         </main>
         <Footer />
