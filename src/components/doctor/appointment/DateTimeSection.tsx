@@ -1,6 +1,5 @@
 import { Calendar } from "@/components/ui/calendar";
-import { Button } from "@/components/ui/button";
-import { format } from "date-fns";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface DateTimeSectionProps {
   date: Date | undefined;
@@ -53,22 +52,18 @@ export function DateTimeSection({
 
       <div className="bg-accent rounded-lg p-3">
         <h3 className="text-lg font-semibold mb-2 text-primary">Select Time</h3>
-        <div className="grid grid-cols-2 gap-2">
-          {timeSlots.map((time) => (
-            <Button
-              key={time}
-              variant={selectedTime === time ? "default" : "outline"}
-              className={`w-full ${
-                selectedTime === time 
-                  ? "bg-[#9b87f5] hover:bg-[#7E69AB]" 
-                  : "hover:bg-[#9b87f5]/10"
-              }`}
-              onClick={() => setSelectedTime(time)}
-            >
-              {time}
-            </Button>
-          ))}
-        </div>
+        <Select value={selectedTime} onValueChange={setSelectedTime}>
+          <SelectTrigger className="w-full bg-white">
+            <SelectValue placeholder="Select a time slot" />
+          </SelectTrigger>
+          <SelectContent>
+            {timeSlots.map((time) => (
+              <SelectItem key={time} value={time}>
+                {time}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );
