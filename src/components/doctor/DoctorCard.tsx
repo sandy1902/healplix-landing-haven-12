@@ -15,30 +15,30 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
     <Card className="hover:shadow-xl transition-shadow duration-300 border-0 bg-white/90 backdrop-blur-sm animate-fade-up">
       <CardContent className="p-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Section 1: Doctor's Personal Information */}
-          <div className="lg:col-span-5">
-            <div className="flex items-start gap-6">
-              <Avatar className="h-24 w-24 rounded-lg">
-                <AvatarImage src={doctor.image} alt={doctor.name} />
-                <AvatarFallback>DR</AvatarFallback>
-              </Avatar>
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold text-[#1A1F2C] mb-2">{doctor.name}</h3>
-                <div className="space-y-1.5">
-                  <p className="text-[#8E9196]">{doctor.qualification}</p>
-                  <p className="text-[#7E69AB] font-medium">{doctor.specialization}</p>
-                  <p className="text-[#8E9196] font-medium">{doctor.experience} experience</p>
-                  <div className="flex items-center gap-1.5">
-                    <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
-                    <span className="font-medium">{doctor.rating}</span>
-                  </div>
-                </div>
+          {/* Section 1: Profile Image */}
+          <div className="lg:col-span-2 flex justify-center">
+            <Avatar className="h-24 w-24 rounded-lg">
+              <AvatarImage src={doctor.image} alt={doctor.name} />
+              <AvatarFallback>DR</AvatarFallback>
+            </Avatar>
+          </div>
+
+          {/* Section 2: Doctor's Details */}
+          <div className="lg:col-span-4">
+            <div className="space-y-2">
+              <h3 className="text-2xl font-bold text-[#1A1F2C]">{doctor.name}</h3>
+              <p className="text-[#8E9196]">{doctor.qualification}</p>
+              <p className="text-[#7E69AB] font-medium">{doctor.specialization}</p>
+              <p className="text-[#8E9196] font-medium">{doctor.experience} experience</p>
+              <div className="flex items-center gap-1.5">
+                <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+                <span className="font-medium">{doctor.rating}</span>
               </div>
             </div>
           </div>
 
-          {/* Section 2: Clinic Information */}
-          <div className="lg:col-span-3 flex items-center">
+          {/* Section 3: Clinic Information */}
+          <div className="lg:col-span-2 flex items-center">
             <div className="w-full p-4 bg-[#F8F9FA] rounded-lg">
               <h4 className="font-semibold text-[#1A1F2C] mb-3">{doctor.clinicName}</h4>
               <p className="text-[#8E9196] flex items-center gap-2">
@@ -48,7 +48,7 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
             </div>
           </div>
 
-          {/* Section 3: Appointment Details */}
+          {/* Section 4: Appointment Details */}
           <div className="lg:col-span-4 flex flex-col justify-center space-y-4">
             {doctor.videoConsultation.available && (
               <div className="flex items-center justify-between p-3 bg-[#9b87f5]/10 rounded-lg">
