@@ -73,31 +73,45 @@ export default function DoctorSchedule() {
   );
 
   return (
-    <Card>
+    <Card className="bg-white shadow-lg">
       <CardHeader>
-        <CardTitle>Schedule & Availability</CardTitle>
+        <CardTitle className="text-2xl font-bold text-primary">Schedule & Availability</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-4">
-            <h3 className="font-semibold">Select Date</h3>
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={(newDate) => newDate && setDate(newDate)}
-              disabled={(date) => date < new Date()}
-              className="rounded-md border"
-            />
+            <h3 className="text-lg font-semibold text-gray-700">Select Date</h3>
+            <div className="p-4 bg-accent rounded-lg">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={(newDate) => newDate && setDate(newDate)}
+                disabled={(date) => date < new Date()}
+                className="rounded-md border"
+              />
+            </div>
           </div>
 
           <div className="space-y-6">
-            <h3 className="font-semibold">Time Slots for {format(date, 'EEEE, MMMM d')}</h3>
+            <h3 className="text-lg font-semibold text-gray-700">
+              Time Slots for {format(date, 'EEEE, MMMM d')}
+            </h3>
             {selectedDayIndex !== -1 && (
-              <div className="space-y-4">
+              <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
                 {schedule[selectedDayIndex].slots.map((slot, slotIndex) => (
-                  <div key={slot.time} className="flex flex-col space-y-2 p-4 border rounded-lg">
+                  <div 
+                    key={slot.time} 
+                    className={`flex flex-col space-y-2 p-4 rounded-lg transition-all duration-300 ${
+                      slot.available 
+                        ? 'bg-white border-2 border-secondary/20 shadow-sm hover:shadow-md' 
+                        : 'bg-gray-50 border border-gray-200'
+                    }`}
+                  >
                     <div className="flex items-center justify-between">
-                      <Label htmlFor={`${schedule[selectedDayIndex].day}-${slot.time}`}>
+                      <Label 
+                        htmlFor={`${schedule[selectedDayIndex].day}-${slot.time}`}
+                        className="text-base font-medium"
+                      >
                         {slot.time}
                       </Label>
                       <Switch
@@ -108,7 +122,7 @@ export default function DoctorSchedule() {
                     </div>
                     
                     {slot.available && (
-                      <div className="flex flex-col space-y-2 mt-2">
+                      <div className="flex flex-col space-y-3 mt-2 pt-3 border-t">
                         <div className="flex items-center space-x-2">
                           <Checkbox
                             id={`video-${slotIndex}`}
@@ -116,8 +130,14 @@ export default function DoctorSchedule() {
                             onCheckedChange={() => 
                               handleToggleAppointmentType(selectedDayIndex, slotIndex, 'videoConsultation')
                             }
+                            className="border-secondary/50"
                           />
-                          <Label htmlFor={`video-${slotIndex}`}>Video Consultation</Label>
+                          <Label 
+                            htmlFor={`video-${slotIndex}`}
+                            className="text-sm text-gray-600"
+                          >
+                            Video Consultation
+                          </Label>
                         </div>
                         <div className="flex items-center space-x-2">
                           <Checkbox
@@ -126,8 +146,14 @@ export default function DoctorSchedule() {
                             onCheckedChange={() => 
                               handleToggleAppointmentType(selectedDayIndex, slotIndex, 'clinicAppointment')
                             }
+                            className="border-secondary/50"
                           />
-                          <Label htmlFor={`clinic-${slotIndex}`}>Clinic Appointment</Label>
+                          <Label 
+                            htmlFor={`clinic-${slotIndex}`}
+                            className="text-sm text-gray-600"
+                          >
+                            Clinic Appointment
+                          </Label>
                         </div>
                       </div>
                     )}
