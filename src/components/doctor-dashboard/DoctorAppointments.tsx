@@ -95,7 +95,8 @@ export default function DoctorAppointments() {
           type: "Consultation Notes",
           description: "Follow-up for respiratory infection. Symptoms improving."
         }
-      ]
+      ],
+      medicalFiles: [] // Added this line to fix the type error
     }
   ];
 
