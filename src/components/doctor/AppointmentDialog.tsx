@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { Doctor } from "@/types/doctor";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { PatientSelector } from "@/components/dashboard/PatientSelector";
 
 interface AppointmentDialogProps {
   doctor: Doctor;
@@ -22,8 +22,8 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
 
   // Example dependents - in a real app, these would come from user data
   const dependents = [
-    { id: "1", name: "John Doe Jr.", relation: "Son" },
-    { id: "2", name: "Mary Doe", relation: "Daughter" },
+    { id: "1", name: "John Doe Jr.", relation: "Son", status: "approved" as const },
+    { id: "2", name: "Mary Doe", relation: "Daughter", status: "approved" as const },
   ];
 
   // Example time slots - in a real app, these would come from an API
@@ -45,48 +45,26 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
           {/* Patient Selection */}
           <div className="bg-accent rounded-lg p-4">
             <h3 className="text-lg font-semibold mb-4 text-primary">Select Patient</h3>
-            <Select value={selectedPatient} onValueChange={setSelectedPatient}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select patient" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="self">Self</SelectItem>
-                {dependents.map((dependent) => (
-                  <SelectItem key={dependent.id} value={dependent.id}>
-                    {dependent.name} ({dependent.relation})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <PatientSelector
+              selectedPatient={selectedPatient}
+              onPatientSelect={setSelectedPatient}
+              dependents={dependents}
+            />
           </div>
 
           {/* Consultation Type */}
           <div className="bg-accent rounded-lg p-4">
             <h3 className="text-lg font-semibold mb-4 text-primary">Consultation Type</h3>
-            <RadioGroup
-              value={consultationType}
-              onValueChange={setConsultationType}
-              className="grid grid-cols-1 md:grid-cols-3 gap-4"
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="clinic" id="clinic" />
-                <Label htmlFor="clinic" className="cursor-pointer">
-                  Clinic Visit (₹{doctor.clinicVisit.charges})
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="video" id="video" />
-                <Label htmlFor="video" className="cursor-pointer">
-                  Video Consultation (₹{doctor.videoConsultation.charges})
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="followup" id="followup" />
-                <Label htmlFor="followup" className="cursor-pointer">
-                  Follow-up Visit (₹500)
-                </Label>
-              </div>
-            </RadioGroup>
+            <Select value={consultationType} onValueChange={setConsultationType}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select consultation type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="clinic">Clinic Visit (₹{doctor.clinicVisit.charges})</SelectItem>
+                <SelectItem value="video">Video Consultation (₹{doctor.videoConsultation.charges})</SelectItem>
+                <SelectItem value="followup">Follow-up Visit (₹500)</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
