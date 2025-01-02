@@ -48,7 +48,7 @@ export function HospitalProfileDialog({
                     <img
                       src={image}
                       alt={`${hospital.name} - Image ${index + 1}`}
-                      className="w-full h-64 object-cover rounded-lg"
+                      className="w-full h-48 object-cover rounded-lg" // Reduced height from h-64 to h-48
                     />
                   </div>
                 </CarouselItem>

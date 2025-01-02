@@ -24,7 +24,7 @@ export function HospitalCard({
           <img
             src={hospital.image}
             alt={hospital.name}
-            className="w-full h-48 object-cover rounded-lg"
+            className="w-full h-36 object-cover rounded-lg" // Reduced height from h-48 to h-36
           />
         </div>
 
