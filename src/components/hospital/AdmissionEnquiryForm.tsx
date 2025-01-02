@@ -64,7 +64,7 @@ export function AdmissionEnquiryForm({
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-6">
             <div className="form-float">
-              <Label className="text-sm font-semibold mb-2 block text-primary">Patient</Label>
+              <Label className="text-sm font-semibold mb-2 block text-primary">Enquiry for</Label>
               <PatientSelector
                 selectedPatient={selectedPatient}
                 onPatientSelect={setSelectedPatient}

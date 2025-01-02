@@ -28,7 +28,7 @@ export function PatientSelector({
     <div className="mb-4">
       <Select value={selectedPatient} onValueChange={onPatientSelect}>
         <SelectTrigger className="w-full border border-gray-200 rounded-lg focus:ring-2 focus:ring-secondary/50 focus:border-secondary">
-          <SelectValue placeholder="Select patient" />
+          <SelectValue placeholder="Select self or dependant" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="self">Self</SelectItem>
