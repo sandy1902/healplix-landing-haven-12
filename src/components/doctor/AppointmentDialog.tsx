@@ -7,6 +7,7 @@ import { ConsultationTypeSection } from "./appointment/ConsultationTypeSection";
 import { DateTimeSection } from "./appointment/DateTimeSection";
 import { AppointmentSummary } from "./appointment/AppointmentSummary";
 import { useToast } from "@/hooks/use-toast";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 
 interface AppointmentDialogProps {
   doctor: Doctor;
@@ -64,60 +65,70 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px] bg-white shadow-2xl border-2 border-secondary/20">
-        <div className="space-y-4">
-          <DialogHeader className="border-b pb-4 mt-4">
-            <DialogTitle className="text-2xl font-bold text-primary bg-gradient-to-r from-secondary/10 to-transparent p-2 rounded-lg">
-              Book Appointment with {doctor.name}
-            </DialogTitle>
-          </DialogHeader>
+        <ResizablePanelGroup direction="vertical" className="min-h-[300px] max-h-[80vh]">
+          <ResizablePanel defaultSize={75}>
+            <div className="space-y-4">
+              <DialogHeader className="border-b pb-4 mt-4">
+                <DialogTitle className="text-2xl font-bold text-primary bg-gradient-to-r from-secondary/10 to-transparent p-2 rounded-lg">
+                  Book Appointment with {doctor.name}
+                </DialogTitle>
+              </DialogHeader>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <PatientSelectionSection
+                  selectedPatient={selectedPatient}
+                  setSelectedPatient={setSelectedPatient}
+                  dependents={dependents}
+                />
+                <ConsultationTypeSection
+                  consultationType={consultationType}
+                  setConsultationType={setConsultationType}
+                  doctor={doctor}
+                />
+              </div>
+
+              <DateTimeSection
+                date={date}
+                setDate={setDate}
+                selectedTime={selectedTime}
+                setSelectedTime={setSelectedTime}
+                timeSlots={timeSlots}
+              />
+            </div>
+          </ResizablePanel>
           
-          <div className="grid grid-cols-2 gap-4">
-            <PatientSelectionSection
-              selectedPatient={selectedPatient}
-              setSelectedPatient={setSelectedPatient}
-              dependents={dependents}
-            />
-            <ConsultationTypeSection
-              consultationType={consultationType}
-              setConsultationType={setConsultationType}
-              doctor={doctor}
-            />
-          </div>
+          <ResizableHandle />
+          
+          <ResizablePanel defaultSize={25}>
+            <div className="p-4">
+              <AppointmentSummary
+                doctor={doctor}
+                selectedPatient={selectedPatient}
+                consultationType={consultationType}
+                date={date}
+                selectedTime={selectedTime}
+                dependents={dependents}
+              />
 
-          <DateTimeSection
-            date={date}
-            setDate={setDate}
-            selectedTime={selectedTime}
-            setSelectedTime={setSelectedTime}
-            timeSlots={timeSlots}
-          />
-
-          <AppointmentSummary
-            doctor={doctor}
-            selectedPatient={selectedPatient}
-            consultationType={consultationType}
-            date={date}
-            selectedTime={selectedTime}
-            dependents={dependents}
-          />
-
-          <div className="flex justify-end space-x-3 border-t pt-2 mt-[-50px]">
-            <Button
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-              className="hover:bg-gray-100"
-            >
-              Cancel
-            </Button>
-            <Button 
-              className="bg-secondary hover:bg-secondary/90 text-white font-semibold shadow-lg"
-              disabled={!date || !selectedTime}
-              onClick={handleConfirmBooking}
-            >
-              Confirm Booking
-            </Button>
-          </div>
-        </div>
+              <div className="flex justify-end space-x-3 border-t pt-2">
+                <Button
+                  variant="outline"
+                  onClick={() => onOpenChange(false)}
+                  className="hover:bg-gray-100"
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  className="bg-secondary hover:bg-secondary/90 text-white font-semibold shadow-lg"
+                  disabled={!date || !selectedTime}
+                  onClick={handleConfirmBooking}
+                >
+                  Confirm Booking
+                </Button>
+              </div>
+            </div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </DialogContent>
     </Dialog>
   );
