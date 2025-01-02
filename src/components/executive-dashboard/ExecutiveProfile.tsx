@@ -5,12 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Camera } from "lucide-react";
+import { Camera, Upload } from "lucide-react";
 
 export default function ExecutiveProfile() {
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [showCamera, setShowCamera] = useState(false);
+  const [stream, setStream] = useState<MediaStream | null>(null);
   const [profile, setProfile] = useState({
     name: "John Executive",
     email: "john@executive.com",
@@ -31,11 +33,79 @@ export default function ExecutiveProfile() {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      if (!file.type.startsWith('image/')) {
+        toast({
+          variant: "destructive",
+          title: "Invalid file type",
+          description: "Please upload an image file.",
+        });
+        return;
+      }
+
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
+        toast({
+          title: "Image Uploaded",
+          description: "Your profile picture has been updated.",
+        });
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const startCamera = async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({ 
+        video: { 
+          facingMode: "user",
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        },
+        audio: false 
+      });
+      setStream(mediaStream);
+      setShowCamera(true);
+      
+      toast({
+        title: "Camera Started",
+        description: "Camera is now active. Click 'Capture' to take a photo.",
+      });
+    } catch (err) {
+      console.error('Camera error:', err);
+      toast({
+        variant: "destructive",
+        title: "Camera Error",
+        description: "Unable to access camera. Please check permissions.",
+      });
+    }
+  };
+
+  const stopCamera = () => {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+    }
+    setShowCamera(false);
+  };
+
+  const capturePhoto = () => {
+    const videoElement = document.querySelector('video');
+    if (videoElement) {
+      const canvas = document.createElement('canvas');
+      canvas.width = videoElement.videoWidth;
+      canvas.height = videoElement.videoHeight;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(videoElement, 0, 0);
+        const imageDataUrl = canvas.toDataURL('image/jpeg');
+        setImagePreview(imageDataUrl);
+        stopCamera();
+        toast({
+          title: "Photo Captured",
+          description: "Your profile picture has been updated with the captured photo.",
+        });
+      }
     }
   };
 
@@ -59,27 +129,56 @@ export default function ExecutiveProfile() {
               <AvatarImage src={imagePreview || "/placeholder.svg"} />
               <AvatarFallback>JE</AvatarFallback>
             </Avatar>
-            {isEditing && (
-              <label
-                htmlFor="avatar-upload"
-                className="absolute bottom-0 right-0 p-1 bg-secondary text-white rounded-full cursor-pointer hover:bg-secondary/90"
+            <div className="absolute -bottom-2 -right-2 flex gap-2">
+              <Button
+                type="button"
+                size="icon"
+                variant="secondary"
+                className="h-8 w-8 rounded-full"
+                onClick={() => document.getElementById('avatar-upload')?.click()}
+              >
+                <Upload className="h-4 w-4" />
+              </Button>
+              <Button
+                type="button"
+                size="icon"
+                variant="secondary"
+                className="h-8 w-8 rounded-full"
+                onClick={showCamera ? stopCamera : startCamera}
               >
                 <Camera className="h-4 w-4" />
-                <input
-                  id="avatar-upload"
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleImageUpload}
-                />
-              </label>
-            )}
+              </Button>
+            </div>
+            <input
+              id="avatar-upload"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageUpload}
+            />
           </div>
           <div>
             <h2 className="text-2xl font-bold">{profile.name}</h2>
             <p className="text-muted-foreground">{profile.position}</p>
           </div>
         </div>
+
+        {showCamera && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+              <video
+                autoPlay
+                playsInline
+                muted
+                className="w-full h-[400px] rounded-lg mb-4 object-cover"
+              />
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={stopCamera}>Cancel</Button>
+                <Button onClick={capturePhoto}>Capture Photo</Button>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
