@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,8 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Camera, Upload } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { MedicalRecordsUpload } from "./MedicalRecordsUpload";
 
 interface AdmissionEnquiryFormProps {
   open: boolean;
@@ -37,67 +37,7 @@ export function AdmissionEnquiryForm({
   const [diagnosis, setDiagnosis] = useState("");
   const [insuranceProvider, setInsuranceProvider] = useState("");
   const [admissionType, setAdmissionType] = useState("");
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [showCamera, setShowCamera] = useState(false);
-  const [stream, setStream] = useState<MediaStream | null>(null);
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-    }
-  };
-
-  const startCamera = async () => {
-    try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: "user" },
-        audio: false 
-      });
-      setStream(mediaStream);
-      setShowCamera(true);
-      
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
-      }
-    } catch (err) {
-      console.error('Camera error:', err);
-      toast({
-        variant: "destructive",
-        title: "Camera Error",
-        description: "Unable to access camera. Please check permissions.",
-      });
-    }
-  };
-
-  const stopCamera = () => {
-    if (stream) {
-      stream.getTracks().forEach(track => track.stop());
-      setStream(null);
-    }
-    setShowCamera(false);
-  };
-
-  const capturePhoto = () => {
-    if (videoRef.current) {
-      const canvas = document.createElement('canvas');
-      canvas.width = videoRef.current.videoWidth;
-      canvas.height = videoRef.current.videoHeight;
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.drawImage(videoRef.current, 0, 0);
-        canvas.toBlob((blob) => {
-          if (blob) {
-            const file = new File([blob], "captured-image.jpg", { type: "image/jpeg" });
-            setSelectedFile(file);
-          }
-        }, 'image/jpeg');
-        stopCamera();
-      }
-    }
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -178,56 +118,8 @@ export function AdmissionEnquiryForm({
               </Select>
             </div>
 
-            <div className="form-float">
-              <Label className="text-sm font-semibold mb-2 block text-primary">Medical Records</Label>
-              <div className="mt-2 space-y-2">
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  className="hidden"
-                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                />
-                <div className="flex gap-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full border border-gray-200 hover:bg-accent/50 transition-colors"
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    <Upload className="h-4 w-4 mr-2" />
-                    {selectedFile ? selectedFile.name : "Upload Medical Records"}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="border border-gray-200 hover:bg-accent/50 transition-colors"
-                    onClick={showCamera ? stopCamera : startCamera}
-                  >
-                    <Camera className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </div>
+            <MedicalRecordsUpload onFileSelect={setSelectedFile} />
           </div>
-
-          {showCamera && (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-              <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
-                <video
-                  ref={videoRef}
-                  autoPlay
-                  playsInline
-                  muted
-                  className="w-full h-[400px] rounded-lg mb-4 object-cover"
-                />
-                <div className="flex justify-end gap-2">
-                  <Button variant="outline" onClick={stopCamera}>Cancel</Button>
-                  <Button onClick={capturePhoto}>Capture Photo</Button>
-                </div>
-              </div>
-            </div>
-          )}
 
           <Button 
             type="submit" 
