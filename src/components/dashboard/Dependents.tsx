@@ -4,6 +4,13 @@ import { Input } from "@/components/ui/input";
 import { UserPlus, X, Check, XCircle } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Dependent {
   id: string;
@@ -52,7 +59,6 @@ export default function Dependents() {
     });
   };
 
-  // This would typically be handled by an admin/doctor
   const handleUpdateStatus = (id: string, newStatus: "approved" | "rejected") => {
     setDependents(dependents.map(dep => 
       dep.id === id ? { ...dep, status: newStatus } : dep
@@ -76,27 +82,33 @@ export default function Dependents() {
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
             />
-            <Input
-              placeholder="Relation"
-              value={newRelation}
-              onChange={(e) => setNewRelation(e.target.value)}
-            />
+            <Select value={newRelation} onValueChange={setNewRelation}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select relation" />
+              </SelectTrigger>
+              <SelectContent className="bg-white">
+                <SelectItem value="spouse">Spouse</SelectItem>
+                <SelectItem value="child">Child</SelectItem>
+                <SelectItem value="mother">Mother</SelectItem>
+                <SelectItem value="father">Father</SelectItem>
+              </SelectContent>
+            </Select>
             <Input
               placeholder="Age"
               type="number"
               value={newAge}
               onChange={(e) => setNewAge(e.target.value)}
             />
-            <select
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              value={newGender}
-              onChange={(e) => setNewGender(e.target.value)}
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
+            <Select value={newGender} onValueChange={setNewGender}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select gender" />
+              </SelectTrigger>
+              <SelectContent className="bg-white">
+                <SelectItem value="male">Male</SelectItem>
+                <SelectItem value="female">Female</SelectItem>
+                <SelectItem value="other">Other</SelectItem>
+              </SelectContent>
+            </Select>
             <Button onClick={handleAddDependent}>
               <UserPlus className="h-4 w-4 mr-2" />
               Add

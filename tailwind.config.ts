@@ -18,6 +18,9 @@ export default {
       },
     },
     extend: {
+      zIndex: {
+        '100': '100',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -34,6 +37,10 @@ export default {
         },
         accent: {
           DEFAULT: "#F8F9FA",
+          foreground: "#1A1F2C",
+        },
+        popover: {
+          DEFAULT: "white",
           foreground: "#1A1F2C",
         },
       },
