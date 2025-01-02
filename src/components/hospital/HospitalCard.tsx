@@ -26,11 +26,11 @@ export function HospitalCard({
         <p className="text-[#8E9196] mb-4">{hospital.location}</p>
         <div className="mb-4">
           <h4 className="font-semibold text-[#1A1F2C] mb-2">Specialities</h4>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-col gap-2">
             {hospital.specialities.map((spec) => (
               <span
                 key={spec}
-                className="px-3 py-1 bg-[#9b87f5]/10 text-[#9b87f5] rounded-full text-sm"
+                className="px-3 py-1 bg-[#9b87f5]/10 text-[#9b87f5] rounded-full text-sm w-fit"
               >
                 {spec}
               </span>
