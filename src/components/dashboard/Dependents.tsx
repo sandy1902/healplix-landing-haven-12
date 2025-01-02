@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { UserPlus, X } from "lucide-react";
+import { UserPlus, X, Check, XCircle } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -11,6 +11,7 @@ interface Dependent {
   relation: string;
   age: string;
   gender: string;
+  status: "pending" | "approved" | "rejected";
 }
 
 export default function Dependents() {
@@ -29,6 +30,7 @@ export default function Dependents() {
         relation: newRelation,
         age: newAge,
         gender: newGender,
+        status: "pending"
       };
       setDependents([...dependents, newDependent]);
       setNewName("");
@@ -37,7 +39,7 @@ export default function Dependents() {
       setNewGender("");
       toast({
         title: "Dependent Added",
-        description: "New dependent has been successfully added.",
+        description: "New dependent has been added and is pending approval.",
       });
     }
   };
@@ -47,6 +49,17 @@ export default function Dependents() {
     toast({
       title: "Dependent Removed",
       description: "Dependent has been successfully removed.",
+    });
+  };
+
+  // This would typically be handled by an admin/doctor
+  const handleUpdateStatus = (id: string, newStatus: "approved" | "rejected") => {
+    setDependents(dependents.map(dep => 
+      dep.id === id ? { ...dep, status: newStatus } : dep
+    ));
+    toast({
+      title: `Dependent ${newStatus === 'approved' ? 'Approved' : 'Rejected'}`,
+      description: `The dependent has been ${newStatus}.`,
     });
   };
 
@@ -99,15 +112,44 @@ export default function Dependents() {
                   <p className="font-medium">{dependent.name}</p>
                   <div className="text-sm text-gray-500">
                     <p>{dependent.relation} • {dependent.age} years • {dependent.gender}</p>
+                    <p className={`mt-1 ${
+                      dependent.status === 'approved' ? 'text-green-500' : 
+                      dependent.status === 'rejected' ? 'text-red-500' : 
+                      'text-yellow-500'
+                    }`}>
+                      Status: {dependent.status.charAt(0).toUpperCase() + dependent.status.slice(1)}
+                    </p>
                   </div>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => handleRemoveDependent(dependent.id)}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+                <div className="flex gap-2">
+                  {dependent.status === 'pending' && (
+                    <>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleUpdateStatus(dependent.id, 'approved')}
+                        className="text-green-500"
+                      >
+                        <Check className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleUpdateStatus(dependent.id, 'rejected')}
+                        className="text-red-500"
+                      >
+                        <XCircle className="h-4 w-4" />
+                      </Button>
+                    </>
+                  )}
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleRemoveDependent(dependent.id)}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
             ))}
           </div>

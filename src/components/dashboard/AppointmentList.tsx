@@ -4,6 +4,13 @@ import { useToast } from "@/hooks/use-toast";
 import { AppointmentCard } from "./AppointmentCard";
 import { ShareRecordsDialog } from "./ShareRecordsDialog";
 import { filterAppointmentsByDate } from "@/utils/dateUtils";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Appointment {
   id: string;
@@ -12,13 +19,36 @@ interface Appointment {
   date: string;
   time: string;
   location: string;
+  forWhom?: string;
+}
+
+interface Dependent {
+  id: string;
+  name: string;
+  relation: string;
+  age: string;
+  gender: string;
+  status: "pending" | "approved" | "rejected";
 }
 
 export default function AppointmentList({ type }: { type: "upcoming" | "past" }) {
   const { toast } = useToast();
   const [showShareDialog, setShowShareDialog] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+  const [selectedPatient, setSelectedPatient] = useState<string>("self");
   
+  // This would typically come from your state management system
+  const [dependents] = useState<Dependent[]>([
+    {
+      id: "1",
+      name: "John Doe Jr",
+      relation: "Son",
+      age: "10",
+      gender: "male",
+      status: "approved"
+    }
+  ]);
+
   const [appointments] = useState<Appointment[]>([
     {
       id: "1",
@@ -26,7 +56,8 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
       specialty: "Cardiologist",
       date: "2025-05-25",
       time: "10:00 AM",
-      location: "Medical Center, Room 302"
+      location: "Medical Center, Room 302",
+      forWhom: "self"
     },
     {
       id: "2",
@@ -54,7 +85,6 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
     }
   ]);
 
-  // Add console.log to debug filtering
   const filteredAppointments = appointments.filter(appointment => {
     const isFiltered = filterAppointmentsByDate(appointment, type);
     console.log(`Filtering appointment ${appointment.id}:`, isFiltered);
@@ -76,8 +106,36 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
     }
   };
 
+  const handlePatientSelect = (value: string) => {
+    setSelectedPatient(value);
+    toast({
+      title: "Patient Selected",
+      description: `Appointment will be booked for ${value === 'self' ? 'yourself' : dependents.find(d => d.id === value)?.name}`,
+    });
+  };
+
   return (
     <>
+      {type === "upcoming" && (
+        <div className="mb-4">
+          <Select value={selectedPatient} onValueChange={handlePatientSelect}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select patient" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="self">Self</SelectItem>
+              {dependents
+                .filter(dep => dep.status === "approved")
+                .map(dependent => (
+                  <SelectItem key={dependent.id} value={dependent.id}>
+                    {dependent.name} ({dependent.relation})
+                  </SelectItem>
+                ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
       <Card>
         <CardHeader>
           <CardTitle>{type === "upcoming" ? "Upcoming Appointments" : "Past Appointments"}</CardTitle>
