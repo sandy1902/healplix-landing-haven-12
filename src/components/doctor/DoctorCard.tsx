@@ -16,15 +16,15 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
       <CardContent className="p-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
           {/* Section 1: Profile Image */}
-          <div className="lg:col-span-2 flex justify-center">
-            <Avatar className="h-24 w-24 rounded-lg">
+          <div className="lg:col-span-1 flex justify-center">
+            <Avatar className="h-20 w-20 rounded-lg">
               <AvatarImage src={doctor.image} alt={doctor.name} />
               <AvatarFallback>DR</AvatarFallback>
             </Avatar>
           </div>
 
           {/* Section 2: Doctor's Details */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-5">
             <div className="space-y-2">
               <h3 className="text-2xl font-bold text-[#1A1F2C]">{doctor.name}</h3>
               <p className="text-[#8E9196]">{doctor.qualification}</p>
