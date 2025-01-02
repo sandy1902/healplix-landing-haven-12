@@ -34,8 +34,8 @@ export function AppointmentCard({ appointment, type, onShare }: AppointmentCardP
       {type === "upcoming" && (
         <div className="mt-4 md:mt-0 flex flex-col md:flex-row gap-2">
           <Button 
-            variant="default"
-            className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto"
+            variant="secondary"
+            className="w-full md:w-auto"
             onClick={() => onShare(appointment)}
           >
             <Share2 className="h-4 w-4 mr-2" />
