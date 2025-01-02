@@ -7,8 +7,8 @@ export function filterAppointmentsByDate(appointment: { date: string }, type: "u
   appointmentDate.setHours(0, 0, 0, 0);
   
   if (type === "upcoming") {
-    return appointmentDate.getTime() >= today.getTime();
+    return appointmentDate >= today;
   } else {
-    return appointmentDate.getTime() < today.getTime();
+    return appointmentDate < today;
   }
 }
