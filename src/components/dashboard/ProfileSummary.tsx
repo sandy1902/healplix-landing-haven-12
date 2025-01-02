@@ -13,6 +13,16 @@ export default function ProfileSummary() {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      // Check if the file is an image
+      if (!file.type.startsWith('image/')) {
+        toast({
+          variant: "destructive",
+          title: "Invalid file type",
+          description: "Please upload an image file.",
+        });
+        return;
+      }
+
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
@@ -38,18 +48,18 @@ export default function ProfileSummary() {
   };
 
   return (
-    <div className="flex items-center gap-4 py-6">
+    <div className="flex flex-col md:flex-row items-center gap-6 p-8 bg-white rounded-lg shadow-lg animate-fade-up">
       <div className="relative">
-        <Avatar className="h-20 w-20">
-          <AvatarImage src={imagePreview || "/placeholder.svg"} />
-          <AvatarFallback>UN</AvatarFallback>
+        <Avatar className="h-32 w-32 border-4 border-secondary/20">
+          <AvatarImage src={imagePreview || "/placeholder.svg"} className="object-cover" />
+          <AvatarFallback className="bg-secondary/10 text-secondary text-2xl">UN</AvatarFallback>
         </Avatar>
-        <div className="absolute -bottom-2 -right-2 flex gap-2">
+        <div className="absolute -bottom-3 -right-3 flex gap-2">
           <Button
             type="button"
             size="icon"
             variant="secondary"
-            className="h-8 w-8 rounded-full"
+            className="h-8 w-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
             onClick={handleUploadClick}
           >
             <Upload className="h-4 w-4" />
@@ -58,7 +68,7 @@ export default function ProfileSummary() {
             type="button"
             size="icon"
             variant="secondary"
-            className="h-8 w-8 rounded-full"
+            className="h-8 w-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
             onClick={handleCameraClick}
           >
             <Camera className="h-4 w-4" />
@@ -80,9 +90,9 @@ export default function ProfileSummary() {
           onChange={handleImageUpload}
         />
       </div>
-      <div>
-        <h1 className="text-2xl font-bold">Welcome, User Name</h1>
-        <p className="text-gray-500">user@example.com</p>
+      <div className="text-center md:text-left">
+        <h1 className="text-3xl font-bold text-primary">Welcome, User Name</h1>
+        <p className="text-gray-500 mt-1">user@example.com</p>
       </div>
     </div>
   );

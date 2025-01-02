@@ -25,82 +25,82 @@ export default function UserDashboard() {
 
   return (
     <div className="min-h-screen bg-accent">
-      <div className="container mx-auto py-8 px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {/* Profile Summary */}
-          <Card className="md:col-span-4">
-            <CardContent>
-              <ProfileSummary />
-            </CardContent>
-          </Card>
+      <div className="container mx-auto py-8 px-4 space-y-6">
+        {/* Profile Summary */}
+        <Card className="border-none shadow-lg">
+          <CardContent className="p-0">
+            <ProfileSummary />
+          </CardContent>
+        </Card>
 
-          {/* Quick Stats */}
-          <div className="md:col-span-4">
-            <QuickStats />
-          </div>
+        {/* Quick Stats */}
+        <div className="animate-fade-up" style={{ animationDelay: "100ms" }}>
+          <QuickStats />
+        </div>
 
-          {/* Main Content */}
-          <div className="md:col-span-4">
-            <Tabs defaultValue="appointments" className="w-full">
-              <TabsList className="w-full justify-start overflow-x-auto">
-                <TabsTrigger value="appointments" className="flex items-center gap-2">
-                  <Clock className="h-4 w-4" />
-                  Appointments
-                </TabsTrigger>
-                <TabsTrigger value="history" className="flex items-center gap-2">
-                  <History className="h-4 w-4" />
-                  History
-                </TabsTrigger>
-                <TabsTrigger value="records" className="flex items-center gap-2">
-                  <FileText className="h-4 w-4" />
-                  Medical Records
-                </TabsTrigger>
-                <TabsTrigger value="dependents" className="flex items-center gap-2">
-                  <Users className="h-4 w-4" />
-                  Dependents
-                </TabsTrigger>
-                <TabsTrigger value="favorites" className="flex items-center gap-2">
-                  <Heart className="h-4 w-4" />
-                  Favorites
-                </TabsTrigger>
-                <TabsTrigger value="profile" className="flex items-center gap-2">
-                  <UserCog className="h-4 w-4" />
-                  Profile Settings
-                </TabsTrigger>
-              </TabsList>
+        {/* Main Content */}
+        <div className="animate-fade-up" style={{ animationDelay: "200ms" }}>
+          <Tabs defaultValue="appointments" className="w-full">
+            <TabsList className="w-full justify-start overflow-x-auto bg-white p-2 rounded-lg mb-4">
+              <TabsTrigger value="appointments" className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white">
+                <Clock className="h-4 w-4" />
+                Appointments
+              </TabsTrigger>
+              <TabsTrigger value="history" className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white">
+                <History className="h-4 w-4" />
+                History
+              </TabsTrigger>
+              <TabsTrigger value="records" className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white">
+                <FileText className="h-4 w-4" />
+                Medical Records
+              </TabsTrigger>
+              <TabsTrigger value="dependents" className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white">
+                <Users className="h-4 w-4" />
+                Dependents
+              </TabsTrigger>
+              <TabsTrigger value="favorites" className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white">
+                <Heart className="h-4 w-4" />
+                Favorites
+              </TabsTrigger>
+              <TabsTrigger value="profile" className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white">
+                <UserCog className="h-4 w-4" />
+                Profile Settings
+              </TabsTrigger>
+            </TabsList>
 
-              <TabsContent value="appointments">
+            <div className="bg-white rounded-lg p-6 shadow-lg">
+              <TabsContent value="appointments" className="mt-0">
                 <AppointmentList type="upcoming" />
               </TabsContent>
 
-              <TabsContent value="history">
+              <TabsContent value="history" className="mt-0">
                 <AppointmentList type="past" />
               </TabsContent>
 
-              <TabsContent value="records">
+              <TabsContent value="records" className="mt-0">
                 <MedicalRecords />
               </TabsContent>
 
-              <TabsContent value="dependents">
+              <TabsContent value="dependents" className="mt-0">
                 <Dependents />
               </TabsContent>
 
-              <TabsContent value="favorites">
+              <TabsContent value="favorites" className="mt-0">
                 <Favorites />
               </TabsContent>
 
-              <TabsContent value="profile">
-                <Card>
-                  <CardHeader>
+              <TabsContent value="profile" className="mt-0">
+                <Card className="border-none shadow-none">
+                  <CardHeader className="px-0 pt-0">
                     <CardTitle>Profile Settings</CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="px-0">
                     <ProfileForm />
                   </CardContent>
                 </Card>
               </TabsContent>
-            </Tabs>
-          </div>
+            </div>
+          </Tabs>
         </div>
       </div>
     </div>
