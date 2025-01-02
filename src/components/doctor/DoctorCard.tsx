@@ -13,11 +13,11 @@ interface DoctorCardProps {
 export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
   return (
     <Card className="hover:shadow-xl transition-shadow duration-300 border-0 bg-white/90 backdrop-blur-sm animate-fade-up">
-      <CardContent className="p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
+      <CardContent className="p-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
           {/* Section 1: Profile Image */}
-          <div className="lg:col-span-1 flex justify-center">
-            <Avatar className="h-20 w-20 rounded-lg">
+          <div className="lg:col-span-1 flex justify-center items-start pt-1">
+            <Avatar className="h-24 w-24 rounded-lg">
               <AvatarImage src={doctor.image} alt={doctor.name} />
               <AvatarFallback>DR</AvatarFallback>
             </Avatar>
