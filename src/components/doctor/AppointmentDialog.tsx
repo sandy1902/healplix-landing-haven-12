@@ -37,6 +37,9 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
     toast({
       title: "Appointment Booked!",
       description: `Your appointment with ${doctor.name} has been confirmed.`,
+      variant: "default",
+      duration: 5000,
+      className: "bg-secondary text-white border-none",
     });
     onOpenChange(false);
   };
