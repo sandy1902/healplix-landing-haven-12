@@ -21,10 +21,29 @@ interface DaySchedule {
 
 export default function DoctorSchedule() {
   const { toast } = useToast();
-  const defaultSlots = [
-    "9:00 AM", "10:00 AM", "11:00 AM",
-    "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"
-  ];
+  
+  // Generate time slots from 10:30 AM to 6:00 PM with 15-minute intervals
+  const generateTimeSlots = () => {
+    const slots = [];
+    let hour = 10;
+    let minute = 30;
+    
+    while (hour < 18 || (hour === 18 && minute === 0)) {
+      const period = hour >= 12 ? 'PM' : 'AM';
+      const displayHour = hour > 12 ? hour - 12 : hour;
+      const timeString = `${displayHour}:${minute.toString().padStart(2, '0')} ${period}`;
+      slots.push(timeString);
+      
+      minute += 15;
+      if (minute >= 60) {
+        minute = 0;
+        hour += 1;
+      }
+    }
+    return slots;
+  };
+
+  const defaultSlots = generateTimeSlots();
   
   const [date, setDate] = useState<Date>(new Date());
   const [schedule, setSchedule] = useState<DaySchedule[]>(
