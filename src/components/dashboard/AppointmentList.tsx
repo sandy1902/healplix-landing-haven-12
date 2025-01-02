@@ -1,9 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Calendar, Clock, MapPin, Share2 } from "lucide-react";
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { AppointmentCard } from "./AppointmentCard";
+import { ShareRecordsDialog } from "./ShareRecordsDialog";
+import { filterAppointmentsByDate } from "@/utils/dateUtils";
 
 interface Appointment {
   id: string;
@@ -54,20 +54,9 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
     }
   ]);
 
-  const filteredAppointments = appointments.filter(appointment => {
-    const appointmentDate = new Date(appointment.date);
-    const today = new Date();
-    
-    // Reset time part for accurate date comparison
-    const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    const appointmentStart = new Date(appointmentDate.getFullYear(), appointmentDate.getMonth(), appointmentDate.getDate());
-    
-    if (type === "upcoming") {
-      return appointmentStart >= todayStart;
-    } else {
-      return appointmentStart < todayStart;
-    }
-  });
+  const filteredAppointments = appointments.filter(appointment => 
+    filterAppointmentsByDate(appointment, type)
+  );
 
   const handleShareRecords = (appointment: Appointment) => {
     setSelectedAppointment(appointment);
@@ -94,38 +83,12 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
           {filteredAppointments.length > 0 ? (
             <div className="space-y-4">
               {filteredAppointments.map((appointment) => (
-                <div
+                <AppointmentCard
                   key={appointment.id}
-                  className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border rounded-lg hover:bg-accent transition-colors"
-                >
-                  <div className="space-y-2">
-                    <h3 className="font-semibold">{appointment.doctorName}</h3>
-                    <p className="text-sm text-gray-500">{appointment.specialty}</p>
-                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                      <Calendar className="h-4 w-4" />
-                      {appointment.date}
-                      <Clock className="h-4 w-4 ml-2" />
-                      {appointment.time}
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                      <MapPin className="h-4 w-4" />
-                      {appointment.location}
-                    </div>
-                  </div>
-                  {type === "upcoming" && (
-                    <div className="mt-4 md:mt-0 space-x-2">
-                      <Button 
-                        variant="secondary"
-                        onClick={() => handleShareRecords(appointment)}
-                      >
-                        <Share2 className="h-4 w-4 mr-2" />
-                        Share Records
-                      </Button>
-                      <Button variant="outline">Reschedule</Button>
-                      <Button variant="destructive">Cancel</Button>
-                    </div>
-                  )}
-                </div>
+                  appointment={appointment}
+                  type={type}
+                  onShare={handleShareRecords}
+                />
               ))}
             </div>
           ) : (
@@ -134,27 +97,12 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
         </CardContent>
       </Card>
 
-      <Dialog open={showShareDialog} onOpenChange={setShowShareDialog}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Share Medical Records</DialogTitle>
-          </DialogHeader>
-          <div className="p-4">
-            <p className="text-gray-600 mb-4">
-              Are you sure you want to share your medical records with {selectedAppointment?.doctorName}? 
-              They will only have access during your consultation.
-            </p>
-            <div className="flex justify-end space-x-2">
-              <Button variant="outline" onClick={() => setShowShareDialog(false)}>
-                Cancel
-              </Button>
-              <Button onClick={handleConfirmShare}>
-                Share Records
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <ShareRecordsDialog
+        open={showShareDialog}
+        onOpenChange={setShowShareDialog}
+        doctorName={selectedAppointment?.doctorName}
+        onConfirm={handleConfirmShare}
+      />
     </>
   );
 }
