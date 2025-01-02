@@ -68,96 +68,98 @@ export default function DoctorSearch() {
   });
 
   return (
-    <ResizablePanelGroup
-      direction="vertical"
-      className="min-h-screen bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10"
-    >
-      <ResizablePanel defaultSize={85}>
-        <div className="container mx-auto py-12 px-4">
-          <Card className="mb-8 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-            <CardHeader className="text-center">
-              <CardTitle className="text-3xl font-bold text-[#1A1F2C]">Find a Doctor</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <Input
-                    placeholder="Search by location..."
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20"
-                  />
+    <>
+      <ResizablePanelGroup
+        direction="vertical"
+        className="min-h-screen bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10"
+      >
+        <ResizablePanel defaultSize={85}>
+          <div className="container mx-auto py-12 px-4">
+            <Card className="mb-8 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+              <CardHeader className="text-center">
+                <CardTitle className="text-3xl font-bold text-[#1A1F2C]">Find a Doctor</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <Input
+                      placeholder="Search by location..."
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20"
+                    />
+                  </div>
+                  <div>
+                    <Select value={speciality} onValueChange={setSpeciality}>
+                      <SelectTrigger className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20">
+                        <SelectValue placeholder="Select Speciality" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="cardiologist">Cardiologist</SelectItem>
+                        <SelectItem value="dermatologist">Dermatologist</SelectItem>
+                        <SelectItem value="neurologist">Neurologist</SelectItem>
+                        <SelectItem value="orthopedist">Orthopedist</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
-                <div>
-                  <Select value={speciality} onValueChange={setSpeciality}>
-                    <SelectTrigger className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20">
-                      <SelectValue placeholder="Select Speciality" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="cardiologist">Cardiologist</SelectItem>
-                      <SelectItem value="dermatologist">Dermatologist</SelectItem>
-                      <SelectItem value="neurologist">Neurologist</SelectItem>
-                      <SelectItem value="orthopedist">Orthopedist</SelectItem>
-                    </SelectContent>
-                  </Select>
+              </CardContent>
+            </Card>
+
+            <Card className="mb-8 border-0 bg-white/80 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+              <CardContent className="p-8">
+                <div className="text-center space-y-4">
+                  <h2 className="text-2xl font-semibold text-primary bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] bg-clip-text text-transparent">
+                    Welcome to Healplix
+                  </h2>
+                  <div className="w-24 h-1 bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mx-auto rounded-full"></div>
+                  <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed text-lg">
+                    Healplix connects you with the best healthcare professionals in your area. Our platform makes it easy to find specialists, book appointments, and manage your healthcare journey. Whether you need a routine check-up or specialized care, we're here to help you find the right doctor.
+                  </p>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
 
-          <Card className="mb-8 border-0 bg-white/80 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
-            <CardContent className="p-8">
-              <div className="text-center space-y-4">
-                <h2 className="text-2xl font-semibold text-primary bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] bg-clip-text text-transparent">
-                  Welcome to Healplix
-                </h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mx-auto rounded-full"></div>
-                <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed text-lg">
-                  Healplix connects you with the best healthcare professionals in your area. Our platform makes it easy to find specialists, book appointments, and manage your healthcare journey. Whether you need a routine check-up or specialized care, we're here to help you find the right doctor.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+            <div className="space-y-6">
+              {filteredDoctors.map((doctor) => (
+                <DoctorCard
+                  key={doctor.id}
+                  doctor={doctor}
+                  onBookAppointment={handleBookAppointment}
+                />
+              ))}
 
-          <div className="space-y-6">
-            {filteredDoctors.map((doctor) => (
-              <DoctorCard
-                key={doctor.id}
-                doctor={doctor}
-                onBookAppointment={handleBookAppointment}
-              />
-            ))}
-
-            {filteredDoctors.length === 0 && (
-              <Card className="border-0 bg-white/90 backdrop-blur-sm">
-                <CardContent className="p-8 text-center text-[#8E9196]">
-                  No doctors found matching your criteria
-                </CardContent>
-              </Card>
-            )}
+              {filteredDoctors.length === 0 && (
+                <Card className="border-0 bg-white/90 backdrop-blur-sm">
+                  <CardContent className="p-8 text-center text-[#8E9196]">
+                    No doctors found matching your criteria
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           </div>
-        </div>
-      </ResizablePanel>
-      <ResizableHandle withHandle />
-      <ResizablePanel defaultSize={15}>
-        <div className="bg-white/50 backdrop-blur-sm p-4 h-full">
-          <h3 className="text-lg font-semibold mb-2">Quick Tips</h3>
-          <ul className="list-disc list-inside space-y-2 text-gray-600">
-            <li>Use the search bar to find doctors in your area</li>
-            <li>Filter by speciality to narrow down your search</li>
-            <li>Check doctor profiles for detailed information</li>
-            <li>Book appointments directly through the platform</li>
-          </ul>
-        </div>
-      </ResizablePanel>
-    </ResizablePanelGroup>
-  );
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={15}>
+          <div className="bg-white/50 backdrop-blur-sm p-4 h-full">
+            <h3 className="text-lg font-semibold mb-2">Quick Tips</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-600">
+              <li>Use the search bar to find doctors in your area</li>
+              <li>Filter by speciality to narrow down your search</li>
+              <li>Check doctor profiles for detailed information</li>
+              <li>Book appointments directly through the platform</li>
+            </ul>
+          </div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
 
-  {selectedDoctor && (
-    <AppointmentDialog
-      doctor={selectedDoctor}
-      open={isDialogOpen}
-      onOpenChange={setIsDialogOpen}
-    />
-  )}
+      {selectedDoctor && (
+        <AppointmentDialog
+          doctor={selectedDoctor}
+          open={isDialogOpen}
+          onOpenChange={setIsDialogOpen}
+        />
+      )}
+    </>
+  );
 }
