@@ -51,7 +51,7 @@ export function HospitalCard({
           variant="outline"
           className="bg-white border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10 w-full"
         >
-          View Profile
+          View Hospital Profile
         </Button>
         <Button 
           onClick={() => onRequestCallback(hospital)}
