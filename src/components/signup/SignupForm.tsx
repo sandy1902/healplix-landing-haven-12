@@ -67,7 +67,7 @@ export function SignupForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className="text-white text-base font-medium mb-1">Email</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="Enter your email" 
@@ -75,7 +75,7 @@ export function SignupForm() {
                   className="bg-white/5 backdrop-blur-sm border-gray-700"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-300" />
             </FormItem>
           )}
         />
@@ -85,7 +85,7 @@ export function SignupForm() {
           name="phoneNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone Number</FormLabel>
+              <FormLabel className="text-white text-base font-medium mb-1">Phone Number</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="Enter your phone number" 
@@ -93,7 +93,7 @@ export function SignupForm() {
                   className="bg-white/5 backdrop-blur-sm border-gray-700"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-300" />
             </FormItem>
           )}
         />
@@ -103,7 +103,7 @@ export function SignupForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel className="text-white text-base font-medium mb-1">Password</FormLabel>
               <FormControl>
                 <div className="relative">
                   <Input
@@ -127,7 +127,7 @@ export function SignupForm() {
                   </Button>
                 </div>
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-300" />
             </FormItem>
           )}
         />
@@ -137,7 +137,7 @@ export function SignupForm() {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
+              <FormLabel className="text-white text-base font-medium mb-1">Confirm Password</FormLabel>
               <FormControl>
                 <div className="relative">
                   <Input
@@ -161,7 +161,7 @@ export function SignupForm() {
                   </Button>
                 </div>
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-300" />
             </FormItem>
           )}
         />

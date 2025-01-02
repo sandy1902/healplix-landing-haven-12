@@ -19,34 +19,34 @@ export function RoleSelector({ control }: RoleSelectorProps) {
       name="role"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Role</FormLabel>
+          <FormLabel className="text-white text-base font-medium mb-1">Role</FormLabel>
           <FormControl>
             <RadioGroup
               onValueChange={field.onChange}
               defaultValue={field.value}
-              className="flex flex-col space-y-1"
+              className="flex flex-col space-y-2"
             >
               <FormItem className="flex items-center space-x-3 space-y-0">
                 <FormControl>
                   <RadioGroupItem value="user" />
                 </FormControl>
-                <FormLabel className="font-normal">User</FormLabel>
+                <FormLabel className="font-normal text-white">User</FormLabel>
               </FormItem>
               <FormItem className="flex items-center space-x-3 space-y-0">
                 <FormControl>
                   <RadioGroupItem value="doctor" />
                 </FormControl>
-                <FormLabel className="font-normal">Doctor</FormLabel>
+                <FormLabel className="font-normal text-white">Doctor</FormLabel>
               </FormItem>
               <FormItem className="flex items-center space-x-3 space-y-0">
                 <FormControl>
                   <RadioGroupItem value="executive" />
                 </FormControl>
-                <FormLabel className="font-normal">Executive</FormLabel>
+                <FormLabel className="font-normal text-white">Executive</FormLabel>
               </FormItem>
             </RadioGroup>
           </FormControl>
-          <FormMessage />
+          <FormMessage className="text-red-300" />
         </FormItem>
       )}
     />
