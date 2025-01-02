@@ -6,10 +6,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { Video, MapPin, Star, Clock, IndianRupee } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface Doctor {
   id: string;
   name: string;
+  image: string;
   qualification: string;
   specialization: string;
   experience: string;
@@ -35,6 +37,7 @@ export default function DoctorSearch() {
     {
       id: "1",
       name: "Dr. Sarah Wilson",
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
       qualification: "MBBS, MD - Cardiology",
       specialization: "Cardiologist",
       experience: "15 years",
@@ -53,6 +56,7 @@ export default function DoctorSearch() {
     {
       id: "2",
       name: "Dr. Michael Chen",
+      image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952",
       qualification: "MBBS, MD - Dermatology",
       specialization: "Dermatologist",
       experience: "12 years",
@@ -121,12 +125,18 @@ export default function DoctorSearch() {
           {filteredDoctors.map((doctor) => (
             <Card key={doctor.id} className="hover:shadow-xl transition-shadow duration-300 border-0 bg-white/90 backdrop-blur-sm animate-fade-up">
               <CardContent className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <div className="space-y-3">
-                    <h3 className="text-2xl font-bold text-[#1A1F2C]">{doctor.name}</h3>
-                    <p className="text-[#8E9196]">{doctor.qualification}</p>
-                    <p className="text-[#7E69AB] font-medium">{doctor.specialization}</p>
-                    <p className="text-[#8E9196] font-medium">{doctor.experience} experience</p>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                  <div className="flex items-start space-x-4">
+                    <Avatar className="h-24 w-24">
+                      <AvatarImage src={doctor.image} alt={doctor.name} />
+                      <AvatarFallback>DR</AvatarFallback>
+                    </Avatar>
+                    <div className="space-y-3">
+                      <h3 className="text-2xl font-bold text-[#1A1F2C]">{doctor.name}</h3>
+                      <p className="text-[#8E9196]">{doctor.qualification}</p>
+                      <p className="text-[#7E69AB] font-medium">{doctor.specialization}</p>
+                      <p className="text-[#8E9196] font-medium">{doctor.experience} experience</p>
+                    </div>
                   </div>
 
                   <div className="space-y-3">
@@ -165,8 +175,11 @@ export default function DoctorSearch() {
                         </div>
                       )}
                     </div>
+                  </div>
+
+                  <div className="flex items-center justify-end">
                     <Button 
-                      className="w-full bg-[#9b87f5] hover:bg-[#7E69AB] text-white transition-colors"
+                      className="w-full md:w-auto bg-[#9b87f5] hover:bg-[#7E69AB] text-white transition-colors"
                       onClick={() => handleBookAppointment(doctor)}
                     >
                       Book Appointment
