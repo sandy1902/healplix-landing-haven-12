@@ -26,8 +26,8 @@ export function CameraCapture({ onPhotoCapture, onClose }: CameraCaptureProps) {
       const mediaStream = await navigator.mediaDevices.getUserMedia({ 
         video: { 
           facingMode: "user",
-          width: { ideal: 1280 },
-          height: { ideal: 720 }
+          width: { ideal: 640 },
+          height: { ideal: 480 }
         },
         audio: false 
       });
@@ -69,14 +69,14 @@ export function CameraCapture({ onPhotoCapture, onClose }: CameraCaptureProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-100">
-      <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-white p-4 rounded-lg shadow-xl max-w-xs w-full">
         <video
           ref={videoRef}
           autoPlay
           playsInline
           muted
-          className="w-full h-[400px] rounded-lg mb-4 object-cover"
+          className="w-full h-[240px] rounded-lg mb-4 object-cover"
         />
         <div className="flex justify-end gap-2">
           <Button variant="outline" onClick={onClose}>Cancel</Button>
