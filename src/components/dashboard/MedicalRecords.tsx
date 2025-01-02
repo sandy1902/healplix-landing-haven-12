@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileText, Upload } from "lucide-react";
+import { FileText, Upload, Camera } from "lucide-react";
 import { useState, useRef } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -15,6 +15,9 @@ interface MedicalRecord {
 export default function MedicalRecords() {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [showCamera, setShowCamera] = useState(false);
+  const [stream, setStream] = useState<MediaStream | null>(null);
   const [records, setRecords] = useState<MedicalRecord[]>([
     {
       id: "1",
@@ -61,6 +64,79 @@ export default function MedicalRecords() {
     }
   };
 
+  const startCamera = async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({ 
+        video: { 
+          facingMode: "user",
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        },
+        audio: false 
+      });
+      
+      if (videoRef.current) {
+        videoRef.current.srcObject = mediaStream;
+      }
+      setStream(mediaStream);
+      setShowCamera(true);
+      
+      toast({
+        title: "Camera Started",
+        description: "Camera is now active. Click 'Capture' to take a photo.",
+      });
+    } catch (err) {
+      console.error('Camera error:', err);
+      toast({
+        variant: "destructive",
+        title: "Camera Error",
+        description: "Unable to access camera. Please check permissions.",
+      });
+    }
+  };
+
+  const stopCamera = () => {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+    }
+    setShowCamera(false);
+  };
+
+  const capturePhoto = () => {
+    if (videoRef.current) {
+      const canvas = document.createElement('canvas');
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(videoRef.current, 0, 0);
+        const imageDataUrl = canvas.toDataURL('image/jpeg');
+        
+        // Convert base64 to blob
+        fetch(imageDataUrl)
+          .then(res => res.blob())
+          .then(blob => {
+            const file = new File([blob], `captured-image-${Date.now()}.jpg`, { type: 'image/jpeg' });
+            const newRecord: MedicalRecord = {
+              id: Date.now().toString(),
+              name: file.name,
+              date: new Date().toISOString().split('T')[0],
+              type: 'JPG',
+              size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`
+            };
+            
+            setRecords([...records, newRecord]);
+            stopCamera();
+            toast({
+              title: "Photo Captured",
+              description: "Your medical record has been captured successfully.",
+            });
+          });
+      }
+    }
+  };
+
   const handleDownload = (record: MedicalRecord) => {
     toast({
       title: "Download Started",
@@ -72,10 +148,16 @@ export default function MedicalRecords() {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Medical Records</CardTitle>
-        <Button variant="secondary" onClick={handleUploadClick}>
-          <Upload className="h-4 w-4 mr-2" />
-          Upload Record
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="secondary" onClick={handleUploadClick}>
+            <Upload className="h-4 w-4 mr-2" />
+            Upload Record
+          </Button>
+          <Button variant="secondary" onClick={startCamera}>
+            <Camera className="h-4 w-4 mr-2" />
+            Capture Image
+          </Button>
+        </div>
       </CardHeader>
       <CardContent>
         <input
@@ -109,6 +191,24 @@ export default function MedicalRecords() {
           </div>
         ) : (
           <p className="text-gray-500">No medical records uploaded</p>
+        )}
+
+        {showCamera && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                muted
+                className="w-full h-[400px] rounded-lg mb-4 object-cover"
+              />
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={stopCamera}>Cancel</Button>
+                <Button onClick={capturePhoto}>Capture Photo</Button>
+              </div>
+            </div>
+          </div>
         )}
       </CardContent>
     </Card>
