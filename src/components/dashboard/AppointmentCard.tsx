@@ -32,16 +32,27 @@ export function AppointmentCard({ appointment, type, onShare }: AppointmentCardP
         </div>
       </div>
       {type === "upcoming" && (
-        <div className="mt-4 md:mt-0 space-x-2">
+        <div className="mt-4 md:mt-0 flex flex-col md:flex-row gap-2">
           <Button 
-            variant="secondary"
+            variant="default"
+            className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto"
             onClick={() => onShare(appointment)}
           >
             <Share2 className="h-4 w-4 mr-2" />
             Share Records
           </Button>
-          <Button variant="outline">Reschedule</Button>
-          <Button variant="destructive">Cancel</Button>
+          <Button 
+            variant="outline" 
+            className="w-full md:w-auto"
+          >
+            Reschedule
+          </Button>
+          <Button 
+            variant="destructive"
+            className="w-full md:w-auto"
+          >
+            Cancel
+          </Button>
         </div>
       )}
     </div>
