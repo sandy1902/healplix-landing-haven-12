@@ -26,8 +26,6 @@ export function HospitalProfileDialog({
   hospital,
   open,
   onOpenChange,
-  onRequestCallback,
-  onAdmissionEnquiry,
 }: HospitalProfileDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -108,20 +106,14 @@ export function HospitalProfileDialog({
           <p className="text-[#8E9196]">{hospital.location}</p>
         </div>
 
-        {/* Action Buttons */}
-        <div className="mt-8 flex flex-col sm:flex-row gap-3">
+        {/* Back to Search Results Button */}
+        <div className="mt-8 flex justify-center">
           <Button
-            onClick={() => onAdmissionEnquiry(hospital)}
-            className="bg-[#9b87f5] hover:bg-[#8b77e5] text-white flex-1"
-          >
-            Send Admission Enquiry
-          </Button>
-          <Button
-            onClick={() => onRequestCallback(hospital)}
+            onClick={() => onOpenChange(false)}
             variant="outline"
-            className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10 flex-1"
+            className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10"
           >
-            Request Callback
+            Back to Search Results
           </Button>
         </div>
       </DialogContent>
