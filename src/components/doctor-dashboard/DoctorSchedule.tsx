@@ -5,6 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Slider } from "@/components/ui/slider";
 import { useState } from "react";
 import { addDays, format } from "date-fns";
 
@@ -18,6 +19,7 @@ interface TimeSlot {
 interface DaySchedule {
   day: string;
   slots: TimeSlot[];
+  isAvailable: boolean;
 }
 
 export default function DoctorSchedule() {
@@ -31,6 +33,7 @@ export default function DoctorSchedule() {
   const [schedule, setSchedule] = useState<DaySchedule[]>(
     ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(day => ({
       day,
+      isAvailable: true,
       slots: defaultSlots.map(time => ({
         time,
         available: true,
@@ -49,6 +52,17 @@ export default function DoctorSchedule() {
     toast({
       title: "Schedule Updated",
       description: `${schedule[dayIndex].slots[slotIndex].time} on ${schedule[dayIndex].day} ${newSchedule[dayIndex].slots[slotIndex].available ? 'enabled' : 'disabled'}.`,
+    });
+  };
+
+  const handleToggleDayAvailability = (dayIndex: number) => {
+    const newSchedule = [...schedule];
+    newSchedule[dayIndex].isAvailable = !newSchedule[dayIndex].isAvailable;
+    setSchedule(newSchedule);
+
+    toast({
+      title: "Day Availability Updated",
+      description: `${schedule[dayIndex].day} is now ${newSchedule[dayIndex].isAvailable ? 'available' : 'unavailable'}.`,
     });
   };
 
@@ -93,10 +107,30 @@ export default function DoctorSchedule() {
           </div>
 
           <div className="space-y-6">
+            {selectedDayIndex !== -1 && (
+              <div className="bg-accent p-4 rounded-lg mb-6">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold text-gray-700">
+                    Day Availability for {schedule[selectedDayIndex].day}
+                  </h3>
+                  <div className="flex items-center gap-2">
+                    <span className={`text-sm ${schedule[selectedDayIndex].isAvailable ? 'text-green-600' : 'text-red-600'}`}>
+                      {schedule[selectedDayIndex].isAvailable ? 'Available' : 'Unavailable'}
+                    </span>
+                    <Switch
+                      checked={schedule[selectedDayIndex].isAvailable}
+                      onCheckedChange={() => handleToggleDayAvailability(selectedDayIndex)}
+                      className="data-[state=checked]:bg-green-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
             <h3 className="text-lg font-semibold text-gray-700">
               Time Slots for {format(date, 'EEEE, MMMM d')}
             </h3>
-            {selectedDayIndex !== -1 && (
+            {selectedDayIndex !== -1 && schedule[selectedDayIndex].isAvailable && (
               <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
                 {schedule[selectedDayIndex].slots.map((slot, slotIndex) => (
                   <div 
@@ -114,11 +148,17 @@ export default function DoctorSchedule() {
                       >
                         {slot.time}
                       </Label>
-                      <Switch
-                        id={`${schedule[selectedDayIndex].day}-${slot.time}`}
-                        checked={slot.available}
-                        onCheckedChange={() => handleToggleSlot(selectedDayIndex, slotIndex)}
-                      />
+                      <div className="flex items-center gap-2">
+                        <span className={`text-sm ${slot.available ? 'text-green-600' : 'text-red-600'}`}>
+                          {slot.available ? 'Yes' : 'No'}
+                        </span>
+                        <Switch
+                          id={`${schedule[selectedDayIndex].day}-${slot.time}`}
+                          checked={slot.available}
+                          onCheckedChange={() => handleToggleSlot(selectedDayIndex, slotIndex)}
+                          className="data-[state=checked]:bg-green-500"
+                        />
+                      </div>
                     </div>
                     
                     {slot.available && (
@@ -159,6 +199,11 @@ export default function DoctorSchedule() {
                     )}
                   </div>
                 ))}
+              </div>
+            )}
+            {selectedDayIndex !== -1 && !schedule[selectedDayIndex].isAvailable && (
+              <div className="text-center p-8 text-gray-500">
+                This day is marked as unavailable. Enable day availability to manage time slots.
               </div>
             )}
           </div>
