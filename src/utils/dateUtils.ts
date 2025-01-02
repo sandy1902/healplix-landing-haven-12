@@ -7,8 +7,8 @@ export function filterAppointmentsByDate(appointment: { date: string }, type: "u
   const appointmentStart = new Date(appointmentDate.getFullYear(), appointmentDate.getMonth(), appointmentDate.getDate());
   
   if (type === "upcoming") {
-    return appointmentStart.getTime() >= todayStart.getTime();
+    return appointmentStart >= todayStart;
   } else {
-    return appointmentStart.getTime() < todayStart.getTime();
+    return appointmentStart < todayStart;
   }
 }
