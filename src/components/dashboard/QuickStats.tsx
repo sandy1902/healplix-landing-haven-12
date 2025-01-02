@@ -1,7 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Gift, CalendarDays, Users, Heart } from "lucide-react";
+import { useState } from "react";
 
 export default function QuickStats() {
+  // In a real application, these would come from your backend
+  const [stats] = useState({
+    rewardPoints: 500,
+    upcomingAppointments: 2,
+    dependants: 3,
+    favorites: 5
+  });
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       <Card>
@@ -12,7 +21,7 @@ export default function QuickStats() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-2xl font-bold">500</p>
+          <p className="text-2xl font-bold">{stats.rewardPoints}</p>
         </CardContent>
       </Card>
 
@@ -24,7 +33,7 @@ export default function QuickStats() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-2xl font-bold">2</p>
+          <p className="text-2xl font-bold">{stats.upcomingAppointments}</p>
         </CardContent>
       </Card>
 
@@ -36,7 +45,7 @@ export default function QuickStats() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-2xl font-bold">3</p>
+          <p className="text-2xl font-bold">{stats.dependants}</p>
         </CardContent>
       </Card>
 
@@ -48,7 +57,7 @@ export default function QuickStats() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-2xl font-bold">5</p>
+          <p className="text-2xl font-bold">{stats.favorites}</p>
         </CardContent>
       </Card>
     </div>
