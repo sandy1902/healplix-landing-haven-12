@@ -20,11 +20,11 @@ export function HospitalCard({
     <>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Section 1: Image */}
-        <div className="w-full">
+        <div className="w-full max-w-[250px] mx-auto">
           <img
             src={hospital.image}
             alt={hospital.name}
-            className="w-full h-36 object-cover rounded-lg" // Reduced height from h-48 to h-36
+            className="w-full h-36 object-cover rounded-lg"
           />
         </div>
 

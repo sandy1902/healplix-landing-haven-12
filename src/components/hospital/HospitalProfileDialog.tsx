@@ -40,7 +40,7 @@ export function HospitalProfileDialog({
 
         {/* Hospital Images Carousel */}
         <div className="mt-6">
-          <Carousel className="w-full">
+          <Carousel className="w-full max-w-[500px] mx-auto">
             <CarouselContent>
               {[hospital.image, ...(hospital.images || [])].map((image, index) => (
                 <CarouselItem key={index}>
@@ -48,7 +48,7 @@ export function HospitalProfileDialog({
                     <img
                       src={image}
                       alt={`${hospital.name} - Image ${index + 1}`}
-                      className="w-full h-48 object-cover rounded-lg" // Reduced height from h-64 to h-48
+                      className="w-full h-48 object-cover rounded-lg"
                     />
                   </div>
                 </CarouselItem>
