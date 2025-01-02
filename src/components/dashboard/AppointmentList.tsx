@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { AppointmentCard } from "./AppointmentCard";
 import { ShareRecordsDialog } from "./ShareRecordsDialog";
+import { RatingDialog } from "./RatingDialog";
 import { filterAppointmentsByDate } from "@/utils/dateUtils";
 import { PatientSelector } from "./PatientSelector";
 
@@ -14,6 +15,7 @@ interface Appointment {
   time: string;
   location: string;
   forWhom?: string;
+  rating?: number;
 }
 
 interface Dependent {
@@ -28,10 +30,10 @@ interface Dependent {
 export default function AppointmentList({ type }: { type: "upcoming" | "past" }) {
   const { toast } = useToast();
   const [showShareDialog, setShowShareDialog] = useState(false);
+  const [showRatingDialog, setShowRatingDialog] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [selectedPatient, setSelectedPatient] = useState<string>("self");
 
-  // This would typically come from your state management system
   const [dependents] = useState<Dependent[]>([
     {
       id: "1",
@@ -43,7 +45,7 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
     }
   ]);
 
-  const [appointments] = useState<Appointment[]>([
+  const [appointments, setAppointments] = useState<Appointment[]>([
     {
       id: "1",
       doctorName: "Dr. Sarah Wilson",
@@ -81,13 +83,29 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
 
   const filteredAppointments = appointments.filter(appointment => {
     const isFiltered = filterAppointmentsByDate(appointment, type);
-    console.log(`Filtering appointment ${appointment.id}:`, isFiltered);
     return isFiltered;
   });
 
   const handleShareRecords = (appointment: Appointment) => {
     setSelectedAppointment(appointment);
     setShowShareDialog(true);
+  };
+
+  const handleRate = (appointment: Appointment) => {
+    setSelectedAppointment(appointment);
+    setShowRatingDialog(true);
+  };
+
+  const handleRatingSubmit = (rating: number, review: string) => {
+    if (selectedAppointment) {
+      setAppointments(appointments.map(apt => 
+        apt.id === selectedAppointment.id ? { ...apt, rating } : apt
+      ));
+      toast({
+        title: "Review Submitted",
+        description: "Thank you for rating your appointment!",
+      });
+    }
   };
 
   const handleConfirmShare = () => {
@@ -135,6 +153,7 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
                   appointment={appointment}
                   type={type}
                   onShare={handleShareRecords}
+                  onRate={handleRate}
                 />
               ))}
             </div>
@@ -150,6 +169,16 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
         doctorName={selectedAppointment?.doctorName}
         onConfirm={handleConfirmShare}
       />
+
+      {selectedAppointment && (
+        <RatingDialog
+          open={showRatingDialog}
+          onOpenChange={setShowRatingDialog}
+          appointmentId={selectedAppointment.id}
+          doctorName={selectedAppointment.doctorName}
+          onSubmit={handleRatingSubmit}
+        />
+      )}
     </>
   );
 }
