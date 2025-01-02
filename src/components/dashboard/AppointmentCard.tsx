@@ -32,7 +32,7 @@ export function AppointmentCard({ appointment, type, onShare }: AppointmentCardP
         </div>
       </div>
       {type === "upcoming" && (
-        <div className="mt-4 md:mt-0 flex flex-col md:flex-row gap-2">
+        <div className="mt-4 md:mt-0">
           <Button 
             variant="secondary"
             className="w-full md:w-auto"
@@ -40,18 +40,6 @@ export function AppointmentCard({ appointment, type, onShare }: AppointmentCardP
           >
             <Share2 className="h-4 w-4 mr-2" />
             Share Records
-          </Button>
-          <Button 
-            variant="outline" 
-            className="w-full md:w-auto"
-          >
-            Reschedule
-          </Button>
-          <Button 
-            variant="destructive"
-            className="w-full md:w-auto"
-          >
-            Cancel
           </Button>
         </div>
       )}
