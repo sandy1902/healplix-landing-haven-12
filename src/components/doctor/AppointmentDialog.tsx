@@ -41,10 +41,10 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
           </DialogTitle>
         </DialogHeader>
         
-        <div className="space-y-6">
+        <div className="space-y-4">
           {/* Patient Selection */}
-          <div className="bg-accent rounded-lg p-4">
-            <h3 className="text-lg font-semibold mb-4 text-primary">Select Patient</h3>
+          <div className="bg-accent rounded-lg p-3">
+            <h3 className="text-lg font-semibold mb-2 text-primary">Select Patient</h3>
             <PatientSelector
               selectedPatient={selectedPatient}
               onPatientSelect={setSelectedPatient}
@@ -53,8 +53,8 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
           </div>
 
           {/* Consultation Type */}
-          <div className="bg-accent rounded-lg p-4">
-            <h3 className="text-lg font-semibold mb-4 text-primary">Consultation Type</h3>
+          <div className="bg-accent rounded-lg p-3">
+            <h3 className="text-lg font-semibold mb-2 text-primary">Consultation Type</h3>
             <Select value={consultationType} onValueChange={setConsultationType}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select consultation type" />
@@ -67,10 +67,10 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
             </Select>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Calendar Section */}
-            <div className="bg-accent rounded-lg p-4">
-              <h3 className="text-lg font-semibold mb-4 text-primary">Select Date</h3>
+            <div className="bg-accent rounded-lg p-3">
+              <h3 className="text-lg font-semibold mb-2 text-primary">Select Date</h3>
               <Calendar
                 mode="single"
                 selected={date}
@@ -81,8 +81,8 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
             </div>
 
             {/* Time Slots Section */}
-            <div className="bg-accent rounded-lg p-4">
-              <h3 className="text-lg font-semibold mb-4 text-primary">Select Time</h3>
+            <div className="bg-accent rounded-lg p-3">
+              <h3 className="text-lg font-semibold mb-2 text-primary">Select Time</h3>
               <div className="grid grid-cols-2 gap-2">
                 {timeSlots.map((time) => (
                   <Button
@@ -103,9 +103,9 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
           </div>
 
           {/* Summary Section */}
-          <div className="bg-accent rounded-lg p-4">
+          <div className="bg-accent rounded-lg p-3">
             <h3 className="text-lg font-semibold mb-2 text-primary">Appointment Summary</h3>
-            <div className="space-y-2 text-sm">
+            <div className="space-y-1 text-sm">
               <p>Doctor: {doctor.name}</p>
               <p>Patient: {selectedPatient === "self" ? "Self" : 
                 dependents.find(d => d.id === selectedPatient)?.name || "Not selected"}</p>
@@ -117,7 +117,7 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
           </div>
         </div>
 
-        <div className="mt-6 flex justify-end space-x-2">
+        <div className="mt-4 flex justify-end space-x-2">
           <Button
             variant="outline"
             onClick={() => onOpenChange(false)}
