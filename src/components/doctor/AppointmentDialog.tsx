@@ -43,14 +43,14 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-primary">
+      <DialogContent className="sm:max-w-[600px] bg-white shadow-2xl border-2 border-secondary/20">
+        <DialogHeader className="border-b pb-4">
+          <DialogTitle className="text-2xl font-bold text-primary bg-gradient-to-r from-secondary/10 to-transparent p-2 rounded-lg">
             Book Appointment with {doctor.name}
           </DialogTitle>
         </DialogHeader>
         
-        <div className="space-y-4">
+        <div className="space-y-6 mt-4">
           <div className="grid grid-cols-2 gap-4">
             <PatientSelectionSection
               selectedPatient={selectedPatient}
@@ -82,15 +82,16 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
           />
         </div>
 
-        <div className="mt-4 flex justify-end space-x-2">
+        <div className="mt-6 flex justify-end space-x-3 pt-4 border-t">
           <Button
             variant="outline"
             onClick={() => onOpenChange(false)}
+            className="hover:bg-gray-100"
           >
             Cancel
           </Button>
           <Button 
-            className="bg-[#9b87f5] hover:bg-[#7E69AB]"
+            className="bg-secondary hover:bg-secondary/90 text-white font-semibold shadow-lg"
             disabled={!date || !selectedTime}
             onClick={handleConfirmBooking}
           >
