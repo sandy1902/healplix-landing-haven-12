@@ -25,6 +25,7 @@ export default function Prescription() {
       perAbdomen: "",
     },
     impression: "",
+    investigations: "",
     medicines: "",
     dosage: "",
     duration: "",
@@ -88,6 +89,17 @@ export default function Prescription() {
           </div>
 
           <div className="space-y-2">
+            <Label htmlFor="investigations">Investigations</Label>
+            <Textarea
+              id="investigations"
+              placeholder="Enter required investigations..."
+              value={prescription.investigations}
+              onChange={(e) => handleChange('investigations', e.target.value)}
+              className="min-h-[100px]"
+            />
+          </div>
+
+          <div className="space-y-2">
             <Label htmlFor="medicines">Medicines</Label>
             <Textarea
               id="medicines"
@@ -147,6 +159,7 @@ export default function Prescription() {
                   perAbdomen: "",
                 },
                 impression: "",
+                investigations: "",
                 medicines: "",
                 dosage: "",
                 duration: "",

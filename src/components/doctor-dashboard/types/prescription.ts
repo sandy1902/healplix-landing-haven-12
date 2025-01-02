@@ -14,6 +14,7 @@ export interface PrescriptionData {
   drugAllergies: string;
   generalExamination: GeneralExamination;
   impression: string;
+  investigations: string;
   medicines: string;
   dosage: string;
   duration: string;

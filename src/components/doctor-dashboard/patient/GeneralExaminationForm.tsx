@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { GeneralExamination } from "../types/prescription";
 
 interface GeneralExaminationFormProps {
@@ -57,15 +58,16 @@ export default function GeneralExaminationForm({ data, onChange }: GeneralExamin
             onChange={(e) => onChange('generalExamination.rs', e.target.value)}
           />
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="perAbdomen">Per Abdomen</Label>
-          <Input
-            id="perAbdomen"
-            placeholder="Per Abdomen"
-            value={data.perAbdomen}
-            onChange={(e) => onChange('generalExamination.perAbdomen', e.target.value)}
-          />
-        </div>
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="perAbdomen">Per Abdomen</Label>
+        <Textarea
+          id="perAbdomen"
+          placeholder="Per Abdomen Examination"
+          value={data.perAbdomen}
+          onChange={(e) => onChange('generalExamination.perAbdomen', e.target.value)}
+          className="min-h-[100px]"
+        />
       </div>
     </div>
   );
