@@ -57,7 +57,14 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
   const filteredAppointments = appointments.filter(appointment => {
     const appointmentDate = new Date(appointment.date);
     const today = new Date();
-    return type === "upcoming" ? appointmentDate >= today : appointmentDate < today;
+    
+    // Reset time part for accurate date comparison
+    today.setHours(0, 0, 0, 0);
+    appointmentDate.setHours(0, 0, 0, 0);
+    
+    return type === "upcoming" 
+      ? appointmentDate >= today 
+      : appointmentDate < today;
   });
 
   const handleShareRecords = (appointment: Appointment) => {
