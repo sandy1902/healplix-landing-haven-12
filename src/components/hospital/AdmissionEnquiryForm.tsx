@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { MedicalRecordsUpload } from "./MedicalRecordsUpload";
+import { Input } from "@/components/ui/input";
 
 interface AdmissionEnquiryFormProps {
   open: boolean;
@@ -37,6 +38,7 @@ export function AdmissionEnquiryForm({
   const [diagnosis, setDiagnosis] = useState("");
   const [insuranceProvider, setInsuranceProvider] = useState("");
   const [admissionType, setAdmissionType] = useState("");
+  const [admissionDate, setAdmissionDate] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   // Dummy dependents data
@@ -57,6 +59,7 @@ export function AdmissionEnquiryForm({
     setDiagnosis("");
     setInsuranceProvider("");
     setAdmissionType("");
+    setAdmissionDate("");
     setSelectedFile(null);
   };
 
@@ -110,19 +113,35 @@ export function AdmissionEnquiryForm({
               </Select>
             </div>
 
-            <div className="form-float">
-              <Label htmlFor="admissionType" className="text-sm font-semibold mb-2 block text-primary">
-                Admission Type
-              </Label>
-              <Select value={admissionType} onValueChange={setAdmissionType}>
-                <SelectTrigger className="w-full border border-gray-200 rounded-lg focus:ring-2 focus:ring-secondary/50 focus:border-secondary">
-                  <SelectValue placeholder="Select admission type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="emergency">Emergency</SelectItem>
-                  <SelectItem value="elective">Elective</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="form-float">
+                <Label htmlFor="admissionType" className="text-sm font-semibold mb-2 block text-primary">
+                  Admission Type
+                </Label>
+                <Select value={admissionType} onValueChange={setAdmissionType}>
+                  <SelectTrigger className="w-full border border-gray-200 rounded-lg focus:ring-2 focus:ring-secondary/50 focus:border-secondary">
+                    <SelectValue placeholder="Select admission type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="emergency">Emergency</SelectItem>
+                    <SelectItem value="elective">Elective</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="form-float">
+                <Label htmlFor="admissionDate" className="text-sm font-semibold mb-2 block text-primary">
+                  Admission Date
+                </Label>
+                <Input
+                  type="date"
+                  id="admissionDate"
+                  value={admissionDate}
+                  onChange={(e) => setAdmissionDate(e.target.value)}
+                  className="w-full border border-gray-200 rounded-lg focus:ring-2 focus:ring-secondary/50 focus:border-secondary"
+                  min={new Date().toISOString().split('T')[0]}
+                />
+              </div>
             </div>
 
             <MedicalRecordsUpload onFileSelect={setSelectedFile} />
