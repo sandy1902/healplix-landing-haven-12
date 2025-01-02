@@ -106,20 +106,6 @@ export default function DoctorSearch() {
               </CardContent>
             </Card>
 
-            <Card className="mb-8 border-0 bg-white/80 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="text-center space-y-4">
-                  <h2 className="text-2xl font-semibold text-primary bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] bg-clip-text text-transparent">
-                    Welcome to Healplix
-                  </h2>
-                  <div className="w-24 h-1 bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] mx-auto rounded-full"></div>
-                  <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed text-lg">
-                    Healplix connects you with the best healthcare professionals in your area. Our platform makes it easy to find specialists, book appointments, and manage your healthcare journey. Whether you need a routine check-up or specialized care, we're here to help you find the right doctor.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
             <div className="space-y-6">
               {filteredDoctors.map((doctor) => (
                 <DoctorCard
