@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const formSchema = z.object({
   emailOrPhone: z.string().min(1, "Email or phone number is required"),
@@ -94,6 +95,14 @@ export function LoginForm() {
                   </Button>
                 </div>
               </FormControl>
+              <div className="flex justify-end mt-1">
+                <Link 
+                  to="/forgot-password" 
+                  className="text-sm text-gray-300 hover:text-white transition-colors"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
               <FormMessage className="text-red-300" />
             </FormItem>
           )}
