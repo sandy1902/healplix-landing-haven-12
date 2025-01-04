@@ -6,6 +6,11 @@
   overflow-x: hidden;
 }
 
+/* Add padding to account for fixed navbar */
+body {
+  padding-top: calc(32px + 5rem + 1.5rem); /* topbar height + navbar height + some spacing */
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -54,6 +59,7 @@
   body {
     overflow-x: hidden;
     width: 100%;
+    padding-top: calc(48px + 5rem + 1.5rem); /* Adjusted for mobile */
   }
   
   /* Adjust padding for mobile */

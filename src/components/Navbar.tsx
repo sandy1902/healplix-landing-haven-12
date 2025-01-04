@@ -16,7 +16,7 @@ export const Navbar = () => {
   };
 
   return (
-    <>
+    <div className="fixed top-0 left-0 right-0 z-50">
       {/* Top Bar */}
       <div className="bg-[#6366f1] text-white py-2 w-full">
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0">
@@ -82,6 +82,6 @@ export const Navbar = () => {
       </nav>
 
       <MobileMenu isOpen={isOpen} onClose={toggleMenu} />
-    </>
+    </div>
   );
 };
