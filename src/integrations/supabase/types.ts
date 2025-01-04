@@ -13,6 +13,7 @@ export type Database = {
         Row: {
           created_at: string | null
           date: string
+          doctor_id: string | null
           doctor_name: string
           for_whom: string | null
           id: string
@@ -28,6 +29,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           date: string
+          doctor_id?: string | null
           doctor_name: string
           for_whom?: string | null
           id?: string
@@ -43,6 +45,7 @@ export type Database = {
         Update: {
           created_at?: string | null
           date?: string
+          doctor_id?: string | null
           doctor_name?: string
           for_whom?: string | null
           id?: string
@@ -56,6 +59,13 @@ export type Database = {
           user_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "appointments_doctor_id_fkey"
+            columns: ["doctor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "appointments_user_id_fkey"
             columns: ["user_id"]
