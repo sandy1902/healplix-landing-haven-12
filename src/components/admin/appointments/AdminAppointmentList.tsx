@@ -26,7 +26,7 @@ interface Appointment {
   time: string;
   location: string;
   status: string;
-  user: Profile;
+  user: Profile | null;
   created_at: string;
   doctor_id: string;
   for_whom: string;
@@ -51,7 +51,7 @@ export function AdminAppointmentList() {
         .order("date", { ascending: true });
 
       if (error) throw error;
-      return data as Appointment[];
+      return data as unknown as Appointment[];
     },
   });
 
