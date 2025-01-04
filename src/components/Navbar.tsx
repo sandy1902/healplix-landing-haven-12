@@ -1,18 +1,35 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Menu, X, Facebook, Twitter, Instagram, Linkedin, LogOut } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileMenu } from "./navbar/MobileMenu";
 import { SearchDropdown } from "./navbar/SearchDropdown";
 import { DashboardMenu } from "./navbar/DashboardMenu";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      toast({
+        title: "Logged out successfully",
+        description: "You have been logged out of your account",
+      });
+      navigate("/login");
+    } catch (error) {
+      toast({
+        title: "Error logging out",
+        description: "There was an error logging out. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -55,14 +72,27 @@ export const Navbar = () => {
             </Link>
 
             {isMobile ? (
-              <Button variant="ghost" size="icon" onClick={toggleMenu}>
-                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon" onClick={handleLogout}>
+                  <LogOut className="h-5 w-5" />
+                </Button>
+                <Button variant="ghost" size="icon" onClick={toggleMenu}>
+                  {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                </Button>
+              </div>
             ) : (
               <div className="flex items-center space-x-6 font-poppins">
                 <Link to="/" className="text-gray-700 hover:text-primary capitalize text-lg">Home</Link>
                 <SearchDropdown />
                 <DashboardMenu />
+                <Button 
+                  variant="ghost" 
+                  onClick={handleLogout}
+                  className="flex items-center gap-2"
+                >
+                  <LogOut className="h-5 w-5" />
+                  Logout
+                </Button>
               </div>
             )}
           </div>
@@ -72,4 +102,4 @@ export const Navbar = () => {
       <MobileMenu isOpen={isOpen} onClose={toggleMenu} />
     </div>
   );
-}
+};

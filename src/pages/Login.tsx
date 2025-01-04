@@ -10,12 +10,14 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Eye, EyeOff } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Login() {
   const navigate = useNavigate();
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -25,9 +27,34 @@ export default function Login() {
   });
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (session) {
-        navigate("/");
+        // Fetch user profile to get role
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', session.user.id)
+          .single();
+
+        if (profile) {
+          // Navigate based on role
+          switch (profile.role) {
+            case 'doctor':
+              navigate('/doctor-dashboard');
+              break;
+            case 'executive':
+              navigate('/executive-dashboard');
+              break;
+            default:
+              navigate('/dashboard');
+              break;
+          }
+
+          toast({
+            title: "Login successful",
+            description: `Welcome back! You've been logged in as ${profile.role}`,
+          });
+        }
       }
     });
 

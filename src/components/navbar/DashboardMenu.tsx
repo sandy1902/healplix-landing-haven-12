@@ -7,10 +7,31 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 export const DashboardMenu = () => {
   const [open, setOpen] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const getUserRole = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', session.user.id)
+          .single();
+        
+        if (profile) {
+          setUserRole(profile.role);
+        }
+      }
+    };
+
+    getUserRole();
+  }, []);
 
   return (
     <div 
@@ -35,21 +56,27 @@ export const DashboardMenu = () => {
           className="w-56 bg-white shadow-lg rounded-lg p-2"
           sideOffset={8}
         >
-          <DropdownMenuItem>
-            <Link to="/dashboard" className="w-full font-poppins capitalize text-lg">
-              Subscriber Dashboard
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link to="/doctor-dashboard" className="w-full font-poppins capitalize text-lg">
-              Doctor Dashboard
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link to="/executive-dashboard" className="w-full font-poppins capitalize text-lg">
-              Executive Dashboard
-            </Link>
-          </DropdownMenuItem>
+          {(userRole === 'subscriber' || !userRole) && (
+            <DropdownMenuItem>
+              <Link to="/dashboard" className="w-full font-poppins capitalize text-lg">
+                Subscriber Dashboard
+              </Link>
+            </DropdownMenuItem>
+          )}
+          {userRole === 'doctor' && (
+            <DropdownMenuItem>
+              <Link to="/doctor-dashboard" className="w-full font-poppins capitalize text-lg">
+                Doctor Dashboard
+              </Link>
+            </DropdownMenuItem>
+          )}
+          {userRole === 'executive' && (
+            <DropdownMenuItem>
+              <Link to="/executive-dashboard" className="w-full font-poppins capitalize text-lg">
+                Executive Dashboard
+              </Link>
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
