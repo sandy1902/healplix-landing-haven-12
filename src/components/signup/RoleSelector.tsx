@@ -19,7 +19,7 @@ export function RoleSelector({ control }: RoleSelectorProps) {
       name="role"
       render={({ field }) => (
         <FormItem>
-          <FormLabel className="text-white text-base font-medium font-sans mb-1">Role</FormLabel>
+          <FormLabel className="text-[#1A1F2C] text-base font-medium font-sans">Role</FormLabel>
           <FormControl>
             <RadioGroup
               onValueChange={field.onChange}
@@ -28,25 +28,25 @@ export function RoleSelector({ control }: RoleSelectorProps) {
             >
               <FormItem className="flex items-center space-x-3 space-y-0">
                 <FormControl>
-                  <RadioGroupItem value="user" className="border-gray-400 text-[#9b87f5]" />
+                  <RadioGroupItem value="user" className="border-[#9b87f5]/20 text-[#9b87f5]" />
                 </FormControl>
-                <FormLabel className="font-normal text-white font-sans">User</FormLabel>
+                <FormLabel className="font-normal text-[#7E69AB] font-sans">User</FormLabel>
               </FormItem>
               <FormItem className="flex items-center space-x-3 space-y-0">
                 <FormControl>
-                  <RadioGroupItem value="doctor" className="border-gray-400 text-[#9b87f5]" />
+                  <RadioGroupItem value="doctor" className="border-[#9b87f5]/20 text-[#9b87f5]" />
                 </FormControl>
-                <FormLabel className="font-normal text-white font-sans">Doctor</FormLabel>
+                <FormLabel className="font-normal text-[#7E69AB] font-sans">Doctor</FormLabel>
               </FormItem>
               <FormItem className="flex items-center space-x-3 space-y-0">
                 <FormControl>
-                  <RadioGroupItem value="executive" className="border-gray-400 text-[#9b87f5]" />
+                  <RadioGroupItem value="executive" className="border-[#9b87f5]/20 text-[#9b87f5]" />
                 </FormControl>
-                <FormLabel className="font-normal text-white font-sans">Executive</FormLabel>
+                <FormLabel className="font-normal text-[#7E69AB] font-sans">Executive</FormLabel>
               </FormItem>
             </RadioGroup>
           </FormControl>
-          <FormMessage className="text-red-200" />
+          <FormMessage className="text-red-500" />
         </FormItem>
       )}
     />
