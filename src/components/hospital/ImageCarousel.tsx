@@ -34,11 +34,7 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
           {images.map((image, index) => (
             <Dialog key={index}>
               <DialogTrigger asChild>
-                <div 
-                  className={`relative group cursor-pointer transition-opacity duration-300 ${
-                    index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-                  }`}
-                >
+                <div className="relative group cursor-pointer">
                   <img
                     src={image}
                     alt={`Hospital Image ${index + 1}`}
