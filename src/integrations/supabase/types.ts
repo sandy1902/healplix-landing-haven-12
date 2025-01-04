@@ -9,6 +9,144 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      appointments: {
+        Row: {
+          created_at: string | null
+          date: string
+          doctor_name: string
+          for_whom: string | null
+          id: string
+          location: string
+          rating: number | null
+          review: string | null
+          specialty: string
+          status: string | null
+          time: string
+          type: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          date: string
+          doctor_name: string
+          for_whom?: string | null
+          id?: string
+          location: string
+          rating?: number | null
+          review?: string | null
+          specialty: string
+          status?: string | null
+          time: string
+          type: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          date?: string
+          doctor_name?: string
+          for_whom?: string | null
+          id?: string
+          location?: string
+          rating?: number | null
+          review?: string | null
+          specialty?: string
+          status?: string | null
+          time?: string
+          type?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      dependents: {
+        Row: {
+          age: string
+          created_at: string | null
+          gender: string
+          id: string
+          name: string
+          relation: string
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          age: string
+          created_at?: string | null
+          gender: string
+          id?: string
+          name: string
+          relation: string
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          age?: string
+          created_at?: string | null
+          gender?: string
+          id?: string
+          name?: string
+          relation?: string
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dependents_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medical_records: {
+        Row: {
+          created_at: string | null
+          date: string
+          file_path: string
+          id: string
+          name: string
+          size: string
+          type: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          date: string
+          file_path: string
+          id?: string
+          name: string
+          size: string
+          type: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          date?: string
+          file_path?: string
+          id?: string
+          name?: string
+          size?: string
+          type?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medical_records_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           address: string | null
@@ -44,6 +182,41 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      reward_points: {
+        Row: {
+          amount: number | null
+          created_at: string | null
+          id: string
+          points: number | null
+          transaction_type: string
+          user_id: string | null
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string | null
+          id?: string
+          points?: number | null
+          transaction_type: string
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string | null
+          id?: string
+          points?: number | null
+          transaction_type?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_points_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
