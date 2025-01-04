@@ -50,7 +50,17 @@ export function useSignupForm() {
     try {
       const formattedPhone = formatPhoneNumber(values.phoneNumber);
       
-      const { error: signUpError } = await supabase.auth.signUp({
+      console.log("Attempting to sign up with:", {
+        email: values.email,
+        phone: formattedPhone,
+        metadata: {
+          full_name: values.name,
+          role: values.role,
+          phone_number: formattedPhone,
+        },
+      });
+
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
         phone: formattedPhone,
@@ -64,8 +74,11 @@ export function useSignupForm() {
       });
 
       if (signUpError) {
+        console.error("Signup error:", signUpError);
         throw signUpError;
       }
+
+      console.log("Signup response:", data);
 
       toast({
         title: "Account created successfully!",
@@ -74,10 +87,16 @@ export function useSignupForm() {
       
       navigate("/login");
     } catch (error) {
+      console.error("Full error object:", error);
+      
       let errorMessage = "Failed to create account";
       
       if (error instanceof Error) {
         errorMessage = error.message;
+      } else if (typeof error === 'object' && error !== null) {
+        // Try to extract message from Supabase error format
+        const supabaseError = error as { message?: string, error_description?: string };
+        errorMessage = supabaseError.message || supabaseError.error_description || errorMessage;
       }
       
       toast({
