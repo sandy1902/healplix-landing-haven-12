@@ -36,8 +36,25 @@ export const AuthUI = () => {
               colors: {
                 brand: '#1e3a8a',
                 brandAccent: '#1e40af',
+                inputBackground: 'white',
+                inputText: '#1e3a8a',
+                inputBorder: 'hsl(var(--input))',
+                inputBorderFocus: 'hsl(var(--ring))',
+                inputBorderHover: 'hsl(var(--input))',
+                inputPlaceholder: '#8E9196',
+              },
+              borderWidths: {
+                inputBorderWidth: '1px',
+              },
+              radii: {
+                borderRadiusButton: '0.375rem',
+                buttonBorderRadius: '0.375rem',
+                inputBorderRadius: '0.375rem',
               },
             },
+          },
+          className: {
+            input: 'form-input-focus',
           },
         }}
         providers={[]}
