@@ -13,13 +13,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Settings, Save, Trash, Plus } from "lucide-react";
+import { SystemSettingsTable } from "@/integrations/supabase/types";
 
-interface SystemSetting {
-  id: string;
-  setting_key: string;
-  setting_value: any;
-  last_modified_at: string;
-}
+type SystemSetting = SystemSettingsTable["Row"];
 
 export function SystemSettings() {
   const { toast } = useToast();
@@ -165,7 +161,7 @@ export function SystemSettings() {
               <TableCell>{setting.setting_key}</TableCell>
               <TableCell>
                 <Input
-                  defaultValue={JSON.stringify(setting.setting_value)}
+                  defaultValue={setting.setting_value || ""}
                   onBlur={(e) =>
                     updateMutation.mutate({
                       id: setting.id,
@@ -175,7 +171,7 @@ export function SystemSettings() {
                 />
               </TableCell>
               <TableCell>
-                {new Date(setting.last_modified_at).toLocaleDateString()}
+                {new Date(setting.updated_at).toLocaleDateString()}
               </TableCell>
               <TableCell>
                 <Button

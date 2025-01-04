@@ -1,3 +1,9 @@
+import { ProfilesTable } from './profiles';
+import { SystemSettingsTable } from './system-settings';
+import { UserAnalyticsTable } from './user-analytics';
+import { RevenueMetricsTable } from './revenue-metrics';
+import { AppointmentsTable } from './appointments';
+
 export type Json =
   | string
   | number
