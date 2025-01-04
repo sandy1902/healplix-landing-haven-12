@@ -20,5 +20,4 @@ export interface SystemSettingsTable {
     created_at?: string;
     updated_at?: string;
   };
-  Relationships: [];
 }
