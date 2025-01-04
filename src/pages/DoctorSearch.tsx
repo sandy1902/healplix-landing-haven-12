@@ -7,6 +7,7 @@ import { DoctorCard } from "@/components/doctor/DoctorCard";
 import { AppointmentDialog } from "@/components/doctor/AppointmentDialog";
 import { GlobalSearchBar } from "@/components/search/GlobalSearchBar";
 import { Doctor } from "@/types/doctor";
+import { Navbar } from "@/components/Navbar";
 
 export default function DoctorSearch() {
   const { toast } = useToast();
@@ -91,7 +92,8 @@ export default function DoctorSearch() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10">
-      <div className="container mx-auto py-12 px-4">
+      <Navbar />
+      <div className="container mx-auto py-24 px-4">
         <Card className="mb-8 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
           <CardHeader className="text-center pb-2">
             <CardTitle className="text-3xl font-bold text-[#1A1F2C]">Find a Doctor</CardTitle>

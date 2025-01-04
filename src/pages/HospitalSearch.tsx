@@ -4,6 +4,7 @@ import { AdmissionEnquiryForm } from "@/components/hospital/AdmissionEnquiryForm
 import { SearchFilters } from "@/components/hospital/SearchFilters";
 import { HospitalResults } from "@/components/hospital/HospitalResults";
 import { Hospital } from "@/types/hospital";
+import { Navbar } from "@/components/Navbar";
 
 export default function HospitalSearch() {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -145,7 +146,8 @@ export default function HospitalSearch() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10">
-      <div className="container mx-auto py-12 px-4">
+      <Navbar />
+      <div className="container mx-auto py-24 px-4">
         <SearchFilters
           location={location}
           setLocation={setLocation}

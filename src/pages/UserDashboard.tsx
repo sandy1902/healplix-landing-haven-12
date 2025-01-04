@@ -10,6 +10,7 @@ import AppointmentList from "@/components/dashboard/AppointmentList";
 import MedicalRecords from "@/components/dashboard/MedicalRecords";
 import Dependents from "@/components/dashboard/Dependents";
 import Favorites from "@/components/dashboard/Favorites";
+import { Navbar } from "@/components/Navbar";
 
 export default function UserDashboard() {
   const navigate = useNavigate();
@@ -25,7 +26,8 @@ export default function UserDashboard() {
 
   return (
     <div className="min-h-screen bg-accent">
-      <div className="container mx-auto py-8 px-4 space-y-6">
+      <Navbar />
+      <div className="container mx-auto py-24 px-4 space-y-6">
         {/* Profile Summary */}
         <Card className="border-none shadow-lg">
           <CardContent className="p-0">

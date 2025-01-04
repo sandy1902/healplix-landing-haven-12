@@ -8,6 +8,7 @@ import AffiliateLink from "@/components/executive-dashboard/AffiliateLink";
 import BookAppointment from "@/components/executive-dashboard/BookAppointment";
 import DetailedRevenue from "@/components/executive-dashboard/DetailedRevenue";
 import UserAnalytics from "@/components/executive-dashboard/UserAnalytics";
+import { Navbar } from "@/components/Navbar";
 
 export default function ExecutiveDashboard() {
   const navigate = useNavigate();
@@ -21,7 +22,8 @@ export default function ExecutiveDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-accent to-background">
-      <div className="container mx-auto py-8 px-4 space-y-6">
+      <Navbar />
+      <div className="container mx-auto py-24 px-4 space-y-6">
         <h1 className="text-3xl font-bold text-primary mb-8 animate-fade-up">
           Executive Dashboard
         </h1>

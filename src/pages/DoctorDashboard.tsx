@@ -14,11 +14,13 @@ import DoctorAppointments from "@/components/doctor-dashboard/DoctorAppointments
 import DoctorRevenue from "@/components/doctor-dashboard/DoctorRevenue";
 import PatientRecords from "@/components/doctor-dashboard/patient/PatientRecords";
 import Prescription from "@/components/doctor-dashboard/patient/Prescription";
+import { Navbar } from "@/components/Navbar";
 
 export default function DoctorDashboard() {
   return (
     <div className="min-h-screen bg-accent">
-      <div className="container mx-auto py-8 px-4 space-y-6">
+      <Navbar />
+      <div className="container mx-auto py-24 px-4 space-y-6">
         <Tabs defaultValue="profile" className="w-full">
           <TabsList className="w-full justify-start overflow-x-auto bg-white p-2 rounded-lg mb-4">
             <TabsTrigger value="profile" className="flex items-center gap-2">
