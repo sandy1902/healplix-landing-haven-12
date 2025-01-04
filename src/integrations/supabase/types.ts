@@ -9,6 +9,57 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      appointments: {
+        Row: {
+          created_at: string
+          date: string
+          doctor_id: string | null
+          doctor_name: string
+          for_whom: string
+          id: string
+          location: string
+          rating: number | null
+          review: string | null
+          specialty: string
+          status: string
+          time: string
+          type: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          doctor_id?: string | null
+          doctor_name: string
+          for_whom: string
+          id?: string
+          location: string
+          rating?: number | null
+          review?: string | null
+          specialty: string
+          status?: string
+          time: string
+          type: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          doctor_id?: string | null
+          doctor_name?: string
+          for_whom?: string
+          id?: string
+          location?: string
+          rating?: number | null
+          review?: string | null
+          specialty?: string
+          status?: string
+          time?: string
+          type?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           address: string | null
@@ -51,6 +102,33 @@ export type Database = {
         }
         Relationships: []
       }
+      revenue_metrics: {
+        Row: {
+          appointment_revenue: number
+          created_at: string
+          date: string
+          id: string
+          subscription_revenue: number
+          total_revenue: number
+        }
+        Insert: {
+          appointment_revenue?: number
+          created_at?: string
+          date: string
+          id?: string
+          subscription_revenue?: number
+          total_revenue?: number
+        }
+        Update: {
+          appointment_revenue?: number
+          created_at?: string
+          date?: string
+          id?: string
+          subscription_revenue?: number
+          total_revenue?: number
+        }
+        Relationships: []
+      }
       system_settings: {
         Row: {
           created_at: string
@@ -72,6 +150,36 @@ export type Database = {
           setting_key?: string
           setting_value?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      user_analytics: {
+        Row: {
+          active_users: number
+          appointments_booked: number
+          created_at: string
+          date: string
+          id: string
+          new_users: number
+          total_users: number
+        }
+        Insert: {
+          active_users?: number
+          appointments_booked?: number
+          created_at?: string
+          date: string
+          id?: string
+          new_users?: number
+          total_users?: number
+        }
+        Update: {
+          active_users?: number
+          appointments_booked?: number
+          created_at?: string
+          date?: string
+          id?: string
+          new_users?: number
+          total_users?: number
         }
         Relationships: []
       }
