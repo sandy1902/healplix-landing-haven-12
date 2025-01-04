@@ -6,9 +6,10 @@ import { DoctorProfileDialog } from "@/components/doctor/DoctorProfileDialog";
 
 interface DoctorsListProps {
   doctors: Array<{ name: string; qualification: string; speciality: string; }>;
+  hospitalName?: string;
 }
 
-export function DoctorsList({ doctors }: DoctorsListProps) {
+export function DoctorsList({ doctors, hospitalName }: DoctorsListProps) {
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [isAppointmentOpen, setIsAppointmentOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -21,8 +22,8 @@ export function DoctorsList({ doctors }: DoctorsListProps) {
       qualification: doctor.qualification,
       experience: "5+ years",
       rating: 4.5,
-      clinicName: "Main Hospital Clinic",
-      location: window.location.pathname === "/search-hospitals" ? "Hospital Location" : "Private Clinic",
+      clinicName: hospitalName || "Main Hospital Clinic",
+      location: hospitalName || "Private Clinic",
       clinicVisit: { 
         charges: 500,
         available: true 
@@ -33,7 +34,7 @@ export function DoctorsList({ doctors }: DoctorsListProps) {
       },
       email: "doctor@hospital.com",
       contactNumber: "+1234567890",
-      clinicLocation: window.location.pathname === "/search-hospitals" ? "Hospital Location" : "Private Clinic",
+      clinicLocation: hospitalName || "Private Clinic",
       clinicTimings: "9:00 AM - 5:00 PM",
       image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d"
     };
@@ -50,8 +51,8 @@ export function DoctorsList({ doctors }: DoctorsListProps) {
       qualification: doctor.qualification,
       experience: "5+ years",
       rating: 4.5,
-      clinicName: "Main Hospital Clinic",
-      location: window.location.pathname === "/search-hospitals" ? "Hospital Location" : "Private Clinic",
+      clinicName: hospitalName || "Main Hospital Clinic",
+      location: hospitalName || "Private Clinic",
       clinicVisit: { 
         charges: 500,
         available: true 
@@ -62,7 +63,7 @@ export function DoctorsList({ doctors }: DoctorsListProps) {
       },
       email: "doctor@hospital.com",
       contactNumber: "+1234567890",
-      clinicLocation: window.location.pathname === "/search-hospitals" ? "Hospital Location" : "Private Clinic",
+      clinicLocation: hospitalName || "Private Clinic",
       clinicTimings: "9:00 AM - 5:00 PM",
       image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d"
     };

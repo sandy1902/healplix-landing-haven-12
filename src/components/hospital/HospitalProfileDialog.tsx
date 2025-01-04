@@ -41,7 +41,14 @@ export function HospitalProfileDialog({
 
           <ScrollArea className="h-[calc(100vh-280px)] pr-4">
             <div className="space-y-8">
-              <ImageCarousel images={hospital.images} />
+              <ImageCarousel images={[
+                "https://images.unsplash.com/photo-1586773860418-d37222d8fce3",
+                "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d",
+                "https://images.unsplash.com/photo-1516549655169-df83a0774514",
+                "https://images.unsplash.com/photo-1538108149393-fbbd81895907",
+                "https://images.unsplash.com/photo-1559000357-f6b52ddfbe37",
+                "https://images.unsplash.com/photo-1579684385127-1ef15d508118"
+              ]} />
 
               <div className="space-y-6">
                 <div className="bg-accent/50 p-6 rounded-lg shadow-sm">
@@ -68,7 +75,7 @@ export function HospitalProfileDialog({
                   </div>
                 </div>
 
-                <DoctorsList doctors={hospital.doctors} />
+                <DoctorsList doctors={hospital.doctors} hospitalName={hospital.name} />
 
                 <div className="bg-white p-6 rounded-lg shadow-sm">
                   <div className="flex items-center justify-between mb-4">
