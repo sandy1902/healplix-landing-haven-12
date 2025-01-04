@@ -77,7 +77,10 @@ export default function DoctorSearch() {
       doctor.location.toLowerCase().includes(term) ||
       doctor.specialization.toLowerCase().includes(term) ||
       doctor.qualification.toLowerCase().includes(term) ||
-      doctor.clinicName.toLowerCase().includes(term)
+      doctor.clinicName.toLowerCase().includes(term) ||
+      (doctor.services && doctor.services.some(service => 
+        service.toLowerCase().includes(term)
+      ))
     );
 
     const matchesLocation = !location || doctor.location.toLowerCase().includes(location.toLowerCase());
@@ -98,7 +101,7 @@ export default function DoctorSearch() {
               <GlobalSearchBar
                 value={searchQuery}
                 onChange={setSearchQuery}
-                placeholder="Search doctors, locations, specialities, clinics..."
+                placeholder="Search doctors, locations, specialities, services, clinics..."
               />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>

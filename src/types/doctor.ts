@@ -12,6 +12,7 @@ export interface Doctor {
   contactNumber: string;
   clinicLocation: string;
   clinicTimings: string;
+  services?: string[];
   videoConsultation: {
     available: boolean;
     charges: number;
