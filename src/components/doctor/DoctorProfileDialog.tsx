@@ -20,13 +20,13 @@ interface DoctorProfileDialogProps {
 export function DoctorProfileDialog({ doctor, open, onOpenChange }: DoctorProfileDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] p-0 bg-[#F1F0FB]/95 backdrop-blur-sm">
-        <ScrollArea className="h-[calc(90vh-4rem)]">
-          <DialogHeader className="p-6 sticky top-0 bg-[#F1F0FB]/95 backdrop-blur-sm z-10">
-            <DialogTitle className="text-2xl font-bold text-[#333333] text-center">Doctor Profile</DialogTitle>
-          </DialogHeader>
-          
-          <div className="space-y-8 px-6">
+      <DialogContent className="max-w-3xl h-[90vh] p-0 bg-[#F1F0FB]/95 backdrop-blur-sm">
+        <DialogHeader className="p-6 sticky top-0 bg-[#F1F0FB]/95 backdrop-blur-sm z-10">
+          <DialogTitle className="text-2xl font-bold text-[#333333] text-center">Doctor Profile</DialogTitle>
+        </DialogHeader>
+        
+        <ScrollArea className="h-[calc(90vh-8rem)] px-6">
+          <div className="space-y-8">
             {/* Profile Header */}
             <div className="flex items-start gap-6 bg-white/50 p-6 rounded-lg">
               <Avatar className="h-32 w-32">
@@ -142,18 +142,18 @@ export function DoctorProfileDialog({ doctor, open, onOpenChange }: DoctorProfil
               </div>
             </div>
           </div>
-
-          {/* Footer with Back Button */}
-          <div className="sticky bottom-0 mt-6 p-4 bg-[#F1F0FB]/95 backdrop-blur-sm border-t flex justify-end">
-            <Button
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-              className="hover:bg-[#7E69AB] hover:text-white transition-colors"
-            >
-              Back to Search
-            </Button>
-          </div>
         </ScrollArea>
+
+        {/* Footer with Back Button */}
+        <div className="sticky bottom-0 p-4 bg-[#F1F0FB]/95 backdrop-blur-sm border-t flex justify-end">
+          <Button
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            className="hover:bg-[#7E69AB] hover:text-white transition-colors"
+          >
+            Back to Search
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );
