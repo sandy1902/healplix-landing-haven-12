@@ -45,7 +45,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        sans: ['Open Sans', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        roboto: ['Roboto', 'sans-serif'],
       },
       keyframes: {
         "fade-up": {
