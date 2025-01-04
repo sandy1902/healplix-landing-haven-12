@@ -5,16 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
-import { RoleSelector } from "./RoleSelector";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { EmailField } from "./EmailField";
-import { PhoneField } from "./PhoneField";
 import { PasswordFields } from "./PasswordFields";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
-  phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
   password: z
     .string()
     .min(8, "Password must be at least 8 characters")
@@ -23,9 +20,6 @@ const formSchema = z.object({
       "Password must contain at least one uppercase letter, one lowercase letter, and one number"
     ),
   confirmPassword: z.string(),
-  role: z.enum(["user", "doctor", "executive"], {
-    required_error: "Please select a role",
-  }),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -40,10 +34,8 @@ export function SignupForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      phoneNumber: "",
       password: "",
       confirmPassword: "",
-      role: "user",
     },
   });
 
@@ -60,17 +52,6 @@ export function SignupForm() {
       if (authError) throw authError;
 
       if (authData.user) {
-        // Create the profile
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert({
-            id: authData.user.id,
-            phone_number: values.phoneNumber,
-            role: values.role,
-          });
-
-        if (profileError) throw profileError;
-
         toast({
           title: "Account created successfully!",
           description: "You can now login with your credentials.",
@@ -95,9 +76,7 @@ export function SignupForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <EmailField control={form.control} />
-        <PhoneField control={form.control} />
         <PasswordFields control={form.control} />
-        <RoleSelector control={form.control} />
 
         <Button 
           type="submit" 
