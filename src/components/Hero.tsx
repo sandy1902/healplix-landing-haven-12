@@ -12,14 +12,6 @@ export const Hero = () => {
               <span>24/7 EMERGENCY SERVICE</span>
             </div>
             
-            <div className="flex items-center space-x-2 mb-4">
-              <img 
-                src="/lovable-uploads/0c9b5516-6d0d-4761-b5f8-d3ab135daffb.png" 
-                alt="Logo" 
-                className="h-12 w-auto"
-              />
-            </div>
-            
             <h1 className="text-4xl md:text-6xl font-bold text-[#1e3a8a] leading-tight">
               Caring for <span className="text-[#00b341] relative">Health
                 <span className="absolute bottom-0 left-0 w-full h-1 bg-[#00b341]"></span>
