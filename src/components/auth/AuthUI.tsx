@@ -5,28 +5,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Eye, EyeOff } from "lucide-react";
 
 export const AuthUI = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState("subscriber");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   return (
     <div className="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <div className="space-y-4 mb-4">
-        <div className="space-y-2">
-          <Label htmlFor="phone">Phone Number</Label>
-          <Input
-            id="phone"
-            type="tel"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            placeholder="Enter your phone number"
-            className="w-full bg-background text-foreground"
-          />
-        </div>
-      </div>
-
       <Auth
         supabaseClient={supabase}
         appearance={{
@@ -36,36 +23,20 @@ export const AuthUI = () => {
               colors: {
                 brand: '#1e3a8a',
                 brandAccent: '#1e40af',
-                inputBackground: '#F0F9FF',
-                inputText: '#1e3a8a',
-                inputBorder: 'hsl(var(--input))',
-                inputBorderFocus: 'hsl(var(--ring))',
-                inputBorderHover: 'hsl(var(--input))',
-                inputPlaceholder: '#8E9196',
-              },
-              borderWidths: {
-                inputBorderWidth: '1px',
-              },
-              radii: {
-                borderRadiusButton: '0.375rem',
-                buttonBorderRadius: '0.375rem',
-                inputBorderRadius: '0.375rem',
               },
             },
           },
-          className: {
-            input: 'form-input-focus text-foreground',
-          },
+          extend: true,
         }}
         providers={[]}
         redirectTo={window.location.origin}
         localization={{
           variables: {
             sign_up: {
+              password_label: "Password",
+              password_input_placeholder: "Your password",
               email_label: "Email address",
               email_input_placeholder: "Your email address",
-              password_label: "Create password",
-              password_input_placeholder: "Create a secure password",
               button_label: "Sign up",
             },
           },
@@ -76,23 +47,21 @@ export const AuthUI = () => {
           phone_number: phoneNumber,
         }}
       >
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="confirmPassword">Confirm Password</Label>
+        <div className="space-y-4 mb-4">
+          <div>
+            <Label htmlFor="phone">Phone Number</Label>
             <Input
-              id="confirmPassword"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm your password"
-              className="w-full bg-background text-foreground"
+              id="phone"
+              type="tel"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              placeholder="Enter your phone number"
             />
           </div>
-          
-          <div className="space-y-2">
+          <div>
             <Label htmlFor="role">Role</Label>
             <Select value={role} onValueChange={setRole}>
-              <SelectTrigger className="w-full bg-background text-foreground">
+              <SelectTrigger>
                 <SelectValue placeholder="Select your role" />
               </SelectTrigger>
               <SelectContent>
@@ -101,6 +70,48 @@ export const AuthUI = () => {
                 <SelectItem value="executive">Executive</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+          <div className="relative">
+            <Label htmlFor="password">Password</Label>
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                className="pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4 text-gray-500" />
+                ) : (
+                  <Eye className="h-4 w-4 text-gray-500" />
+                )}
+              </button>
+            </div>
+          </div>
+          <div className="relative">
+            <Label htmlFor="confirmPassword">Confirm Password</Label>
+            <div className="relative">
+              <Input
+                id="confirmPassword"
+                type={showPassword ? "text" : "password"}
+                className="pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4 text-gray-500" />
+                ) : (
+                  <Eye className="h-4 w-4 text-gray-500" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </Auth>
