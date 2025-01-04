@@ -64,7 +64,7 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] h-[85vh] bg-white shadow-2xl border-2 border-secondary/20">
+      <DialogContent className="sm:max-w-[600px] h-[90vh] bg-white shadow-2xl border-2 border-secondary/20">
         <ScrollArea className="h-full [&_[data-radix-scroll-area-viewport]]:!block [&_[data-radix-scroll-area-scrollbar]]:!w-4 [&_[data-radix-scroll-area-thumb]]:!bg-[#7E69AB]/50">
           <div className="px-8 py-6">
             <DialogHeader className="border-b pb-6 mb-8">
