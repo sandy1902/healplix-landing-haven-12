@@ -1,16 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { FlipHorizontal } from "lucide-react";
 
 interface CameraModalProps {
   onCapture: (imageDataUrl: string) => void;
   onClose: () => void;
   stream: MediaStream | null;
+  onToggleCamera: () => void;
 }
 
-export function CameraModal({ onCapture, onClose, stream }: CameraModalProps) {
+export function CameraModal({ onCapture, onClose, stream, onToggleCamera }: CameraModalProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
 
   useEffect(() => {
     if (videoRef.current && stream) {
@@ -47,10 +47,7 @@ export function CameraModal({ onCapture, onClose, stream }: CameraModalProps) {
             variant="secondary"
             size="icon"
             className="absolute top-2 right-2 rounded-full"
-            onClick={() => {
-              onClose();
-              setFacingMode(prev => prev === "user" ? "environment" : "user");
-            }}
+            onClick={onToggleCamera}
           >
             <FlipHorizontal className="h-4 w-4" />
           </Button>
