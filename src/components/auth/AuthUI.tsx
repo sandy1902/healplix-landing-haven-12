@@ -14,6 +14,20 @@ export const AuthUI = () => {
 
   return (
     <div className="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+      <div className="space-y-4 mb-4">
+        <div className="space-y-2">
+          <Label htmlFor="phone">Phone Number</Label>
+          <Input
+            id="phone"
+            type="tel"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            placeholder="Enter your phone number"
+            className="w-full"
+          />
+        </div>
+      </div>
+
       <Auth
         supabaseClient={supabase}
         appearance={{
@@ -46,19 +60,7 @@ export const AuthUI = () => {
           phone_number: phoneNumber,
         }}
       >
-        <div className="space-y-4 mb-4">
-          <div className="space-y-2">
-            <Label htmlFor="phone">Phone Number</Label>
-            <Input
-              id="phone"
-              type="tel"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              placeholder="Enter your phone number"
-              className="w-full"
-            />
-          </div>
-          
+        <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="password">Create Password</Label>
             <Input
