@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Home, Info, Search, LogIn, UserPlus, LayoutDashboard } from "lucide-react";
+import { Home, Search, LogIn, UserPlus, LayoutDashboard } from "lucide-react";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -20,14 +20,6 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
         >
           <Home className="h-4 w-4" />
           Home
-        </Link>
-        <Link
-          to="/about-us"
-          className="text-gray-600 hover:text-primary px-4 py-2 flex items-center gap-2"
-          onClick={onClose}
-        >
-          <Info className="h-4 w-4" />
-          About Us
         </Link>
         <Link
           to="/search-doctors"
