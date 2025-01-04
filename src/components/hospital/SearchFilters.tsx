@@ -25,19 +25,19 @@ export const SearchFilters = ({
   setSearchQuery,
 }: SearchFiltersProps) => {
   return (
-    <Card className="mb-8 shadow-lg border-0 bg-gradient-to-r from-[#9b87f5]/5 to-[#7E69AB]/5 backdrop-blur-sm">
-      <CardHeader className="text-center pb-2">
-        <CardTitle className="text-3xl font-bold text-[#1A1F2C]">Find a Hospital</CardTitle>
+    <Card className="mb-4 md:mb-8 shadow-lg border-0 bg-gradient-to-r from-[#9b87f5]/5 to-[#7E69AB]/5 backdrop-blur-sm">
+      <CardHeader className="text-center pb-2 px-4">
+        <CardTitle className="text-2xl md:text-3xl font-bold text-[#1A1F2C]">Find a Hospital</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-6">
+      <CardContent className="p-4">
+        <div className="space-y-4">
           <GlobalSearchBar
             value={searchQuery}
             onChange={setSearchQuery}
-            placeholder="Search hospitals, locations, specialities, doctors, services..."
+            placeholder="Search hospitals, specialities..."
           />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
+          <div className="flex flex-col space-y-4">
+            <div className="w-full">
               <Input
                 placeholder="Search by location..."
                 value={location}
@@ -45,7 +45,7 @@ export const SearchFilters = ({
                 className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20"
               />
             </div>
-            <div>
+            <div className="w-full">
               <Select value={speciality} onValueChange={setSpeciality}>
                 <SelectTrigger className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20">
                   <SelectValue placeholder="Select Speciality" />
@@ -60,7 +60,7 @@ export const SearchFilters = ({
                 </SelectContent>
               </Select>
             </div>
-            <div>
+            <div className="w-full">
               <Select value={insuranceProvider} onValueChange={setInsuranceProvider}>
                 <SelectTrigger className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20">
                   <SelectValue placeholder="Select Insurance Provider" />
