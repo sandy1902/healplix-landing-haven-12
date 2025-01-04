@@ -7,6 +7,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Hospital } from "@/types/hospital";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface HospitalProfileDialogProps {
   hospital: Hospital;
@@ -33,23 +34,50 @@ export function HospitalProfileDialog({
         <ScrollArea className="h-full px-6 pb-20 overflow-y-auto [&_[data-radix-scroll-area-viewport]]:!block [&_[data-radix-scroll-area-scrollbar]]:!w-4 [&_[data-radix-scroll-area-thumb]]:!bg-[#7E69AB]/50">
           <div className="space-y-8">
             {/* Hospital Images */}
-            <div className="flex justify-center">
-              <img
-                src={hospital.image}
-                alt={hospital.name}
-                className="w-full h-48 object-cover rounded-lg"
-              />
+            <div className="relative">
+              <ScrollArea className="w-full whitespace-nowrap rounded-lg">
+                <div className="flex space-x-4 p-4">
+                  {hospital.images.map((image, index) => (
+                    <img
+                      key={index}
+                      src={image}
+                      alt={`${hospital.name} - Image ${index + 1}`}
+                      className="h-48 w-64 object-cover rounded-lg inline-block"
+                    />
+                  ))}
+                </div>
+              </ScrollArea>
             </div>
 
             {/* Hospital Details */}
-            <div className="bg-white p-6 rounded-lg">
+            <div className="bg-white/50 p-6 rounded-lg">
               <h3 className="text-lg font-semibold text-[#333333] mb-4">{hospital.name}</h3>
               <p className="text-[#8E9196]">{hospital.location}</p>
               <p className="text-[#7E69AB] font-medium">Rating: {hospital.rating}</p>
             </div>
 
+            {/* Doctors */}
+            <div className="bg-white/50 p-6 rounded-lg">
+              <h3 className="text-lg font-semibold text-[#333333] mb-4">Our Doctors</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {hospital.doctors.map((doctor) => (
+                  <div key={doctor.name} className="flex items-start space-x-4 p-4 bg-white rounded-lg">
+                    <Avatar className="h-12 w-12">
+                      <AvatarImage src="/placeholder.svg" />
+                      <AvatarFallback>DR</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <h4 className="font-medium text-[#333333]">{doctor.name}</h4>
+                      <p className="text-sm text-[#7E69AB]">{doctor.speciality}</p>
+                      <p className="text-sm text-[#8E9196]">{doctor.qualification}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Specialities */}
-            <div className="bg-white p-6 rounded-lg">
+            <div className="bg-white/50 p-6 rounded-lg">
               <h3 className="text-lg font-semibold text-[#333333] mb-4">Specialities</h3>
               <ul className="list-disc list-inside text-[#555555]">
                 {hospital.specialities.map((spec) => (
@@ -59,7 +87,7 @@ export function HospitalProfileDialog({
             </div>
 
             {/* Services */}
-            <div className="bg-white p-6 rounded-lg">
+            <div className="bg-white/50 p-6 rounded-lg">
               <h3 className="text-lg font-semibold text-[#333333] mb-4">Services</h3>
               <ul className="list-disc list-inside text-[#555555]">
                 <li>24/7 Emergency Care</li>
