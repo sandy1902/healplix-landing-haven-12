@@ -57,36 +57,34 @@ export default function Login() {
       <Navbar />
       <div className="flex items-center justify-center px-4 py-24">
         <div className="w-full max-w-md">
-          <div className="bg-white/20 backdrop-blur-lg rounded-xl shadow-2xl p-8 space-y-6 border border-[#9b87f5]/20">
-            <div className="text-center">
-              <h1 className="text-3xl font-bold text-[#1A1F2C] font-poppins mb-2">Welcome Back</h1>
-              <p className="text-[#7E69AB] font-sans">Sign in to your account</p>
-            </div>
-            
-            <Auth
-              supabaseClient={supabase}
-              appearance={{
-                theme: ThemeSupa,
-                variables: {
-                  default: {
-                    colors: {
-                      brand: '#9b87f5',
-                      brandAccent: '#7E69AB',
-                    },
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-[#1A1F2C] font-poppins mb-2">Welcome Back</h1>
+            <p className="text-[#7E69AB] font-sans">Sign in to your account</p>
+          </div>
+          
+          <Auth
+            supabaseClient={supabase}
+            appearance={{
+              theme: ThemeSupa,
+              variables: {
+                default: {
+                  colors: {
+                    brand: '#9b87f5',
+                    brandAccent: '#7E69AB',
                   },
                 },
-                className: {
-                  container: 'font-sans',
-                  button: 'font-sans',
-                  input: 'font-sans',
-                  label: 'font-sans',
-                },
-              }}
-              providers={[]}
-              redirectTo={`${window.location.origin}/dashboard`}
-              view="sign_in"
-            />
-          </div>
+              },
+              className: {
+                container: 'font-sans',
+                button: 'font-sans',
+                input: 'font-sans',
+                label: 'font-sans',
+              },
+            }}
+            providers={[]}
+            redirectTo={`${window.location.origin}/dashboard`}
+            view="sign_in"
+          />
         </div>
       </div>
       <Footer />
