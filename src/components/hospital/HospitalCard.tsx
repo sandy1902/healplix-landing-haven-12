@@ -18,31 +18,33 @@ export function HospitalCard({
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        {/* Section 1: Image */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 bg-white/90 p-6 rounded-lg hover:shadow-lg transition-all duration-300">
         <div className="w-full max-w-[250px] mx-auto">
           <img
             src={hospital.image}
             alt={hospital.name}
-            className="w-full h-36 object-cover rounded-lg"
+            className="w-full h-36 object-cover rounded-lg shadow-md"
           />
         </div>
 
-        {/* Section 2: Hospital Details */}
         <div className="flex flex-col justify-center">
           <h3 className="text-2xl font-semibold text-[#1A1F2C] mb-2">{hospital.name}</h3>
-          <p className="text-[#8E9196]">{hospital.location}</p>
-          <span className="text-[#1A1F2C] font-semibold mt-2">Rating: {hospital.rating}/5</span>
+          <p className="text-[#7E69AB]">{hospital.location}</p>
+          <div className="flex items-center gap-2 mt-2">
+            <span className="text-[#1A1F2C] font-semibold">Rating:</span>
+            <span className="bg-[#9b87f5]/10 text-[#7E69AB] px-2 py-1 rounded-md">
+              {hospital.rating}/5
+            </span>
+          </div>
         </div>
 
-        {/* Section 3: Specialities */}
         <div>
           <h4 className="text-lg font-semibold text-[#1A1F2C] mb-3">Specialities</h4>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-wrap gap-2">
             {hospital.specialities.map((spec) => (
               <span
                 key={spec}
-                className="px-3 py-1.5 bg-[#9b87f5]/10 text-[#9b87f5] rounded-full text-sm font-medium w-fit"
+                className="px-3 py-1.5 bg-[#9b87f5]/10 text-[#9b87f5] rounded-full text-sm font-medium"
               >
                 {spec}
               </span>
@@ -50,7 +52,6 @@ export function HospitalCard({
           </div>
         </div>
 
-        {/* Section 4: Action Buttons */}
         <div className="flex flex-col gap-3 justify-center">
           <Button 
             variant="outline"
@@ -68,7 +69,7 @@ export function HospitalCard({
           </Button>
           <Button 
             onClick={() => onAdmissionEnquiry(hospital)}
-            className="bg-[#9b87f5] hover:bg-[#8b77e5] text-white w-full"
+            className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white w-full"
           >
             Send Admission Enquiry
           </Button>

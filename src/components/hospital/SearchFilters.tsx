@@ -25,7 +25,7 @@ export const SearchFilters = ({
   setSearchQuery,
 }: SearchFiltersProps) => {
   return (
-    <Card className="mb-8 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+    <Card className="mb-8 shadow-lg border-0 bg-gradient-to-r from-[#9b87f5]/5 to-[#7E69AB]/5 backdrop-blur-sm">
       <CardHeader className="text-center pb-2">
         <CardTitle className="text-3xl font-bold text-[#1A1F2C]">Find a Hospital</CardTitle>
       </CardHeader>

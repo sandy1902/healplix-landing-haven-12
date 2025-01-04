@@ -17,10 +17,9 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
 
   return (
     <>
-      <Card className="border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="border-0 bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
         <CardContent className="p-6">
           <div className="grid grid-cols-12 gap-4">
-            {/* Column 1: Profile Image */}
             <div className="col-span-2 flex justify-center items-start">
               <Avatar className="h-32 w-32 rounded-lg">
                 <AvatarImage src={doctor.image} alt={doctor.name} />
@@ -28,34 +27,31 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
               </Avatar>
             </div>
 
-            {/* Column 2: Doctor's Details */}
             <div className="col-span-4">
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <h3 className="text-2xl font-bold text-[#1A1F2C]">{doctor.name}</h3>
-                  <div className="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-md">
-                    <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                    <span className="text-sm font-medium text-yellow-700">{doctor.rating}</span>
+                  <div className="flex items-center gap-1 bg-[#9b87f5]/10 px-2 py-1 rounded-md">
+                    <Star className="h-4 w-4 text-[#9b87f5] fill-[#9b87f5]" />
+                    <span className="text-sm font-medium text-[#7E69AB]">{doctor.rating}</span>
                   </div>
                 </div>
-                <p className="text-[#8E9196]">{doctor.qualification}</p>
-                <p className="text-[#7E69AB] font-medium">{doctor.specialization}</p>
-                <p className="text-[#8E9196] font-medium">{doctor.experience} experience</p>
+                <p className="text-[#7E69AB]">{doctor.qualification}</p>
+                <p className="text-[#9b87f5] font-medium">{doctor.specialization}</p>
+                <p className="text-[#7E69AB] font-medium">{doctor.experience} experience</p>
               </div>
             </div>
 
-            {/* Column 3: Clinic Information */}
             <div className="col-span-3">
-              <div className="w-full p-4 bg-[#F8F9FA] rounded-lg">
+              <div className="w-full p-4 bg-[#9b87f5]/5 rounded-lg">
                 <h4 className="font-semibold text-[#1A1F2C] mb-3">{doctor.clinicName}</h4>
-                <p className="text-[#8E9196] flex items-center gap-2">
+                <p className="text-[#7E69AB] flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-[#9b87f5]" /> 
                   <span className="flex-1">{doctor.location}</span>
                 </p>
               </div>
             </div>
 
-            {/* Column 4: Appointment Details */}
             <div className="col-span-3 flex flex-col justify-center space-y-4">
               <Button 
                 variant="outline"
