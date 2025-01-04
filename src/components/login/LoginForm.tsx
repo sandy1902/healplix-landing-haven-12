@@ -14,31 +14,55 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
-  emailOrPhone: z.string().min(1, "Email or phone number is required"),
+  email: z.string().email("Invalid email address"),
   password: z.string().min(1, "Password is required"),
 });
 
 export function LoginForm() {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      emailOrPhone: "",
+      email: "",
       password: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    toast({
-      title: "Login successful!",
-      description: "Welcome back to Healplix.",
-    });
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      setIsLoading(true);
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: values.email,
+        password: values.password,
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        toast({
+          title: "Login successful!",
+          description: "Welcome back to Healplix.",
+        });
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        title: "Login failed",
+        description: error instanceof Error ? error.message : "Please check your credentials and try again",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -46,15 +70,15 @@ export function LoginForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="emailOrPhone"
+          name="email"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-[#1A1F2C] text-base font-medium font-sans">
-                Email or Phone Number
+                Email
               </FormLabel>
               <FormControl>
                 <Input 
-                  placeholder="Enter your email or phone number" 
+                  placeholder="Enter your email" 
                   {...field}
                   className="bg-white/50 backdrop-blur-sm border-[#9b87f5]/20 focus:border-[#9b87f5]/50 focus:ring-[#9b87f5]/50 font-sans"
                 />
@@ -108,8 +132,12 @@ export function LoginForm() {
           )}
         />
 
-        <Button type="submit" className="w-full bg-[#9b87f5] hover:bg-[#7E69AB] text-white font-sans">
-          Login
+        <Button 
+          type="submit" 
+          className="w-full bg-[#9b87f5] hover:bg-[#7E69AB] text-white font-sans"
+          disabled={isLoading}
+        >
+          {isLoading ? "Logging in..." : "Login"}
         </Button>
       </form>
     </Form>

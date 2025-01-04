@@ -2,21 +2,15 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
-import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { RoleSelector } from "./RoleSelector";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
+import { EmailField } from "./EmailField";
+import { PhoneField } from "./PhoneField";
+import { PasswordFields } from "./PasswordFields";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -40,8 +34,7 @@ const formSchema = z.object({
 export function SignupForm() {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,6 +49,8 @@ export function SignupForm() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setIsLoading(true);
+      
       // Sign up the user
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: values.email,
@@ -91,120 +86,25 @@ export function SignupForm() {
         description: error instanceof Error ? error.message : "Please try again later",
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-[#1A1F2C] text-base font-medium font-sans">Email</FormLabel>
-              <FormControl>
-                <Input 
-                  placeholder="Enter your email" 
-                  {...field}
-                  className="bg-white/50 backdrop-blur-sm border-[#9b87f5]/20 focus:border-[#9b87f5]/50 focus:ring-[#9b87f5]/50 font-sans"
-                />
-              </FormControl>
-              <FormMessage className="text-red-500" />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="phoneNumber"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-[#1A1F2C] text-base font-medium font-sans">Phone Number</FormLabel>
-              <FormControl>
-                <Input 
-                  placeholder="Enter your phone number" 
-                  {...field}
-                  className="bg-white/50 backdrop-blur-sm border-[#9b87f5]/20 focus:border-[#9b87f5]/50 focus:ring-[#9b87f5]/50 font-sans"
-                />
-              </FormControl>
-              <FormMessage className="text-red-500" />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-[#1A1F2C] text-base font-medium font-sans">Password</FormLabel>
-              <FormControl>
-                <div className="relative">
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
-                    {...field}
-                    className="bg-white/50 backdrop-blur-sm border-[#9b87f5]/20 focus:border-[#9b87f5]/50 focus:ring-[#9b87f5]/50 pr-10 font-sans"
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-0 top-0 hover:bg-transparent"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-[#7E69AB]" />
-                    ) : (
-                      <Eye className="h-4 w-4 text-[#7E69AB]" />
-                    )}
-                  </Button>
-                </div>
-              </FormControl>
-              <FormMessage className="text-red-500" />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="confirmPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-[#1A1F2C] text-base font-medium font-sans">Confirm Password</FormLabel>
-              <FormControl>
-                <div className="relative">
-                  <Input
-                    type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Confirm your password"
-                    {...field}
-                    className="bg-white/50 backdrop-blur-sm border-[#9b87f5]/20 focus:border-[#9b87f5]/50 focus:ring-[#9b87f5]/50 pr-10 font-sans"
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-0 top-0 hover:bg-transparent"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {showConfirmPassword ? (
-                      <EyeOff className="h-4 w-4 text-[#7E69AB]" />
-                    ) : (
-                      <Eye className="h-4 w-4 text-[#7E69AB]" />
-                    )}
-                  </Button>
-                </div>
-              </FormControl>
-              <FormMessage className="text-red-500" />
-            </FormItem>
-          )}
-        />
-
+        <EmailField control={form.control} />
+        <PhoneField control={form.control} />
+        <PasswordFields control={form.control} />
         <RoleSelector control={form.control} />
 
-        <Button type="submit" className="w-full bg-[#9b87f5] hover:bg-[#7E69AB] text-white font-sans">
-          Sign Up
+        <Button 
+          type="submit" 
+          className="w-full bg-[#9b87f5] hover:bg-[#7E69AB] text-white font-sans"
+          disabled={isLoading}
+        >
+          {isLoading ? "Creating account..." : "Sign Up"}
         </Button>
       </form>
     </Form>
