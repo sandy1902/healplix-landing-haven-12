@@ -25,9 +25,9 @@ export const SearchDropdown = () => {
         <DropdownMenuTrigger asChild>
           <Button 
             variant="ghost" 
-            className="flex items-center gap-2 hover:text-primary font-poppins capitalize"
+            className="flex items-center gap-2 hover:text-primary font-poppins capitalize text-lg"
           >
-            <Search className="h-4 w-4" />
+            <Search className="h-5 w-5" />
             Search
           </Button>
         </DropdownMenuTrigger>
@@ -36,12 +36,12 @@ export const SearchDropdown = () => {
           sideOffset={8}
         >
           <DropdownMenuItem>
-            <Link to="/search-doctors" className="w-full font-poppins capitalize">
+            <Link to="/search-doctors" className="w-full font-poppins capitalize text-lg">
               Find a Doctor
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link to="/search-hospitals" className="w-full font-poppins capitalize">
+            <Link to="/search-hospitals" className="w-full font-poppins capitalize text-lg">
               Find a Hospital
             </Link>
           </DropdownMenuItem>
