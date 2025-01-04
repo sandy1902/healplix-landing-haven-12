@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileMenu } from "./navbar/MobileMenu";
+import { SearchDropdown } from "./navbar/SearchDropdown";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,10 +58,11 @@ export const Navbar = () => {
                 {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </Button>
             ) : (
-              <div className="flex items-center space-x-6">
-                <Link to="/" className="text-gray-700 hover:text-primary">HOME</Link>
-                <Link to="/about-us" className="text-gray-700 hover:text-primary">ABOUT US</Link>
-                <Link to="/contact" className="text-gray-700 hover:text-primary">CONTACT US</Link>
+              <div className="flex items-center space-x-6 font-poppins">
+                <Link to="/" className="text-gray-700 hover:text-primary capitalize">Home</Link>
+                <Link to="/about-us" className="text-gray-700 hover:text-primary capitalize">About us</Link>
+                <Link to="/contact" className="text-gray-700 hover:text-primary capitalize">Contact us</Link>
+                <SearchDropdown />
                 <div className="flex items-center space-x-3">
                   <Link to="/login">
                     <Button variant="outline" className="font-roboto">
