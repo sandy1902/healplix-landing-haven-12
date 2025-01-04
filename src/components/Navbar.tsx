@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileMenu } from "./navbar/MobileMenu";
 
@@ -24,10 +24,18 @@ export const Navbar = () => {
           </div>
           <div className="flex items-center space-x-4">
             <span>Follow Us On:</span>
-            <a href="#" className="hover:opacity-80">Facebook</a>
-            <a href="#" className="hover:opacity-80">Twitter</a>
-            <a href="#" className="hover:opacity-80">Instagram</a>
-            <a href="#" className="hover:opacity-80">LinkedIn</a>
+            <a href="#" className="hover:opacity-80">
+              <Facebook size={20} />
+            </a>
+            <a href="#" className="hover:opacity-80">
+              <Twitter size={20} />
+            </a>
+            <a href="#" className="hover:opacity-80">
+              <Instagram size={20} />
+            </a>
+            <a href="#" className="hover:opacity-80">
+              <Linkedin size={20} />
+            </a>
           </div>
         </div>
       </div>
