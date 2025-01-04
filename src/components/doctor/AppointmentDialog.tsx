@@ -66,35 +66,35 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] bg-white shadow-2xl border-2 border-secondary/20">
         <ScrollArea className="h-full [&_[data-radix-scroll-area-viewport]]:!block [&_[data-radix-scroll-area-scrollbar]]:!w-4 [&_[data-radix-scroll-area-thumb]]:!bg-[#7E69AB]/50">
-          <div className="space-y-4 p-6">
-            <DialogHeader className="border-b pb-4">
+          <div className="px-6 py-4">
+            <DialogHeader className="border-b pb-4 mb-6">
               <DialogTitle className="text-2xl font-bold text-primary bg-gradient-to-r from-secondary/10 to-transparent p-2 rounded-lg">
                 Book Appointment with {doctor.name}
               </DialogTitle>
             </DialogHeader>
             
-            <div className="grid grid-cols-2 gap-4">
-              <PatientSelectionSection
-                selectedPatient={selectedPatient}
-                setSelectedPatient={setSelectedPatient}
-                dependents={dependents}
-              />
-              <ConsultationTypeSection
-                consultationType={consultationType}
-                setConsultationType={setConsultationType}
-                doctor={doctor}
-              />
-            </div>
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <PatientSelectionSection
+                  selectedPatient={selectedPatient}
+                  setSelectedPatient={setSelectedPatient}
+                  dependents={dependents}
+                />
+                <ConsultationTypeSection
+                  consultationType={consultationType}
+                  setConsultationType={setConsultationType}
+                  doctor={doctor}
+                />
+              </div>
 
-            <DateTimeSection
-              date={date}
-              setDate={setDate}
-              selectedTime={selectedTime}
-              setSelectedTime={setSelectedTime}
-              timeSlots={timeSlots}
-            />
+              <DateTimeSection
+                date={date}
+                setDate={setDate}
+                selectedTime={selectedTime}
+                setSelectedTime={setSelectedTime}
+                timeSlots={timeSlots}
+              />
 
-            <div className="mt-6">
               <AppointmentSummary
                 doctor={doctor}
                 selectedPatient={selectedPatient}
@@ -104,7 +104,7 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
                 dependents={dependents}
               />
 
-              <div className="flex justify-end space-x-3 border-t pt-4 mt-4">
+              <div className="flex justify-end space-x-3 border-t pt-4">
                 <Button
                   variant="outline"
                   onClick={() => onOpenChange(false)}
