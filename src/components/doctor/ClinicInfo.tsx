@@ -14,7 +14,6 @@ export function ClinicInfo({ doctor }: ClinicInfoProps) {
       <div className="flex items-start gap-1">
         <MapPin className="h-3 w-3 md:h-4 md:w-4 text-[#9b87f5] mt-0.5" />
         <div className="flex-1 text-sm md:text-base text-[#7E69AB]">
-          <p>{doctor.location}</p>
           <p>{doctor.clinicLocation}</p>
         </div>
       </div>
