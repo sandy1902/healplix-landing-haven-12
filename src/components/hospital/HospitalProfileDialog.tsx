@@ -8,6 +8,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Hospital } from "@/types/hospital";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 
 interface HospitalProfileDialogProps {
   hospital: Hospital;
@@ -24,6 +26,20 @@ export function HospitalProfileDialog({
   onRequestCallback,
   onAdmissionEnquiry 
 }: HospitalProfileDialogProps) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => 
+      prev === hospital.images.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const previousImage = () => {
+    setCurrentImageIndex((prev) => 
+      prev === 0 ? hospital.images.length - 1 : prev - 1
+    );
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[800px] h-[90vh] p-0 bg-[#F1F0FB]/95 backdrop-blur-sm">
@@ -33,10 +49,10 @@ export function HospitalProfileDialog({
         
         <ScrollArea className="h-full px-6 pb-20 overflow-y-auto [&_[data-radix-scroll-area-viewport]]:!block [&_[data-radix-scroll-area-scrollbar]]:!w-4 [&_[data-radix-scroll-area-thumb]]:!bg-[#7E69AB]/50">
           <div className="space-y-8">
-            {/* Hospital Images */}
+            {/* Hospital Images Carousel */}
             <div className="relative">
               <ScrollArea className="w-full whitespace-nowrap rounded-lg">
-                <div className="flex space-x-4 p-4">
+                <div className="flex space-x-4 p-4 relative">
                   {hospital.images.map((image, index) => (
                     <img
                       key={index}
@@ -47,13 +63,45 @@ export function HospitalProfileDialog({
                   ))}
                 </div>
               </ScrollArea>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white"
+                onClick={previousImage}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white"
+                onClick={nextImage}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
             </div>
 
             {/* Hospital Details */}
             <div className="bg-white/50 p-6 rounded-lg">
               <h3 className="text-lg font-semibold text-[#333333] mb-4">{hospital.name}</h3>
               <p className="text-[#8E9196]">{hospital.location}</p>
-              <p className="text-[#7E69AB] font-medium">Rating: {hospital.rating}</p>
+              <div className="flex items-center mt-2">
+                <div className="flex items-center">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Star
+                      key={star}
+                      className={`h-5 w-5 ${
+                        star <= hospital.rating
+                          ? "fill-yellow-400 text-yellow-400"
+                          : "text-gray-300"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <span className="ml-2 text-[#7E69AB] font-medium">
+                  {hospital.rating}/5
+                </span>
+              </div>
             </div>
 
             {/* Doctors */}
@@ -71,6 +119,39 @@ export function HospitalProfileDialog({
                       <p className="text-sm text-[#7E69AB]">{doctor.speciality}</p>
                       <p className="text-sm text-[#8E9196]">{doctor.qualification}</p>
                     </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Reviews */}
+            <div className="bg-white/50 p-6 rounded-lg">
+              <h3 className="text-lg font-semibold text-[#333333] mb-4">Patient Reviews</h3>
+              <div className="space-y-4">
+                {hospital.reviews?.map((review) => (
+                  <div key={review.id} className="bg-white p-4 rounded-lg">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center">
+                        <Avatar className="h-8 w-8">
+                          <AvatarFallback>{review.userName[0]}</AvatarFallback>
+                        </Avatar>
+                        <span className="ml-2 font-medium">{review.userName}</span>
+                      </div>
+                      <span className="text-sm text-gray-500">{review.date}</span>
+                    </div>
+                    <div className="flex items-center mb-2">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star
+                          key={star}
+                          className={`h-4 w-4 ${
+                            star <= review.rating
+                              ? "fill-yellow-400 text-yellow-400"
+                              : "text-gray-300"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-gray-600">{review.comment}</p>
                   </div>
                 ))}
               </div>
