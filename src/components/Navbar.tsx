@@ -31,7 +31,7 @@ export const Navbar = () => {
         title: "Logged out",
         description: "You have been successfully logged out.",
       });
-      navigate('/login');
+      navigate('/'); // Changed from '/login' to '/'
     }
   };
 
