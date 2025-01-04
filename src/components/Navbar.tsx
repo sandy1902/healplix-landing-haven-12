@@ -18,13 +18,12 @@ export const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center">
             <img 
               src="/lovable-uploads/09637a17-236d-44c0-8a5f-aa2d26ea3cd2.png" 
-              alt="Healplix Logo" 
+              alt="Logo" 
               className="h-8 w-auto"
             />
-            <span className="text-xl font-bold text-primary">Healplix</span>
           </Link>
 
           {isMobile ? (
