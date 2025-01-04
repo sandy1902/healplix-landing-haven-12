@@ -75,6 +75,27 @@ export function HospitalProfileDialog({
                   </div>
                 </div>
 
+                <div className="bg-white p-6 rounded-lg shadow-sm">
+                  <h3 className="text-xl font-semibold mb-4 text-primary">Services</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      "24/7 Emergency Care",
+                      "Laboratory Services",
+                      "Diagnostic Imaging",
+                      "Pharmacy",
+                      "Rehabilitation Services",
+                      "Outpatient Surgery"
+                    ].map((service) => (
+                      <div 
+                        key={service}
+                        className="flex items-center p-3 bg-gray-50 rounded-lg"
+                      >
+                        <span className="text-gray-700">{service}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
                 <DoctorsList doctors={hospital.doctors} hospitalName={hospital.name} />
 
                 <div className="bg-white p-6 rounded-lg shadow-sm">
