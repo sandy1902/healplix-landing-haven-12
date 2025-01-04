@@ -128,7 +128,7 @@ export default function DoctorSearch() {
           </CardContent>
         </Card>
 
-        <div className="space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {filteredDoctors.map((doctor) => (
             <DoctorCard
               key={doctor.id}
@@ -138,7 +138,7 @@ export default function DoctorSearch() {
           ))}
 
           {filteredDoctors.length === 0 && (
-            <Card className="border-0 bg-white/90 backdrop-blur-sm">
+            <Card className="col-span-full border-0 bg-white/90 backdrop-blur-sm">
               <CardContent className="p-6 text-center text-[#8E9196]">
                 No doctors found matching your criteria
               </CardContent>
