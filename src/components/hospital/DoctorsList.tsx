@@ -22,8 +22,14 @@ export function DoctorsList({ doctors }: DoctorsListProps) {
       rating: 4.5,
       clinicName: "Main Hospital Clinic",
       location: "Hospital Location",
-      clinicVisit: { charges: 500 },
-      videoConsultation: { charges: 400 },
+      clinicVisit: { 
+        charges: 500,
+        available: true 
+      },
+      videoConsultation: { 
+        charges: 400,
+        available: true 
+      },
       image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d",
       about: `Dr. ${doctor.name} is a highly qualified ${doctor.speciality} specialist.`
     };
