@@ -3,9 +3,11 @@ import { useToast } from "@/components/ui/use-toast";
 import { AdmissionEnquiryForm } from "@/components/hospital/AdmissionEnquiryForm";
 import { SearchFilters } from "@/components/hospital/SearchFilters";
 import { HospitalResults } from "@/components/hospital/HospitalResults";
+import { GlobalSearchBar } from "@/components/search/GlobalSearchBar";
 import { Hospital } from "@/types/hospital";
 
 export default function HospitalSearch() {
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [speciality, setSpeciality] = useState<string>("");
   const [insuranceProvider, setInsuranceProvider] = useState<string>("");
@@ -123,15 +125,35 @@ export default function HospitalSearch() {
   };
 
   const filteredHospitals = hospitals.filter(hospital => {
+    const searchTerms = searchQuery.toLowerCase().split(" ");
+    const matchesSearch = searchQuery === "" || searchTerms.every(term =>
+      hospital.name.toLowerCase().includes(term) ||
+      hospital.location.toLowerCase().includes(term) ||
+      hospital.specialities.some(spec => spec.toLowerCase().includes(term)) ||
+      hospital.doctors.some(doc => 
+        doc.name.toLowerCase().includes(term) || 
+        doc.speciality.toLowerCase().includes(term)
+      )
+    );
+    
     const matchesLocation = !location || hospital.location.toLowerCase().includes(location.toLowerCase());
     const matchesSpeciality = !speciality || hospital.specialities.includes(speciality);
     const matchesInsurance = !insuranceProvider || hospital.insuranceProviders.includes(insuranceProvider);
-    return matchesLocation && matchesSpeciality && matchesInsurance;
+    
+    return matchesSearch && matchesLocation && matchesSpeciality && matchesInsurance;
   });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10">
       <div className="container mx-auto py-12 px-4">
+        <div className="mb-8">
+          <GlobalSearchBar
+            value={searchQuery}
+            onChange={setSearchQuery}
+            placeholder="Search hospitals, locations, specialities, doctors..."
+          />
+        </div>
+
         <SearchFilters
           location={location}
           setLocation={setLocation}

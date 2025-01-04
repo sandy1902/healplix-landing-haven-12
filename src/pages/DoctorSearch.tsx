@@ -5,10 +5,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { DoctorCard } from "@/components/doctor/DoctorCard";
 import { AppointmentDialog } from "@/components/doctor/AppointmentDialog";
+import { GlobalSearchBar } from "@/components/search/GlobalSearchBar";
 import { Doctor } from "@/types/doctor";
 
 export default function DoctorSearch() {
   const { toast } = useToast();
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [speciality, setSpeciality] = useState<string>("");
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
@@ -69,9 +71,19 @@ export default function DoctorSearch() {
   };
 
   const filteredDoctors = doctors.filter(doctor => {
+    const searchTerms = searchQuery.toLowerCase().split(" ");
+    const matchesSearch = searchQuery === "" || searchTerms.every(term =>
+      doctor.name.toLowerCase().includes(term) ||
+      doctor.location.toLowerCase().includes(term) ||
+      doctor.specialization.toLowerCase().includes(term) ||
+      doctor.qualification.toLowerCase().includes(term) ||
+      doctor.clinicName.toLowerCase().includes(term)
+    );
+
     const matchesLocation = !location || doctor.location.toLowerCase().includes(location.toLowerCase());
     const matchesSpeciality = !speciality || doctor.specialization.toLowerCase() === speciality.toLowerCase();
-    return matchesLocation && matchesSpeciality;
+    
+    return matchesSearch && matchesLocation && matchesSpeciality;
   });
 
   return (
@@ -82,27 +94,34 @@ export default function DoctorSearch() {
             <CardTitle className="text-3xl font-bold text-[#1A1F2C]">Find a Doctor</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Input
-                  placeholder="Search by location..."
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20"
-                />
-              </div>
-              <div>
-                <Select value={speciality} onValueChange={setSpeciality}>
-                  <SelectTrigger className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20">
-                    <SelectValue placeholder="Select Speciality" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="cardiologist">Cardiologist</SelectItem>
-                    <SelectItem value="dermatologist">Dermatologist</SelectItem>
-                    <SelectItem value="neurologist">Neurologist</SelectItem>
-                    <SelectItem value="orthopedist">Orthopedist</SelectItem>
-                  </SelectContent>
-                </Select>
+            <div className="space-y-6">
+              <GlobalSearchBar
+                value={searchQuery}
+                onChange={setSearchQuery}
+                placeholder="Search doctors, locations, specialities, clinics..."
+              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <Input
+                    placeholder="Search by location..."
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20"
+                  />
+                </div>
+                <div>
+                  <Select value={speciality} onValueChange={setSpeciality}>
+                    <SelectTrigger className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20">
+                      <SelectValue placeholder="Select Speciality" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="cardiologist">Cardiologist</SelectItem>
+                      <SelectItem value="dermatologist">Dermatologist</SelectItem>
+                      <SelectItem value="neurologist">Neurologist</SelectItem>
+                      <SelectItem value="orthopedist">Orthopedist</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
           </CardContent>
