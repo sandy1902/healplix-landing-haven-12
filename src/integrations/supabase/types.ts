@@ -9,6 +9,38 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      admin_logs: {
+        Row: {
+          action_type: Database["public"]["Enums"]["admin_action_type"]
+          admin_id: string | null
+          created_at: string | null
+          description: string
+          id: string
+        }
+        Insert: {
+          action_type: Database["public"]["Enums"]["admin_action_type"]
+          admin_id?: string | null
+          created_at?: string | null
+          description: string
+          id?: string
+        }
+        Update: {
+          action_type?: Database["public"]["Enums"]["admin_action_type"]
+          admin_id?: string | null
+          created_at?: string | null
+          description?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admin_logs_admin_id_fkey"
+            columns: ["admin_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       admission_enquiries: {
         Row: {
           admission_date: string | null
@@ -605,6 +637,38 @@ export type Database = {
           },
         ]
       }
+      system_settings: {
+        Row: {
+          id: string
+          last_modified_at: string | null
+          last_modified_by: string | null
+          setting_key: string
+          setting_value: Json
+        }
+        Insert: {
+          id?: string
+          last_modified_at?: string | null
+          last_modified_by?: string | null
+          setting_key: string
+          setting_value: Json
+        }
+        Update: {
+          id?: string
+          last_modified_at?: string | null
+          last_modified_by?: string | null
+          setting_key?: string
+          setting_value?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "system_settings_last_modified_by_fkey"
+            columns: ["last_modified_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_analytics: {
         Row: {
           active_users: number
@@ -643,8 +707,13 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      admin_action_type:
+        | "user_management"
+        | "system_config"
+        | "security"
+        | "audit"
       registration_status: "pending" | "approved" | "rejected"
-      user_role: "user" | "doctor" | "executive"
+      user_role: "user" | "doctor" | "executive" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
