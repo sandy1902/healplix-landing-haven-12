@@ -14,8 +14,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 const formSchema = z.object({
   emailOrPhone: z.string().min(1, "Email or phone number is required"),
@@ -25,8 +24,6 @@ const formSchema = z.object({
 export function LoginForm() {
   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
-  const { login } = useAuth();
-  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,12 +35,10 @@ export function LoginForm() {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
-    login();
     toast({
       title: "Login successful!",
       description: "Welcome back to Healplix.",
     });
-    navigate('/');
   };
 
   return (
