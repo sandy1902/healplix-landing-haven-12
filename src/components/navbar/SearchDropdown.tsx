@@ -10,14 +10,16 @@ import {
 
 export const SearchDropdown = () => {
   return (
-    <DropdownMenu open={undefined}>
+    <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button 
           variant="ghost" 
           className="flex items-center gap-2 data-[state=open]:text-primary"
           onMouseEnter={(e) => {
             const target = e.currentTarget as HTMLButtonElement;
-            target.click();
+            if (!target.getAttribute('data-state') || target.getAttribute('data-state') === 'closed') {
+              target.click();
+            }
           }}
         >
           <Search className="h-4 w-4" />
@@ -28,7 +30,9 @@ export const SearchDropdown = () => {
         className="w-48 bg-white shadow-lg rounded-lg p-2"
         onMouseLeave={(e) => {
           const trigger = document.querySelector('[data-state="open"]') as HTMLButtonElement;
-          if (trigger) trigger.click();
+          if (trigger) {
+            trigger.click();
+          }
         }}
       >
         <DropdownMenuItem>
