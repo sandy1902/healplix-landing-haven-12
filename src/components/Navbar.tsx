@@ -44,12 +44,12 @@ export const Navbar = () => {
       {/* Main Navbar */}
       <nav className="bg-white shadow-sm">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-24">
             <Link to="/" className="flex items-center">
               <img 
                 src="/lovable-uploads/09637a17-236d-44c0-8a5f-aa2d26ea3cd2.png" 
                 alt="Logo" 
-                className="h-12 w-auto"
+                className="h-16 w-auto"
               />
             </Link>
 
@@ -59,18 +59,18 @@ export const Navbar = () => {
               </Button>
             ) : (
               <div className="flex items-center space-x-6 font-poppins">
-                <Link to="/" className="text-gray-700 hover:text-primary capitalize">Home</Link>
-                <Link to="/about-us" className="text-gray-700 hover:text-primary capitalize">About us</Link>
-                <Link to="/contact" className="text-gray-700 hover:text-primary capitalize">Contact us</Link>
+                <Link to="/" className="text-gray-700 hover:text-primary capitalize text-lg">Home</Link>
+                <Link to="/about-us" className="text-gray-700 hover:text-primary capitalize text-lg">About us</Link>
+                <Link to="/contact" className="text-gray-700 hover:text-primary capitalize text-lg">Contact us</Link>
                 <SearchDropdown />
                 <div className="flex items-center space-x-3">
                   <Link to="/login">
-                    <Button variant="outline" className="font-roboto">
+                    <Button variant="outline" className="font-roboto text-base">
                       Login
                     </Button>
                   </Link>
                   <Link to="/signup">
-                    <Button className="bg-[#1e40af] hover:bg-[#1e3a8a] font-roboto">
+                    <Button className="bg-[#1e40af] hover:bg-[#1e3a8a] font-roboto text-base">
                       Sign Up
                     </Button>
                   </Link>
