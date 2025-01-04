@@ -34,7 +34,7 @@ export const SearchFilters = ({
           <GlobalSearchBar
             value={searchQuery}
             onChange={setSearchQuery}
-            placeholder="Search hospitals, locations, specialities, doctors..."
+            placeholder="Search hospitals, locations, specialities, doctors, services..."
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>

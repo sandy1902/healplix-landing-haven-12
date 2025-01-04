@@ -132,7 +132,8 @@ export default function HospitalSearch() {
       hospital.doctors.some(doc => 
         doc.name.toLowerCase().includes(term) || 
         doc.speciality.toLowerCase().includes(term)
-      )
+      ) ||
+      hospital.services?.some(service => service.toLowerCase().includes(term))
     );
     
     const matchesLocation = !location || hospital.location.toLowerCase().includes(location.toLowerCase());
