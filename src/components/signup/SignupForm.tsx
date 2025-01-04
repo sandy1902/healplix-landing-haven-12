@@ -15,6 +15,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { RoleSelector } from "./RoleSelector";
+import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -37,6 +39,7 @@ const formSchema = z.object({
 
 export function SignupForm() {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -51,12 +54,44 @@ export function SignupForm() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    toast({
-      title: "Account created successfully!",
-      description: "You can now login with your credentials.",
-    });
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      // Sign up the user
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: values.email,
+        password: values.password,
+      });
+
+      if (authError) throw authError;
+
+      if (authData.user) {
+        // Create the profile
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .insert({
+            id: authData.user.id,
+            phone_number: values.phoneNumber,
+            role: values.role,
+          });
+
+        if (profileError) throw profileError;
+
+        toast({
+          title: "Account created successfully!",
+          description: "You can now login with your credentials.",
+        });
+
+        // Redirect to login page
+        navigate('/login');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        title: "Error creating account",
+        description: error instanceof Error ? error.message : "Please try again later",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
