@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Doctor } from "@/types/doctor";
 import { AppointmentDialog } from "@/components/doctor/AppointmentDialog";
 import { DoctorProfileDialog } from "@/components/doctor/DoctorProfileDialog";
+import { formatDoctorData } from "@/utils/doctorUtils";
 
 interface DoctorsListProps {
   doctors: Array<{ name: string; qualification: string; speciality: string; }>;
@@ -14,60 +15,14 @@ export function DoctorsList({ doctors, hospitalName }: DoctorsListProps) {
   const [isAppointmentOpen, setIsAppointmentOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-  const handleBookAppointment = (doctor: any) => {
-    const formattedDoctor: Doctor = {
-      id: doctor.name.toLowerCase().replace(/\s+/g, '-'),
-      name: doctor.name,
-      specialization: doctor.speciality,
-      qualification: doctor.qualification,
-      experience: "5+ years",
-      rating: 4.5,
-      clinicName: hospitalName || "Main Hospital Clinic",
-      location: hospitalName || "Private Clinic",
-      clinicVisit: { 
-        charges: 500,
-        available: true 
-      },
-      videoConsultation: { 
-        charges: 400,
-        available: true 
-      },
-      email: "doctor@hospital.com",
-      contactNumber: "+1234567890",
-      clinicLocation: hospitalName || "Private Clinic",
-      clinicTimings: "9:00 AM - 5:00 PM",
-      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d"
-    };
-    
+  const handleBookAppointment = (doctor: { name: string; qualification: string; speciality: string }) => {
+    const formattedDoctor = formatDoctorData(doctor, hospitalName);
     setSelectedDoctor(formattedDoctor);
     setIsAppointmentOpen(true);
   };
 
-  const handleViewProfile = (doctor: any) => {
-    const formattedDoctor: Doctor = {
-      id: doctor.name.toLowerCase().replace(/\s+/g, '-'),
-      name: doctor.name,
-      specialization: doctor.speciality,
-      qualification: doctor.qualification,
-      experience: "5+ years",
-      rating: 4.5,
-      clinicName: hospitalName || "Main Hospital Clinic",
-      location: hospitalName || "Private Clinic",
-      clinicVisit: { 
-        charges: 500,
-        available: true 
-      },
-      videoConsultation: { 
-        charges: 400,
-        available: true 
-      },
-      email: "doctor@hospital.com",
-      contactNumber: "+1234567890",
-      clinicLocation: hospitalName || "Private Clinic",
-      clinicTimings: "9:00 AM - 5:00 PM",
-      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d"
-    };
-    
+  const handleViewProfile = (doctor: { name: string; qualification: string; speciality: string }) => {
+    const formattedDoctor = formatDoctorData(doctor, hospitalName);
     setSelectedDoctor(formattedDoctor);
     setIsProfileOpen(true);
   };
