@@ -29,11 +29,6 @@ export const Features = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="inline-flex items-center space-x-2 text-[#00b341] mb-4">
-            <img 
-              src="/lovable-uploads/09637a17-236d-44c0-8a5f-aa2d26ea3cd2.png"
-              alt="icon"
-              className="w-6 h-6"
-            />
             <span>OUR COMPREHENSIVE SPECIALTIES</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a8a]">
