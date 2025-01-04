@@ -25,6 +25,17 @@ export function useLoginForm() {
     },
   });
 
+  const formatPhoneNumber = (phone: string) => {
+    // Remove any non-digit characters
+    const cleaned = phone.replace(/\D/g, '');
+    
+    // Add +91 prefix if not present and the number starts with a digit
+    if (cleaned.match(/^\d/)) {
+      return `+91${cleaned}`;
+    }
+    return cleaned;
+  };
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     try {
@@ -32,7 +43,9 @@ export function useLoginForm() {
       const isEmail = values.identifier.includes('@');
       const credentials = isEmail 
         ? { email: values.identifier, password: values.password }
-        : { phone: values.identifier, password: values.password };
+        : { phone: formatPhoneNumber(values.identifier), password: values.password };
+
+      console.log('Attempting login with credentials:', credentials);
 
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword(credentials);
 
@@ -62,6 +75,7 @@ export function useLoginForm() {
           navigate('/dashboard');
       }
     } catch (error) {
+      console.error('Login error:', error);
       toast({
         title: "Error",
         description: "Invalid credentials",
