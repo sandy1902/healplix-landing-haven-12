@@ -6,9 +6,8 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MapPin, Mail, Phone, Clock, Award, Star, BookOpen, Heart, User } from "lucide-react";
+import { MapPin, Award, Star, BookOpen } from "lucide-react";
 import { Doctor } from "@/types/doctor";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 interface DoctorProfileDialogProps {
@@ -20,13 +19,13 @@ interface DoctorProfileDialogProps {
 export function DoctorProfileDialog({ doctor, open, onOpenChange }: DoctorProfileDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl h-[90vh] p-0 bg-[#F1F0FB]/95 backdrop-blur-sm">
-        <DialogHeader className="p-6 sticky top-0 bg-[#F1F0FB]/95 backdrop-blur-sm z-10">
+      <DialogContent className="max-w-[800px] h-[90vh] p-0 bg-[#F1F0FB]/95 backdrop-blur-sm">
+        <DialogHeader className="p-6 bg-[#F1F0FB]/95 backdrop-blur-sm">
           <DialogTitle className="text-2xl font-bold text-[#333333] text-center">Doctor Profile</DialogTitle>
         </DialogHeader>
         
-        <ScrollArea className="h-[calc(90vh-8rem)] px-6 w-full">
-          <div className="space-y-8 pb-6">
+        <ScrollArea className="h-full px-6 pb-20">
+          <div className="space-y-8">
             {/* Profile Header */}
             <div className="flex items-start gap-6 bg-white/50 p-6 rounded-lg">
               <Avatar className="h-32 w-32">
@@ -48,25 +47,11 @@ export function DoctorProfileDialog({ doctor, open, onOpenChange }: DoctorProfil
             {/* Clinic Details */}
             <div className="bg-white/50 p-6 rounded-lg">
               <h3 className="text-lg font-semibold text-[#333333] mb-4">Clinic Details</h3>
-              <div className="space-y-3">
-                <div className="flex items-start gap-2 text-[#555555]">
-                  <MapPin className="h-4 w-4 mt-1 text-[#7E69AB]" />
-                  <div>
-                    <p className="font-medium">{doctor.clinicName}</p>
-                    <p>{doctor.clinicLocation}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 text-[#555555]">
-                  <Clock className="h-4 w-4 text-[#7E69AB]" />
-                  <span>{doctor.clinicTimings}</span>
-                </div>
-                <div className="flex items-center gap-2 text-[#555555]">
-                  <Mail className="h-4 w-4 text-[#7E69AB]" />
-                  <span>{doctor.email}</span>
-                </div>
-                <div className="flex items-center gap-2 text-[#555555]">
-                  <Phone className="h-4 w-4 text-[#7E69AB]" />
-                  <span>{doctor.contactNumber}</span>
+              <div className="flex items-start gap-2 text-[#555555]">
+                <MapPin className="h-4 w-4 mt-1 text-[#7E69AB]" />
+                <div>
+                  <p className="font-medium">{doctor.clinicName}</p>
+                  <p>{doctor.clinicLocation}</p>
                 </div>
               </div>
             </div>
@@ -140,19 +125,19 @@ export function DoctorProfileDialog({ doctor, open, onOpenChange }: DoctorProfil
                 </div>
               </div>
             </div>
+
+            {/* Back to Search Button */}
+            <div className="py-6">
+              <Button
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+                className="w-full hover:bg-[#7E69AB] hover:text-white transition-colors"
+              >
+                Back to Search
+              </Button>
+            </div>
           </div>
         </ScrollArea>
-
-        {/* Footer with Back Button */}
-        <div className="sticky bottom-0 p-4 bg-[#F1F0FB]/95 backdrop-blur-sm border-t flex justify-end">
-          <Button
-            variant="outline"
-            onClick={() => onOpenChange(false)}
-            className="hover:bg-[#7E69AB] hover:text-white transition-colors"
-          >
-            Back to Search
-          </Button>
-        </div>
       </DialogContent>
     </Dialog>
   );
