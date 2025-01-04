@@ -67,15 +67,15 @@ export function SignupForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-white text-base font-medium mb-1">Email</FormLabel>
+              <FormLabel className="text-white text-base font-medium font-sans mb-1">Email</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="Enter your email" 
                   {...field}
-                  className="bg-white/5 backdrop-blur-sm border-gray-700"
+                  className="bg-white/5 backdrop-blur-sm border-gray-400 text-white placeholder:text-gray-300"
                 />
               </FormControl>
-              <FormMessage className="text-red-300" />
+              <FormMessage className="text-red-200" />
             </FormItem>
           )}
         />
@@ -85,15 +85,15 @@ export function SignupForm() {
           name="phoneNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-white text-base font-medium mb-1">Phone Number</FormLabel>
+              <FormLabel className="text-white text-base font-medium font-sans mb-1">Phone Number</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="Enter your phone number" 
                   {...field}
-                  className="bg-white/5 backdrop-blur-sm border-gray-700"
+                  className="bg-white/5 backdrop-blur-sm border-gray-400 text-white placeholder:text-gray-300"
                 />
               </FormControl>
-              <FormMessage className="text-red-300" />
+              <FormMessage className="text-red-200" />
             </FormItem>
           )}
         />
@@ -103,31 +103,31 @@ export function SignupForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-white text-base font-medium mb-1">Password</FormLabel>
+              <FormLabel className="text-white text-base font-medium font-sans mb-1">Password</FormLabel>
               <FormControl>
                 <div className="relative">
                   <Input
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     {...field}
-                    className="bg-white/5 backdrop-blur-sm border-gray-700 pr-10"
+                    className="bg-white/5 backdrop-blur-sm border-gray-400 text-white placeholder:text-gray-300 pr-10"
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="icon"
-                    className="absolute right-0 top-0 hover:bg-transparent"
+                    className="absolute right-0 top-0 hover:bg-transparent text-gray-300"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
+                      <EyeOff className="h-4 w-4" />
                     ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-4 w-4" />
                     )}
                   </Button>
                 </div>
               </FormControl>
-              <FormMessage className="text-red-300" />
+              <FormMessage className="text-red-200" />
             </FormItem>
           )}
         />
@@ -137,38 +137,38 @@ export function SignupForm() {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-white text-base font-medium mb-1">Confirm Password</FormLabel>
+              <FormLabel className="text-white text-base font-medium font-sans mb-1">Confirm Password</FormLabel>
               <FormControl>
                 <div className="relative">
                   <Input
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder="Confirm your password"
                     {...field}
-                    className="bg-white/5 backdrop-blur-sm border-gray-700 pr-10"
+                    className="bg-white/5 backdrop-blur-sm border-gray-400 text-white placeholder:text-gray-300 pr-10"
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="icon"
-                    className="absolute right-0 top-0 hover:bg-transparent"
+                    className="absolute right-0 top-0 hover:bg-transparent text-gray-300"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
+                      <EyeOff className="h-4 w-4" />
                     ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-4 w-4" />
                     )}
                   </Button>
                 </div>
               </FormControl>
-              <FormMessage className="text-red-300" />
+              <FormMessage className="text-red-200" />
             </FormItem>
           )}
         />
 
         <RoleSelector control={form.control} />
 
-        <Button type="submit" className="w-full bg-secondary hover:bg-secondary/90">
+        <Button type="submit" className="w-full bg-[#9b87f5] hover:bg-[#7E69AB] text-white font-sans">
           Sign Up
         </Button>
       </form>
