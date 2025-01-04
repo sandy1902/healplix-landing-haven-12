@@ -36,10 +36,15 @@ export const Hero = () => {
             </div>
           </div>
           
-          <div className="relative">
+          <div className="relative grid grid-cols-2 gap-4">
             <img 
-              src="/lovable-uploads/719ebe3c-450b-43b2-beb7-24a67b55231c.png"
-              alt="Female Doctor"
+              src="/lovable-uploads/09637a17-236d-44c0-8a5f-aa2d26ea3cd2.png"
+              alt="Doctor"
+              className="w-full h-auto object-cover rounded-lg"
+            />
+            <img 
+              src="/lovable-uploads/0d5b3abf-46be-468a-8b88-06fb1cd51517.png"
+              alt="Caring Patient"
               className="w-full h-auto object-cover rounded-lg"
             />
           </div>
