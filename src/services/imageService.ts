@@ -1,15 +1,36 @@
 import { RunwareService, GenerateImageParams } from "@/lib/runware";
+import { useState, useEffect } from "react";
 
-// Note: In production, this should be handled securely through environment variables
-const TEMP_API_KEY = ""; // User needs to provide their Runware API key
+let globalApiKey = "";
+
+// Create a custom hook to manage the API key
+export const useRunwareApiKey = () => {
+  const [apiKey, setApiKey] = useState("");
+
+  useEffect(() => {
+    const storedKey = localStorage.getItem("runware_api_key");
+    if (storedKey) {
+      globalApiKey = storedKey;
+      setApiKey(storedKey);
+    }
+  }, []);
+
+  const updateApiKey = (newKey: string) => {
+    globalApiKey = newKey;
+    localStorage.setItem("runware_api_key", newKey);
+    setApiKey(newKey);
+  };
+
+  return { apiKey, updateApiKey };
+};
 
 export const generateMedicalImage = async (prompt: string) => {
-  if (!TEMP_API_KEY) {
+  if (!globalApiKey) {
     console.error("Please provide a Runware API key");
     return null;
   }
 
-  const runware = new RunwareService(TEMP_API_KEY);
+  const runware = new RunwareService(globalApiKey);
   
   const params: GenerateImageParams = {
     positivePrompt: prompt,
