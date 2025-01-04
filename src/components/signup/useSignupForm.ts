@@ -50,17 +50,21 @@ export function useSignupForm() {
     try {
       const formattedPhone = formatPhoneNumber(values.phoneNumber);
       
-      const { error: signUpError } = await supabase.auth.signUp({
+      console.log("Signing up with:", {
+        email: values.email,
+        phone: formattedPhone,
+      });
+
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
-        phone: formattedPhone,
         options: {
           data: {
             full_name: values.name,
             role: values.role,
             phone_number: formattedPhone,
           },
-          emailRedirectTo: window.location.origin + '/login',
+          emailRedirectTo: `${window.location.origin}/login`,
         },
       });
 
@@ -69,9 +73,11 @@ export function useSignupForm() {
         throw signUpError;
       }
 
+      console.log("Signup successful:", data);
+
       toast({
         title: "Account created successfully!",
-        description: "Please check your email to verify your account before logging in.",
+        description: "You can now log in with your email and password.",
       });
       
       navigate("/login");
