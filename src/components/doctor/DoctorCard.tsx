@@ -12,12 +12,12 @@ interface DoctorCardProps {
 
 export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
   return (
-    <Card className="hover:shadow-xl transition-shadow duration-300 border-0 bg-white/90 backdrop-blur-sm animate-fade-up">
-      <CardContent className="p-4">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
+    <Card className="border-0 bg-white/90 backdrop-blur-sm">
+      <CardContent className="p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           {/* Section 1: Profile Image */}
-          <div className="lg:col-span-1 flex justify-center items-start pt-1">
-            <Avatar className="h-24 w-24 rounded-lg">
+          <div className="lg:col-span-2 flex justify-center items-start">
+            <Avatar className="h-32 w-32 rounded-lg">
               <AvatarImage src={doctor.image} alt={doctor.name} />
               <AvatarFallback>DR</AvatarFallback>
             </Avatar>
@@ -25,15 +25,17 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
 
           {/* Section 2: Doctor's Details */}
           <div className="lg:col-span-4">
-            <div className="space-y-2">
-              <h3 className="text-2xl font-bold text-[#1A1F2C]">{doctor.name}</h3>
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <h3 className="text-2xl font-bold text-[#1A1F2C]">{doctor.name}</h3>
+                <div className="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-md">
+                  <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                  <span className="text-sm font-medium text-yellow-700">{doctor.rating}</span>
+                </div>
+              </div>
               <p className="text-[#8E9196]">{doctor.qualification}</p>
               <p className="text-[#7E69AB] font-medium">{doctor.specialization}</p>
               <p className="text-[#8E9196] font-medium">{doctor.experience} experience</p>
-              <div className="flex items-center gap-1.5 bg-yellow-50 w-fit px-3 py-1.5 rounded-md">
-                <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
-                <span className="font-medium text-yellow-700">{doctor.rating}</span>
-              </div>
             </div>
           </div>
 
@@ -49,7 +51,7 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
           </div>
 
           {/* Section 4: Appointment Details */}
-          <div className="lg:col-span-4 flex flex-col justify-center space-y-4">
+          <div className="lg:col-span-3 flex flex-col justify-center space-y-4">
             {doctor.videoConsultation.available && (
               <div className="flex items-center justify-between p-3 bg-[#9b87f5]/10 rounded-lg">
                 <Badge variant="outline" className="flex items-center gap-2 border-[#9b87f5]">
