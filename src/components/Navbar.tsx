@@ -17,39 +17,39 @@ export const Navbar = () => {
   return (
     <>
       {/* Top Bar */}
-      <div className="bg-[#6366f1] text-white py-2">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <span>Phone: +91 9704183466</span>
-            <span>Email: info@healplix.com</span>
+      <div className="bg-[#6366f1] text-white py-2 w-full">
+        <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0">
+          <div className="flex flex-col md:flex-row items-center md:space-x-4 space-y-2 md:space-y-0">
+            <span className="text-sm md:text-base">Phone: +91 9704183466</span>
+            <span className="text-sm md:text-base">Email: info@healplix.com</span>
           </div>
           <div className="flex items-center space-x-4">
-            <span>Follow Us On:</span>
+            <span className="text-sm md:text-base">Follow Us On:</span>
             <a href="#" className="hover:opacity-80">
-              <Facebook size={20} />
+              <Facebook size={16} className="md:w-5 md:h-5" />
             </a>
             <a href="#" className="hover:opacity-80">
-              <Twitter size={20} />
+              <Twitter size={16} className="md:w-5 md:h-5" />
             </a>
             <a href="#" className="hover:opacity-80">
-              <Instagram size={20} />
+              <Instagram size={16} className="md:w-5 md:h-5" />
             </a>
             <a href="#" className="hover:opacity-80">
-              <Linkedin size={20} />
+              <Linkedin size={16} className="md:w-5 md:h-5" />
             </a>
           </div>
         </div>
       </div>
 
       {/* Main Navbar */}
-      <nav className="bg-white shadow-sm">
+      <nav className="bg-white shadow-sm w-full">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-24">
+          <div className="flex items-center justify-between h-20 md:h-24">
             <Link to="/" className="flex items-center">
               <img 
                 src="/lovable-uploads/09637a17-236d-44c0-8a5f-aa2d26ea3cd2.png" 
                 alt="Logo" 
-                className="h-16 w-auto"
+                className="h-12 md:h-16 w-auto"
               />
             </Link>
 
