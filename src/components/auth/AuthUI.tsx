@@ -33,6 +33,8 @@ export const AuthUI = () => {
             sign_up: {
               email_label: "Email address",
               email_input_placeholder: "Your email address",
+              password_label: "",
+              password_input_placeholder: "",
               button_label: "Sign up",
             },
           },
