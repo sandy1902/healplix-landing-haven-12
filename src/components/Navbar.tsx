@@ -61,11 +61,18 @@ export const Navbar = () => {
                 <Link to="/" className="text-gray-700 hover:text-primary">HOME</Link>
                 <Link to="/about-us" className="text-gray-700 hover:text-primary">ABOUT US</Link>
                 <Link to="/contact" className="text-gray-700 hover:text-primary">CONTACT US</Link>
-                <Link to="/signup" className="text-gray-700 hover:text-primary">SIGN UP</Link>
-                <Link to="/login" className="text-gray-700 hover:text-primary">LOGIN</Link>
-                <Button className="bg-[#1e40af] hover:bg-[#1e3a8a]">
-                  APPOINTMENT NOW
-                </Button>
+                <div className="flex items-center space-x-3">
+                  <Link to="/login">
+                    <Button variant="outline" className="font-roboto">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button className="bg-[#1e40af] hover:bg-[#1e3a8a] font-roboto">
+                      Sign Up
+                    </Button>
+                  </Link>
+                </div>
               </div>
             )}
           </div>
