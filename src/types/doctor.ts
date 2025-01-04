@@ -8,6 +8,10 @@ export interface Doctor {
   clinicName: string;
   location: string;
   rating: number;
+  email: string;
+  contactNumber: string;
+  clinicLocation: string;
+  clinicTimings: string;
   videoConsultation: {
     available: boolean;
     charges: number;
