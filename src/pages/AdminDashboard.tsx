@@ -1,7 +1,7 @@
 import { AdminAnalyticsDashboard } from "@/components/admin/analytics/AdminAnalyticsDashboard";
 import { AdminAppointmentList } from "@/components/admin/appointments/AdminAppointmentList";
 import { SystemSettings } from "@/components/admin/settings/SystemSettings";
-import { AdminLogsViewer } from "../components/admin/logs/AdminLogsViewer";
+import AdminLogsViewer from "../components/admin/logs/AdminLogsViewer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function AdminDashboard() {
