@@ -1,58 +1,57 @@
-import { Calendar, Clock, Users, Shield } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-const features = [
+const specialties = [
   {
-    icon: Calendar,
-    title: "Easy Scheduling",
-    description: "Book appointments 24/7 with our intuitive scheduling system",
-    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7"
+    icon: "/lovable-uploads/0d5b3abf-46be-468a-8b88-06fb1cd51517.png",
+    title: "Internal Medicine",
+    doctors: "30+ Doctors"
   },
   {
-    icon: Clock,
-    title: "Instant Confirmation",
-    description: "Receive immediate confirmation and reminders for your appointments",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
+    icon: "/lovable-uploads/0d5b3abf-46be-468a-8b88-06fb1cd51517.png",
+    title: "Dental Care",
+    doctors: "20+ Doctors"
   },
   {
-    icon: Users,
-    title: "Find Specialists",
-    description: "Connect with the right healthcare providers for your needs",
-    image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
+    icon: "/lovable-uploads/0d5b3abf-46be-468a-8b88-06fb1cd51517.png",
+    title: "Urology Care",
+    doctors: "20+ Doctors"
   },
   {
-    icon: Shield,
-    title: "Secure & Private",
-    description: "Your health information is protected with enterprise-grade security",
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e"
+    icon: "/lovable-uploads/0d5b3abf-46be-468a-8b88-06fb1cd51517.png",
+    title: "Neurology Care",
+    doctors: "10+ Doctors"
   }
 ];
 
 export const Features = () => {
   return (
-    <section id="features" className="section-padding bg-accent">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">
-            Why Choose Healplix?
+          <div className="inline-flex items-center space-x-2 text-[#00b341] mb-4">
+            <img 
+              src="/lovable-uploads/09637a17-236d-44c0-8a5f-aa2d26ea3cd2.png"
+              alt="icon"
+              className="w-6 h-6"
+            />
+            <span>OUR COMPREHENSIVE SPECIALTIES</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a8a]">
+            From Routine Check-Ups To Advanced Treatments, We've Got You Covered.
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            We make healthcare accessible and convenient with features designed around your needs
-          </p>
         </div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
-            <div key={index} className="feature-card group hover:transform hover:scale-105 transition-all duration-300">
-              <div className="relative h-48 mb-6 rounded-lg overflow-hidden">
-                <img
-                  src={feature.image}
-                  alt={feature.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                <feature.icon className="absolute bottom-4 left-4 w-8 h-8 text-white" />
+          {specialties.map((specialty, index) => (
+            <div key={index} className="bg-white rounded-lg p-8 text-center shadow-lg hover:shadow-xl transition-shadow">
+              <div className="w-20 h-20 mx-auto mb-6 bg-[#f0f9ff] rounded-full flex items-center justify-center">
+                <img src={specialty.icon} alt={specialty.title} className="w-12 h-12" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-primary">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
+              <h3 className="text-xl font-bold text-[#1e3a8a] mb-2">{specialty.title}</h3>
+              <p className="text-gray-600 mb-6">{specialty.doctors}</p>
+              <Button variant="outline" className="w-full border-[#1e3a8a] text-[#1e3a8a] hover:bg-[#1e3a8a] hover:text-white">
+                MAKE AN APPOINTMENT
+              </Button>
             </div>
           ))}
         </div>
