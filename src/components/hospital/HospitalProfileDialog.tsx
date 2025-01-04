@@ -21,31 +21,31 @@ export function HospitalProfileDialog({
 }: HospitalProfileDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[1000px] h-[90vh]">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">{hospital.name}</DialogTitle>
+      <DialogContent className="max-w-[1000px] h-[90vh] overflow-hidden flex flex-col">
+        <DialogHeader className="px-6 py-4 border-b">
+          <DialogTitle className="text-2xl font-bold text-primary">{hospital.name}</DialogTitle>
         </DialogHeader>
         
-        <div className="overflow-y-auto flex-1 px-2">
-          <div className="space-y-6">
+        <div className="flex-1 overflow-y-auto px-6 py-4">
+          <div className="space-y-8">
             <ImageCarousel images={hospital.images} />
 
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-lg font-semibold mb-2">About</h3>
-                <p className="text-gray-600">{hospital.location}</p>
-                <div className="mt-2">
-                  <span className="text-[#1A1F2C] font-semibold">Rating: {hospital.rating}/5</span>
+            <div className="space-y-6">
+              <div className="bg-accent/50 p-6 rounded-lg">
+                <h3 className="text-xl font-semibold mb-3">About</h3>
+                <p className="text-gray-700">{hospital.location}</p>
+                <div className="mt-3">
+                  <span className="text-primary font-semibold">Rating: {hospital.rating}/5</span>
                 </div>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold mb-2">Specialities</h3>
+                <h3 className="text-xl font-semibold mb-4">Specialities</h3>
                 <div className="flex flex-wrap gap-2">
                   {hospital.specialities.map((spec) => (
                     <span
                       key={spec}
-                      className="px-3 py-1.5 bg-[#9b87f5]/10 text-[#9b87f5] rounded-full text-sm font-medium"
+                      className="px-4 py-2 bg-[#9b87f5]/10 text-[#9b87f5] rounded-full text-sm font-medium"
                     >
                       {spec}
                     </span>
@@ -54,12 +54,12 @@ export function HospitalProfileDialog({
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold mb-2">Insurance Providers</h3>
+                <h3 className="text-xl font-semibold mb-4">Insurance Providers</h3>
                 <div className="flex flex-wrap gap-2">
                   {hospital.insuranceProviders.map((provider) => (
                     <span
                       key={provider}
-                      className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm"
+                      className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm"
                     >
                       {provider}
                     </span>
@@ -68,15 +68,15 @@ export function HospitalProfileDialog({
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold mb-2">Reviews</h3>
+                <h3 className="text-xl font-semibold mb-4">Reviews</h3>
                 <div className="space-y-4">
                   {hospital.reviews.map((review) => (
-                    <div key={review.id} className="bg-gray-50 p-4 rounded-lg">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium">{review.userName}</span>
-                        <span className="text-[#9b87f5]">{review.rating}/5</span>
+                    <div key={review.id} className="bg-white p-6 rounded-lg shadow-sm border">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="font-medium text-lg">{review.userName}</span>
+                        <span className="text-[#9b87f5] font-semibold">{review.rating}/5</span>
                       </div>
-                      <p className="text-gray-600">{review.comment}</p>
+                      <p className="text-gray-600 mb-2">{review.comment}</p>
                       <span className="text-sm text-gray-500">{review.date}</span>
                     </div>
                   ))}
@@ -85,7 +85,7 @@ export function HospitalProfileDialog({
 
               <DoctorsList doctors={hospital.doctors} />
 
-              <div className="flex gap-4 mt-6">
+              <div className="flex gap-4 sticky bottom-0 bg-white py-4">
                 <Button
                   onClick={() => onRequestCallback(hospital)}
                   variant="outline"
