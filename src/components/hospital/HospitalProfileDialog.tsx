@@ -7,15 +7,22 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Hospital } from "@/types/hospital";
-import { AdmissionEnquiryForm } from "./AdmissionEnquiryForm";
 
 interface HospitalProfileDialogProps {
   hospital: Hospital;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onRequestCallback: (hospital: Hospital) => void;
+  onAdmissionEnquiry: (hospital: Hospital) => void;
 }
 
-export function HospitalProfileDialog({ hospital, open, onOpenChange }: HospitalProfileDialogProps) {
+export function HospitalProfileDialog({ 
+  hospital, 
+  open, 
+  onOpenChange,
+  onRequestCallback,
+  onAdmissionEnquiry 
+}: HospitalProfileDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[800px] h-[90vh] p-0 bg-[#F1F0FB]/95 backdrop-blur-sm">
@@ -60,6 +67,23 @@ export function HospitalProfileDialog({ hospital, open, onOpenChange }: Hospital
                 <li>Inpatient and Outpatient Care</li>
                 <li>Rehabilitation Services</li>
               </ul>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-3">
+              <Button 
+                onClick={() => onRequestCallback(hospital)}
+                variant="outline"
+                className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10 w-full"
+              >
+                Request Callback
+              </Button>
+              <Button 
+                onClick={() => onAdmissionEnquiry(hospital)}
+                className="bg-[#9b87f5] hover:bg-[#8b77e5] text-white w-full"
+              >
+                Send Admission Enquiry
+              </Button>
             </div>
 
             {/* Back to Search Results Button */}
