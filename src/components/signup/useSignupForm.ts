@@ -57,7 +57,12 @@ export function useSignupForm() {
       const formattedPhone = formatPhoneNumber(values.phoneNumber);
       console.log('Formatted phone number:', formattedPhone);
       
-      // First, create the auth user
+      console.log('Attempting to create user with metadata:', {
+        full_name: values.name,
+        role: values.role,
+        phone_number: formattedPhone,
+      });
+
       const { data: authData, error: signUpError } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
