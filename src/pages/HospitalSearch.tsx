@@ -45,6 +45,22 @@ export default function HospitalSearch() {
           qualification: "MD, FAAOS",
           speciality: "Orthopedics"
         }
+      ],
+      reviews: [
+        {
+          id: "r1",
+          userName: "John Doe",
+          rating: 5,
+          comment: "Excellent care and professional staff",
+          date: "2024-03-15"
+        },
+        {
+          id: "r2",
+          userName: "Jane Smith",
+          rating: 4,
+          comment: "Great experience overall, but waiting times could be improved",
+          date: "2024-03-10"
+        }
       ]
     },
     {
@@ -75,6 +91,22 @@ export default function HospitalSearch() {
           name: "Dr. Lisa Chen",
           qualification: "MD, FAAD",
           speciality: "Dermatology"
+        }
+      ],
+      reviews: [
+        {
+          id: "r3",
+          userName: "Michael Johnson",
+          rating: 5,
+          comment: "Outstanding pediatric care",
+          date: "2024-03-12"
+        },
+        {
+          id: "r4",
+          userName: "Sarah Williams",
+          rating: 4,
+          comment: "Very professional staff and clean facility",
+          date: "2024-03-08"
         }
       ]
     }
