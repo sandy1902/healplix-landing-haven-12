@@ -186,6 +186,146 @@ export type Database = {
           },
         ]
       }
+      hospital_images: {
+        Row: {
+          created_at: string | null
+          hospital_id: string | null
+          id: string
+          image_type: string | null
+          image_url: string
+          is_primary: boolean | null
+        }
+        Insert: {
+          created_at?: string | null
+          hospital_id?: string | null
+          id?: string
+          image_type?: string | null
+          image_url: string
+          is_primary?: boolean | null
+        }
+        Update: {
+          created_at?: string | null
+          hospital_id?: string | null
+          id?: string
+          image_type?: string | null
+          image_url?: string
+          is_primary?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hospital_images_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      hospital_reviews: {
+        Row: {
+          created_at: string | null
+          hospital_id: string | null
+          id: string
+          rating: number
+          review_text: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          hospital_id?: string | null
+          id?: string
+          rating: number
+          review_text?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          hospital_id?: string | null
+          id?: string
+          rating?: number
+          review_text?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hospital_reviews_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hospital_reviews_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      hospitals: {
+        Row: {
+          accreditation: string[] | null
+          contact_number: string | null
+          created_at: string | null
+          description: string | null
+          email: string | null
+          emergency_services: boolean | null
+          facilities: string[] | null
+          id: string
+          insurance_providers: string[] | null
+          location: string
+          name: string
+          operating_hours: Json | null
+          rating: number | null
+          specialities: string[] | null
+          total_reviews: number | null
+          updated_at: string | null
+          website: string | null
+        }
+        Insert: {
+          accreditation?: string[] | null
+          contact_number?: string | null
+          created_at?: string | null
+          description?: string | null
+          email?: string | null
+          emergency_services?: boolean | null
+          facilities?: string[] | null
+          id?: string
+          insurance_providers?: string[] | null
+          location: string
+          name: string
+          operating_hours?: Json | null
+          rating?: number | null
+          specialities?: string[] | null
+          total_reviews?: number | null
+          updated_at?: string | null
+          website?: string | null
+        }
+        Update: {
+          accreditation?: string[] | null
+          contact_number?: string | null
+          created_at?: string | null
+          description?: string | null
+          email?: string | null
+          emergency_services?: boolean | null
+          facilities?: string[] | null
+          id?: string
+          insurance_providers?: string[] | null
+          location?: string
+          name?: string
+          operating_hours?: Json | null
+          rating?: number | null
+          specialities?: string[] | null
+          total_reviews?: number | null
+          updated_at?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
       medical_records: {
         Row: {
           created_at: string | null
