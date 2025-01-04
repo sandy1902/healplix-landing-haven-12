@@ -9,33 +9,7 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      profiles: {
-        Row: {
-          created_at: string
-          first_name: string | null
-          id: string
-          last_name: string | null
-          phone_number: string | null
-          role: Database["public"]["Enums"]["user_role"] | null
-        }
-        Insert: {
-          created_at?: string
-          first_name?: string | null
-          id: string
-          last_name?: string | null
-          phone_number?: string | null
-          role?: Database["public"]["Enums"]["user_role"] | null
-        }
-        Update: {
-          created_at?: string
-          first_name?: string | null
-          id?: string
-          last_name?: string | null
-          phone_number?: string | null
-          role?: Database["public"]["Enums"]["user_role"] | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Views: {
       [_ in never]: never
@@ -44,7 +18,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      user_role: "subscriber" | "doctor" | "executive"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never

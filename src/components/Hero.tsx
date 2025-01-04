@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Clock } from "lucide-react";
-import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (
@@ -36,20 +35,11 @@ export const Hero = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
-                className="bg-[#1e3a8a] hover:bg-[#1e40af]"
-                asChild
-              >
-                <Link to="/login">SIGN UP</Link>
+              <Button size="lg" className="bg-[#1e3a8a] hover:bg-[#1e40af]">
+                SIGN UP
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-[#1e3a8a] text-[#1e3a8a] hover:bg-[#1e3a8a] hover:text-white"
-                asChild
-              >
-                <Link to="/login">BOOK APPOINTMENT</Link>
+              <Button size="lg" variant="outline" className="border-[#1e3a8a] text-[#1e3a8a] hover:bg-[#1e3a8a] hover:text-white">
+                BOOK APPOINTMENT
               </Button>
             </div>
           </div>

@@ -1,8 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Home, Search, LayoutDashboard, LogOut } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { Home, Search, LayoutDashboard } from "lucide-react";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -10,27 +8,6 @@ interface MobileMenuProps {
 }
 
 export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
-  const navigate = useNavigate();
-  const { toast } = useToast();
-
-  const handleLogout = async () => {
-    try {
-      await supabase.auth.signOut();
-      toast({
-        title: "Logged out successfully",
-        description: "You have been logged out of your account",
-      });
-      navigate("/login");
-      onClose();
-    } catch (error) {
-      toast({
-        title: "Error logging out",
-        description: "There was a problem logging out. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -84,14 +61,6 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
           <LayoutDashboard className="h-4 w-4" />
           Executive Dashboard
         </Link>
-        <Button
-          variant="ghost"
-          className="flex items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50 justify-start px-4"
-          onClick={handleLogout}
-        >
-          <LogOut className="h-4 w-4" />
-          Logout
-        </Button>
       </div>
     </div>
   );

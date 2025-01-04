@@ -1,36 +1,15 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Facebook, Twitter, Instagram, Linkedin, LogOut } from "lucide-react";
+import { Menu, X, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileMenu } from "./navbar/MobileMenu";
 import { SearchDropdown } from "./navbar/SearchDropdown";
 import { DashboardMenu } from "./navbar/DashboardMenu";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useIsMobile();
-  const navigate = useNavigate();
-  const { toast } = useToast();
-
-  const handleLogout = async () => {
-    try {
-      await supabase.auth.signOut();
-      toast({
-        title: "Logged out successfully",
-        description: "You have been logged out of your account",
-      });
-      navigate("/login");
-    } catch (error) {
-      toast({
-        title: "Error logging out",
-        description: "There was a problem logging out. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -84,14 +63,6 @@ export const Navbar = () => {
                 <Link to="/" className="text-gray-700 hover:text-primary capitalize text-lg">Home</Link>
                 <SearchDropdown />
                 <DashboardMenu />
-                <Button 
-                  variant="ghost" 
-                  className="flex items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
-                  onClick={handleLogout}
-                >
-                  <LogOut className="h-5 w-5" />
-                  Logout
-                </Button>
               </div>
             )}
           </div>
