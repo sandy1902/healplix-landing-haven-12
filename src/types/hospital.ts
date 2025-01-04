@@ -9,6 +9,7 @@ export interface Hospital {
   rating: number;
   doctors: Doctor[];
   reviews: Review[];
+  services?: string[];
 }
 
 export interface Doctor {
