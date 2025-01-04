@@ -82,7 +82,7 @@ export function useSignupForm() {
 
       toast({
         title: "Account created successfully!",
-        description: "Please check your email for verification link before logging in.",
+        description: "You can now log in with your email and password.",
       });
       
       navigate("/login");
