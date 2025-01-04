@@ -15,8 +15,10 @@ import { useToast } from "@/components/ui/use-toast";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { RoleSelector } from "./RoleSelector";
+import { Link } from "react-router-dom";
 
 const formSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
   phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
   password: z
@@ -43,6 +45,7 @@ export function SignupForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       phoneNumber: "",
       password: "",
@@ -62,6 +65,24 @@ export function SignupForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-[#1A1F2C] text-base font-medium font-sans">Name</FormLabel>
+              <FormControl>
+                <Input 
+                  placeholder="Enter your full name" 
+                  {...field}
+                  className="bg-white/50 backdrop-blur-sm border-[#9b87f5]/20 focus:border-[#9b87f5]/50 focus:ring-[#9b87f5]/50 font-sans"
+                />
+              </FormControl>
+              <FormMessage className="text-red-500" />
+            </FormItem>
+          )}
+        />
+
         <FormField
           control={form.control}
           name="email"
@@ -168,9 +189,17 @@ export function SignupForm() {
 
         <RoleSelector control={form.control} />
 
-        <Button type="submit" className="w-full bg-[#9b87f5] hover:bg-[#7E69AB] text-white font-sans">
-          Sign Up
-        </Button>
+        <div className="flex flex-col space-y-4">
+          <Button type="submit" className="w-full bg-[#9b87f5] hover:bg-[#7E69AB] text-white font-sans">
+            Sign Up
+          </Button>
+          <p className="text-center text-[#7E69AB] font-sans">
+            Already have an account?{" "}
+            <Link to="/login" className="text-[#9b87f5] hover:text-[#7E69AB] font-medium">
+              Login here
+            </Link>
+          </p>
+        </div>
       </form>
     </Form>
   );

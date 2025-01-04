@@ -1,30 +1,8 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { supabase } from "@/integrations/supabase/client";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { useToast } from "@/components/ui/use-toast";
+import { SignupForm } from "@/components/signup/SignupForm";
 
 export default function Signup() {
-  const navigate = useNavigate();
-  const { toast } = useToast();
-
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === 'SIGNED_IN') {
-        toast({
-          title: "Welcome to Healplix!",
-          description: "Your account has been created successfully.",
-        });
-        navigate('/dashboard');
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [navigate, toast]);
-
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#9b87f5]/5 to-[#7E69AB]/5">
       <Navbar />
@@ -35,24 +13,7 @@ export default function Signup() {
               <h1 className="text-3xl font-bold text-[#1A1F2C] font-poppins mb-2">Create an Account</h1>
               <p className="text-[#7E69AB] font-sans">Join us and start your journey</p>
             </div>
-            
-            <Auth
-              supabaseClient={supabase}
-              appearance={{
-                theme: ThemeSupa,
-                variables: {
-                  default: {
-                    colors: {
-                      brand: '#9b87f5',
-                      brandAccent: '#7E69AB',
-                    },
-                  },
-                },
-              }}
-              providers={[]}
-              view="sign_up"
-              redirectTo={`${window.location.origin}/dashboard`}
-            />
+            <SignupForm />
           </div>
         </div>
       </div>
