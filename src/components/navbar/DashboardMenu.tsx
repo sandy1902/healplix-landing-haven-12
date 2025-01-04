@@ -37,7 +37,7 @@ export const DashboardMenu = () => {
         >
           <DropdownMenuItem>
             <Link to="/dashboard" className="w-full font-poppins capitalize text-lg">
-              User Dashboard
+              Subscriber Dashboard
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>

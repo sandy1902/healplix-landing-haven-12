@@ -43,7 +43,7 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
           onClick={onClose}
         >
           <LayoutDashboard className="h-4 w-4" />
-          User Dashboard
+          Subscriber Dashboard
         </Link>
         <Link
           to="/doctor-dashboard"
