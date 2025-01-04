@@ -47,3 +47,18 @@
 .form-float {
   animation: formFloat 0.5s ease-out forwards;
 }
+
+/* Enhanced hover effects */
+.hover-lift {
+  @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+}
+
+/* Image hover effects */
+.image-zoom {
+  @apply transition-transform duration-300 hover:scale-105;
+}
+
+/* Text gradient effect */
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+}
