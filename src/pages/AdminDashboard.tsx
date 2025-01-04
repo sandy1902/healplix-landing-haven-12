@@ -1,20 +1,38 @@
-import { SystemSettings } from "@/components/admin/settings/SystemSettings";
+import { AdminLogsViewer } from "@/components/admin/logs/AdminLogsViewer";
+import { AdminAnalyticsDashboard } from "@/components/admin/analytics/AdminAnalyticsDashboard";
 import { AdminAppointmentList } from "@/components/admin/appointments/AdminAppointmentList";
+import { SystemSettings } from "@/components/admin/settings/SystemSettings";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function AdminDashboard() {
   return (
-    <div className="container mx-auto py-8 space-y-8">
-      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+    <div className="container mx-auto py-8 px-4">
+      <h1 className="text-3xl font-bold text-gray-900 mb-8">Admin Dashboard</h1>
       
-      <div className="grid gap-8">
-        <div className="bg-white p-6 rounded-lg shadow">
+      <Tabs defaultValue="analytics" className="space-y-6">
+        <TabsList>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
+          <TabsTrigger value="appointments">Appointments</TabsTrigger>
+          <TabsTrigger value="settings">Settings</TabsTrigger>
+          <TabsTrigger value="logs">Activity Logs</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="analytics">
+          <AdminAnalyticsDashboard />
+        </TabsContent>
+
+        <TabsContent value="appointments">
           <AdminAppointmentList />
-        </div>
-        
-        <div className="bg-white p-6 rounded-lg shadow">
+        </TabsContent>
+
+        <TabsContent value="settings">
           <SystemSettings />
-        </div>
-      </div>
+        </TabsContent>
+
+        <TabsContent value="logs">
+          <AdminLogsViewer />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
