@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import Index from "./pages/Index";
-import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import UserDashboard from "./pages/UserDashboard";
 import DoctorDashboard from "./pages/DoctorDashboard";
@@ -22,7 +21,6 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/about-us" element={<AboutUs />} />
