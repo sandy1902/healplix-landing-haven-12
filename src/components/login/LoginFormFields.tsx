@@ -5,7 +5,7 @@ import { UseFormReturn } from "react-hook-form";
 import * as z from "zod";
 
 const formSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  identifier: z.string().min(1, "Email or phone number is required"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
@@ -20,13 +20,13 @@ export function LoginFormFields({ form, showPassword, setShowPassword }: LoginFo
     <>
       <FormField
         control={form.control}
-        name="email"
+        name="identifier"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-[#1A1F2C] text-base font-medium font-sans">Email</FormLabel>
+            <FormLabel className="text-[#1A1F2C] text-base font-medium font-sans">Email or Phone Number</FormLabel>
             <FormControl>
               <Input
-                placeholder="Enter your email"
+                placeholder="Enter your email or phone number"
                 className="border-[#9b87f5]/20 focus:border-[#9b87f5] focus:ring-[#9b87f5] font-sans"
                 {...field}
               />

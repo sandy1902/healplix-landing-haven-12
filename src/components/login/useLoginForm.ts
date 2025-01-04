@@ -7,7 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  identifier: z.string().min(1, "Email or phone number is required"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
@@ -20,7 +20,7 @@ export function useLoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      identifier: "",
       password: "",
     },
   });
@@ -28,10 +28,13 @@ export function useLoginForm() {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     try {
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-        email: values.email,
-        password: values.password,
-      });
+      // Determine if the identifier is an email or phone number
+      const isEmail = values.identifier.includes('@');
+      const credentials = isEmail 
+        ? { email: values.identifier, password: values.password }
+        : { phone: values.identifier, password: values.password };
+
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword(credentials);
 
       if (authError) throw authError;
 
@@ -61,7 +64,7 @@ export function useLoginForm() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Invalid email or password",
+        description: "Invalid credentials",
         variant: "destructive",
       });
     } finally {
