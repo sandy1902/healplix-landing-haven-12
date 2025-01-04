@@ -106,6 +106,38 @@ export type Database = {
           },
         ]
       }
+      favorites: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          type: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+          type: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          type?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       medical_records: {
         Row: {
           created_at: string | null
@@ -211,6 +243,48 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "reward_points_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shared_records: {
+        Row: {
+          appointment_id: string | null
+          expires_at: string | null
+          id: string
+          shared_at: string | null
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          appointment_id?: string | null
+          expires_at?: string | null
+          id?: string
+          shared_at?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          appointment_id?: string | null
+          expires_at?: string | null
+          id?: string
+          shared_at?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shared_records_appointment_id_fkey"
+            columns: ["appointment_id"]
+            isOneToOne: false
+            referencedRelation: "appointments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shared_records_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"

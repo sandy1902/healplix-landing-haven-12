@@ -1,5 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface PersonalInfoFormProps {
   formData: {
@@ -14,6 +16,18 @@ interface PersonalInfoFormProps {
 }
 
 export function PersonalInfoForm({ formData, handleChange }: PersonalInfoFormProps) {
+  const [userEmail, setUserEmail] = useState<string>("");
+
+  useEffect(() => {
+    const getUserEmail = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUserEmail(user.email || "");
+      }
+    };
+    getUserEmail();
+  }, []);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="space-y-4">
@@ -32,6 +46,17 @@ export function PersonalInfoForm({ formData, handleChange }: PersonalInfoFormPro
           placeholder="Enter last name" 
           value={formData.lastName}
           onChange={handleChange}
+        />
+      </div>
+      <div className="space-y-4">
+        <Label htmlFor="email">Email</Label>
+        <Input 
+          id="email" 
+          type="email"
+          value={userEmail}
+          readOnly
+          disabled
+          className="bg-gray-100"
         />
       </div>
       <div className="space-y-4">
