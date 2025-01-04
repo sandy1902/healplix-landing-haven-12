@@ -48,22 +48,9 @@ export function useSignupForm() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      console.log('Starting signup process with values:', {
-        ...values,
-        password: '[REDACTED]',
-        confirmPassword: '[REDACTED]'
-      });
-
       const formattedPhone = formatPhoneNumber(values.phoneNumber);
-      console.log('Formatted phone number:', formattedPhone);
       
-      console.log('Attempting to create user with metadata:', {
-        full_name: values.name,
-        role: values.role,
-        phone_number: formattedPhone,
-      });
-
-      const { data: authData, error: signUpError } = await supabase.auth.signUp({
+      const { error: signUpError } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
         phone: formattedPhone,
@@ -77,19 +64,8 @@ export function useSignupForm() {
       });
 
       if (signUpError) {
-        console.error('Signup error:', signUpError);
         throw signUpError;
       }
-
-      console.log('Auth signup successful:', {
-        user: authData.user ? {
-          id: authData.user.id,
-          email: authData.user.email,
-          phone: authData.user.phone,
-          role: authData.user.user_metadata?.role,
-        } : null,
-        session: authData.session ? 'Session created' : 'No session'
-      });
 
       toast({
         title: "Account created successfully!",
@@ -98,10 +74,15 @@ export function useSignupForm() {
       
       navigate("/login");
     } catch (error) {
-      console.error('Error in signup process:', error);
+      let errorMessage = "Failed to create account";
+      
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to create account",
+        description: errorMessage,
         variant: "destructive",
       });
     }
