@@ -16,7 +16,7 @@ export function DoctorsList({ doctors }: DoctorsListProps) {
     const formattedDoctor: Doctor = {
       id: doctor.name.toLowerCase().replace(/\s+/g, '-'),
       name: doctor.name,
-      speciality: doctor.speciality,
+      specialization: doctor.speciality, // Changed from speciality to specialization
       qualification: doctor.qualification,
       experience: "5+ years",
       rating: 4.5,
@@ -30,8 +30,11 @@ export function DoctorsList({ doctors }: DoctorsListProps) {
         charges: 400,
         available: true 
       },
-      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d",
-      about: `Dr. ${doctor.name} is a highly qualified ${doctor.speciality} specialist.`
+      email: "doctor@hospital.com",
+      contactNumber: "+1234567890",
+      clinicLocation: "Hospital Location",
+      clinicTimings: "9:00 AM - 5:00 PM",
+      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d"
     };
     
     setSelectedDoctor(formattedDoctor);
