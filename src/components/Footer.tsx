@@ -8,7 +8,7 @@ export const Footer = () => {
               <img 
                 src="/lovable-uploads/0c9b5516-6d0d-4761-b5f8-d3ab135daffb.png" 
                 alt="Healplix Logo" 
-                className="h-8 md:h-12 w-auto"
+                className="h-12 md:h-16 w-auto"
               />
             </div>
             <p className="text-[#7E69AB] text-sm md:text-base">
