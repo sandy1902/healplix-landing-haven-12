@@ -45,16 +45,16 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[1000px] h-[90vh] bg-white shadow-2xl border-2 border-secondary/20">
-        <div className="px-8 py-6 overflow-y-auto h-full">
-          <DialogHeader className="border-b pb-6 mb-8">
-            <DialogTitle className="text-2xl font-bold text-center text-primary">
+      <DialogContent className="max-w-[95vw] md:max-w-[1000px] h-[90vh] md:h-[90vh] bg-white shadow-2xl border-2 border-secondary/20 mx-auto my-auto p-2 md:p-6">
+        <div className="px-2 md:px-8 py-3 md:py-6 overflow-y-auto h-full">
+          <DialogHeader className="border-b pb-3 md:pb-6 mb-4 md:mb-8">
+            <DialogTitle className="text-xl md:text-2xl font-bold text-center text-primary">
               Book Appointment with {doctor.name}
             </DialogTitle>
           </DialogHeader>
 
-          <div className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4 md:space-y-8">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
               <ConsultationTypeSection
                 consultationType={consultationType}
                 setConsultationType={setConsultationType}
@@ -76,7 +76,7 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
               doctor={doctor}
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
               <AppointmentSummary
                 doctor={doctor}
                 selectedPatient={selectedPatient}
@@ -86,17 +86,17 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
                 dependents={dependents}
               />
 
-              <div className="flex flex-col justify-center space-y-4">
+              <div className="flex flex-col justify-center space-y-3 md:space-y-4">
                 <Button
                   onClick={handleBookAppointment}
-                  className="bg-[#7E69AB] hover:bg-[#6A5B8A] text-white w-full"
+                  className="bg-[#7E69AB] hover:bg-[#6A5B8A] text-white w-full text-sm md:text-base py-2 md:py-3"
                 >
                   Book Appointment
                 </Button>
                 <Button
                   variant="outline"
                   onClick={() => onOpenChange(false)}
-                  className="border-[#7E69AB] text-[#7E69AB] hover:bg-[#7E69AB]/10 w-full"
+                  className="border-[#7E69AB] text-[#7E69AB] hover:bg-[#7E69AB]/10 w-full text-sm md:text-base py-2 md:py-3"
                 >
                   Cancel
                 </Button>
