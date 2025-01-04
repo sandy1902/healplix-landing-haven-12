@@ -1,9 +1,30 @@
-import { Link } from "react-router-dom";
-import { SignupForm } from "@/components/signup/SignupForm";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Auth } from "@supabase/auth-ui-react";
+import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { supabase } from "@/integrations/supabase/client";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Signup() {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_UP') {
+        toast({
+          title: "Welcome to Healplix!",
+          description: "Your account has been created successfully.",
+        });
+        navigate('/dashboard');
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate, toast]);
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#9b87f5]/5 to-[#7E69AB]/5">
       <Navbar />
@@ -15,14 +36,23 @@ export default function Signup() {
               <p className="text-[#7E69AB] font-sans">Join us and start your journey</p>
             </div>
             
-            <SignupForm />
-
-            <p className="text-center text-sm text-[#7E69AB] font-sans">
-              Already have an account?{" "}
-              <Link to="/login" className="font-medium text-[#9b87f5] hover:text-[#7E69AB] underline underline-offset-4">
-                Login here
-              </Link>
-            </p>
+            <Auth
+              supabaseClient={supabase}
+              appearance={{
+                theme: ThemeSupa,
+                variables: {
+                  default: {
+                    colors: {
+                      brand: '#9b87f5',
+                      brandAccent: '#7E69AB',
+                    },
+                  },
+                },
+              }}
+              providers={[]}
+              view="sign_up"
+              redirectTo={`${window.location.origin}/dashboard`}
+            />
           </div>
         </div>
       </div>

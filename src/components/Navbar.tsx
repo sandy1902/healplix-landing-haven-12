@@ -1,18 +1,41 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Menu, X, Facebook, Twitter, Instagram, Linkedin, LogOut } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileMenu } from "./navbar/MobileMenu";
 import { SearchDropdown } from "./navbar/SearchDropdown";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to log out. Please try again.",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Logged out",
+        description: "You have been successfully logged out.",
+      });
+      navigate('/login');
+    }
+  };
+
+  const session = supabase.auth.getSession();
 
   return (
     <>
@@ -64,16 +87,36 @@ export const Navbar = () => {
                 <Link to="/contact" className="text-gray-700 hover:text-primary capitalize text-lg">Contact us</Link>
                 <SearchDropdown />
                 <div className="flex items-center space-x-3">
-                  <Link to="/login">
-                    <Button variant="outline" className="font-roboto text-base">
-                      Login
-                    </Button>
-                  </Link>
-                  <Link to="/signup">
-                    <Button className="bg-[#1e40af] hover:bg-[#1e3a8a] font-roboto text-base">
-                      Sign Up
-                    </Button>
-                  </Link>
+                  {session ? (
+                    <>
+                      <Link to="/dashboard">
+                        <Button variant="outline" className="font-roboto text-base">
+                          Dashboard
+                        </Button>
+                      </Link>
+                      <Button 
+                        onClick={handleLogout}
+                        variant="outline" 
+                        className="font-roboto text-base flex items-center gap-2"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Logout
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Link to="/login">
+                        <Button variant="outline" className="font-roboto text-base">
+                          Login
+                        </Button>
+                      </Link>
+                      <Link to="/signup">
+                        <Button className="bg-[#1e40af] hover:bg-[#1e3a8a] font-roboto text-base">
+                          Sign Up
+                        </Button>
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             )}
@@ -84,4 +127,4 @@ export const Navbar = () => {
       <MobileMenu isOpen={isOpen} onClose={toggleMenu} />
     </>
   );
-};
+}
