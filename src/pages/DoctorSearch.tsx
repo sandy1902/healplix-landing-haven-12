@@ -25,6 +25,10 @@ export default function DoctorSearch() {
       clinicName: "Heart Care Clinic",
       location: "Los Angeles, CA",
       rating: 4.8,
+      email: "sarah.wilson@heartcare.com",
+      contactNumber: "+1 (555) 123-4567",
+      clinicLocation: "123 Medical Center Drive, Los Angeles, CA 90012",
+      clinicTimings: "Mon-Fri: 9:00 AM - 5:00 PM",
       videoConsultation: {
         available: true,
         charges: 1000
@@ -44,6 +48,10 @@ export default function DoctorSearch() {
       clinicName: "Skin Care Center",
       location: "San Francisco, CA",
       rating: 4.5,
+      email: "michael.chen@skincare.com",
+      contactNumber: "+1 (555) 987-6543",
+      clinicLocation: "456 Medical Plaza, San Francisco, CA 94108",
+      clinicTimings: "Mon-Sat: 10:00 AM - 6:00 PM",
       videoConsultation: {
         available: true,
         charges: 800
