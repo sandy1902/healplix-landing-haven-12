@@ -48,9 +48,14 @@ export function useSignupForm() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      console.log('Starting signup process with values:', values);
+      console.log('Starting signup process with values:', {
+        ...values,
+        password: '[REDACTED]',
+        confirmPassword: '[REDACTED]'
+      });
 
       const formattedPhone = formatPhoneNumber(values.phoneNumber);
+      console.log('Formatted phone number:', formattedPhone);
       
       // First, create the auth user
       const { data: authData, error: signUpError } = await supabase.auth.signUp({
@@ -71,11 +76,19 @@ export function useSignupForm() {
         throw signUpError;
       }
 
-      console.log('Auth signup successful:', authData);
+      console.log('Auth signup successful:', {
+        user: authData.user ? {
+          id: authData.user.id,
+          email: authData.user.email,
+          phone: authData.user.phone,
+          role: authData.user.user_metadata?.role,
+        } : null,
+        session: authData.session ? 'Session created' : 'No session'
+      });
 
       toast({
         title: "Account created successfully!",
-        description: "You can now login with your credentials.",
+        description: "Please check your email for verification link before logging in.",
       });
       
       navigate("/login");
