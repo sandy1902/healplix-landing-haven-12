@@ -50,17 +50,7 @@ export function useSignupForm() {
     try {
       const formattedPhone = formatPhoneNumber(values.phoneNumber);
       
-      console.log("Attempting to sign up with:", {
-        email: values.email,
-        phone: formattedPhone,
-        metadata: {
-          full_name: values.name,
-          role: values.role,
-          phone_number: formattedPhone,
-        },
-      });
-
-      const { data, error: signUpError } = await supabase.auth.signUp({
+      const { error: signUpError } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
         phone: formattedPhone,
@@ -70,6 +60,7 @@ export function useSignupForm() {
             role: values.role,
             phone_number: formattedPhone,
           },
+          emailRedirectTo: window.location.origin + '/login',
         },
       });
 
@@ -78,11 +69,9 @@ export function useSignupForm() {
         throw signUpError;
       }
 
-      console.log("Signup response:", data);
-
       toast({
         title: "Account created successfully!",
-        description: "You can now log in with your email and password.",
+        description: "Please check your email to verify your account before logging in.",
       });
       
       navigate("/login");
@@ -94,7 +83,6 @@ export function useSignupForm() {
       if (error instanceof Error) {
         errorMessage = error.message;
       } else if (typeof error === 'object' && error !== null) {
-        // Try to extract message from Supabase error format
         const supabaseError = error as { message?: string, error_description?: string };
         errorMessage = supabaseError.message || supabaseError.error_description || errorMessage;
       }
