@@ -62,7 +62,6 @@ export const Navbar = () => {
               <div className="flex items-center space-x-6 font-poppins">
                 <Link to="/" className="text-gray-700 hover:text-primary capitalize text-lg">Home</Link>
                 <Link to="/about-us" className="text-gray-700 hover:text-primary capitalize text-lg">About us</Link>
-                <Link to="/contact" className="text-gray-700 hover:text-primary capitalize text-lg">Contact us</Link>
                 <SearchDropdown />
                 <DashboardMenu />
                 <div className="flex items-center space-x-3">
