@@ -24,6 +24,13 @@ export const AuthUI = () => {
               },
             },
           },
+          style: {
+            input: {
+              password: {
+                display: 'none',
+              },
+            },
+          },
           extend: true,
         }}
         providers={[]}
