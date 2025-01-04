@@ -17,7 +17,7 @@ export const Navbar = () => {
   return (
     <>
       {/* Top Bar */}
-      <div className="bg-[#6366f1] text-white py-2 w-full">
+      <div className="bg-[#9b87f5] text-white py-2 w-full">
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0">
           <div className="flex flex-col md:flex-row items-center md:space-x-4 space-y-2 md:space-y-0">
             <span className="text-sm md:text-base">Phone: +91 9704183466</span>
