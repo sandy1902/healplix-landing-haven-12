@@ -64,17 +64,17 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] bg-white shadow-2xl border-2 border-secondary/20">
+      <DialogContent className="sm:max-w-[600px] h-[85vh] bg-white shadow-2xl border-2 border-secondary/20">
         <ScrollArea className="h-full [&_[data-radix-scroll-area-viewport]]:!block [&_[data-radix-scroll-area-scrollbar]]:!w-4 [&_[data-radix-scroll-area-thumb]]:!bg-[#7E69AB]/50">
-          <div className="px-6 py-4">
-            <DialogHeader className="border-b pb-4 mb-6">
-              <DialogTitle className="text-2xl font-bold text-primary bg-gradient-to-r from-secondary/10 to-transparent p-2 rounded-lg">
+          <div className="px-8 py-6">
+            <DialogHeader className="border-b pb-6 mb-8">
+              <DialogTitle className="text-2xl font-bold text-primary bg-gradient-to-r from-secondary/10 to-transparent p-3 rounded-lg">
                 Book Appointment with {doctor.name}
               </DialogTitle>
             </DialogHeader>
             
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <PatientSelectionSection
                   selectedPatient={selectedPatient}
                   setSelectedPatient={setSelectedPatient}
@@ -104,7 +104,7 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
                 dependents={dependents}
               />
 
-              <div className="flex justify-end space-x-3 border-t pt-4">
+              <div className="flex justify-end space-x-4 border-t pt-6 mt-2">
                 <Button
                   variant="outline"
                   onClick={() => onOpenChange(false)}
