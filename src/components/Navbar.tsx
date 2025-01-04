@@ -15,6 +15,10 @@ export const Navbar = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
