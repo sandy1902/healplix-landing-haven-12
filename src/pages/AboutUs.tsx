@@ -21,9 +21,9 @@ const AboutUs = () => {
               </div>
               <div className="rounded-lg overflow-hidden shadow-xl animate-fade-up">
                 <img 
-                  src="/lovable-uploads/719ebe3c-450b-43b2-beb7-24a67b55231c.png" 
-                  alt="Healthcare Professional" 
-                  className="w-full h-auto"
+                  src="/lovable-uploads/b80ecc05-1f27-4693-bb12-54ad49ebaeb8.png" 
+                  alt="Healthcare Team" 
+                  className="w-full h-auto object-cover"
                 />
               </div>
             </div>
