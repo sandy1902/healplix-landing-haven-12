@@ -9,7 +9,72 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          address: string | null
+          bio: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone_number: string | null
+          registration_status:
+            | Database["public"]["Enums"]["registration_status"]
+            | null
+          role: Database["public"]["Enums"]["user_role"] | null
+          specialization: string | null
+        }
+        Insert: {
+          address?: string | null
+          bio?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          phone_number?: string | null
+          registration_status?:
+            | Database["public"]["Enums"]["registration_status"]
+            | null
+          role?: Database["public"]["Enums"]["user_role"] | null
+          specialization?: string | null
+        }
+        Update: {
+          address?: string | null
+          bio?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone_number?: string | null
+          registration_status?:
+            | Database["public"]["Enums"]["registration_status"]
+            | null
+          role?: Database["public"]["Enums"]["user_role"] | null
+          specialization?: string | null
+        }
+        Relationships: []
+      }
+      system_settings: {
+        Row: {
+          created_at: string
+          id: string
+          setting_key: string
+          setting_value: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          setting_key: string
+          setting_value?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          setting_key?: string
+          setting_value?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +83,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      registration_status: "pending" | "approved" | "rejected"
+      user_role: "user" | "doctor" | "executive" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
