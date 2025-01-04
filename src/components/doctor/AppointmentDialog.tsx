@@ -81,29 +81,29 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
               timeSlots={timeSlots}
             />
 
-            <AppointmentSummary
-              doctor={doctor}
-              selectedPatient={selectedPatient}
-              consultationType={consultationType}
-              date={date}
-              selectedTime={selectedTime}
-              dependents={dependents}
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <AppointmentSummary
+                doctor={doctor}
+                selectedPatient={selectedPatient}
+                consultationType={consultationType}
+                date={date}
+                selectedTime={selectedTime}
+                dependents={dependents}
+              />
 
-            <div className="flex justify-end pt-6 border-t">
-              <div className="space-x-4">
+              <div className="flex flex-col justify-center space-y-4">
+                <Button
+                  onClick={handleBookAppointment}
+                  className="bg-[#7E69AB] hover:bg-[#6A5B8A] text-white w-full"
+                >
+                  Book Appointment
+                </Button>
                 <Button
                   variant="outline"
                   onClick={() => onOpenChange(false)}
-                  className="border-[#7E69AB] text-[#7E69AB] hover:bg-[#7E69AB]/10"
+                  className="border-[#7E69AB] text-[#7E69AB] hover:bg-[#7E69AB]/10 w-full"
                 >
                   Cancel
-                </Button>
-                <Button
-                  onClick={handleBookAppointment}
-                  className="bg-[#7E69AB] hover:bg-[#6A5B8A] text-white"
-                >
-                  Book Appointment
                 </Button>
               </div>
             </div>
