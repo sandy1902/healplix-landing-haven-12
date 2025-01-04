@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
@@ -86,18 +86,6 @@ export default function Login() {
               redirectTo={`${window.location.origin}/dashboard`}
               view="sign_in"
             />
-
-            <div className="text-center mt-6">
-              <p className="text-[#7E69AB] font-sans">
-                Don't have an account?{" "}
-                <Link 
-                  to="/signup" 
-                  className="text-[#9b87f5] hover:text-[#7E69AB] font-semibold transition-colors"
-                >
-                  Sign up
-                </Link>
-              </p>
-            </div>
           </div>
         </div>
       </div>
