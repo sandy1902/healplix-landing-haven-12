@@ -12,13 +12,40 @@ export default function Login() {
   const { toast } = useToast();
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN') {
-        toast({
-          title: "Welcome back!",
-          description: "You have successfully logged in.",
-        });
-        navigate('/dashboard');
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        // Fetch user profile to get role
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', session.user.id)
+          .single();
+
+        if (profile) {
+          let redirectPath = '/dashboard'; // default path
+          let welcomeMessage = 'Welcome back!';
+
+          // Role-based redirection
+          switch (profile.role) {
+            case 'executive':
+              redirectPath = '/executive-dashboard';
+              welcomeMessage = 'Welcome back, Executive!';
+              break;
+            case 'doctor':
+              redirectPath = '/doctor-dashboard';
+              welcomeMessage = 'Welcome back, Doctor!';
+              break;
+            default:
+              redirectPath = '/dashboard';
+              welcomeMessage = 'Welcome back!';
+          }
+
+          toast({
+            title: welcomeMessage,
+            description: "You have successfully logged in.",
+          });
+          navigate(redirectPath);
+        }
       }
     });
 

@@ -9,6 +9,53 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      admission_enquiries: {
+        Row: {
+          admission_date: string | null
+          admission_type: string | null
+          created_at: string | null
+          diagnosis: string | null
+          hospital_id: string | null
+          id: string
+          insurance_provider: string | null
+          medical_records_path: string | null
+          patient_name: string
+          status: string | null
+        }
+        Insert: {
+          admission_date?: string | null
+          admission_type?: string | null
+          created_at?: string | null
+          diagnosis?: string | null
+          hospital_id?: string | null
+          id?: string
+          insurance_provider?: string | null
+          medical_records_path?: string | null
+          patient_name: string
+          status?: string | null
+        }
+        Update: {
+          admission_date?: string | null
+          admission_type?: string | null
+          created_at?: string | null
+          diagnosis?: string | null
+          hospital_id?: string | null
+          id?: string
+          insurance_provider?: string | null
+          medical_records_path?: string | null
+          patient_name?: string
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admission_enquiries_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       appointments: {
         Row: {
           created_at: string | null
@@ -74,6 +121,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      contact_forms: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          message: string
+          name: string
+          status: string | null
+          subject: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          message: string
+          name: string
+          status?: string | null
+          subject: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          status?: string | null
+          subject?: string
+        }
+        Relationships: []
       }
       dependents: {
         Row: {
@@ -378,6 +455,9 @@ export type Database = {
           phone_number: string | null
           practice_locations: string[] | null
           profile_image_url: string | null
+          registration_status:
+            | Database["public"]["Enums"]["registration_status"]
+            | null
           role: Database["public"]["Enums"]["user_role"]
           specialization: string | null
           updated_at: string | null
@@ -392,6 +472,9 @@ export type Database = {
           phone_number?: string | null
           practice_locations?: string[] | null
           profile_image_url?: string | null
+          registration_status?:
+            | Database["public"]["Enums"]["registration_status"]
+            | null
           role?: Database["public"]["Enums"]["user_role"]
           specialization?: string | null
           updated_at?: string | null
@@ -406,6 +489,9 @@ export type Database = {
           phone_number?: string | null
           practice_locations?: string[] | null
           profile_image_url?: string | null
+          registration_status?:
+            | Database["public"]["Enums"]["registration_status"]
+            | null
           role?: Database["public"]["Enums"]["user_role"]
           specialization?: string | null
           updated_at?: string | null
@@ -557,6 +643,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      registration_status: "pending" | "approved" | "rejected"
       user_role: "user" | "doctor" | "executive"
     }
     CompositeTypes: {

@@ -30,7 +30,7 @@ function App() {
           <Route 
             path="/dashboard" 
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={['user']}>
                 <UserDashboard />
               </ProtectedRoute>
             } 
@@ -38,7 +38,7 @@ function App() {
           <Route 
             path="/doctor-dashboard" 
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={['doctor']}>
                 <DoctorDashboard />
               </ProtectedRoute>
             } 
@@ -46,7 +46,7 @@ function App() {
           <Route 
             path="/executive-dashboard" 
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={['executive']}>
                 <ExecutiveDashboard />
               </ProtectedRoute>
             } 
@@ -60,14 +60,59 @@ function App() {
   );
 }
 
-// Protected Route component
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const session = supabase.auth.getSession();
-  
+// Protected Route component with role-based access
+const ProtectedRoute = ({ 
+  children, 
+  allowedRoles 
+}: { 
+  children: React.ReactNode;
+  allowedRoles: string[];
+}) => {
+  const [session, setSession] = useState<any>(null);
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Check authentication and fetch user role
+    const checkAuth = async () => {
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      setSession(currentSession);
+
+      if (currentSession?.user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', currentSession.user.id)
+          .single();
+        
+        setUserRole(profile?.role || null);
+      }
+      setLoading(false);
+    };
+
+    checkAuth();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   if (!session) {
     return <Navigate to="/login" replace />;
   }
-  
+
+  if (!allowedRoles.includes(userRole as string)) {
+    // Redirect to appropriate dashboard based on role
+    switch (userRole) {
+      case 'executive':
+        return <Navigate to="/executive-dashboard" replace />;
+      case 'doctor':
+        return <Navigate to="/doctor-dashboard" replace />;
+      default:
+        return <Navigate to="/dashboard" replace />;
+    }
+  }
+
   return <>{children}</>;
 };
 
