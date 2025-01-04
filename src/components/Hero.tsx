@@ -38,8 +38,8 @@ export const Hero = () => {
           
           <div className="relative">
             <img 
-              src="/lovable-uploads/3c73ff5a-634a-47be-a516-4f5b6c299780.png"
-              alt="Doctor"
+              src="/lovable-uploads/719ebe3c-450b-43b2-beb7-24a67b55231c.png"
+              alt="Female Doctor"
               className="w-full h-auto object-cover rounded-lg"
             />
           </div>
