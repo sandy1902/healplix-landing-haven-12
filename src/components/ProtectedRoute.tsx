@@ -41,16 +41,9 @@ export const ProtectedRoute = ({ children, allowedRoles }: ProtectedRouteProps) 
     return <Navigate to="/login" replace />;
   }
 
+  // If user doesn't have the required role, redirect to login
   if (!allowedRoles.includes(userRole as string)) {
-    // Redirect to appropriate dashboard based on role
-    switch (userRole) {
-      case 'executive':
-        return <Navigate to="/executive-dashboard" replace />;
-      case 'doctor':
-        return <Navigate to="/doctor-dashboard" replace />;
-      default:
-        return <Navigate to="/dashboard" replace />;
-    }
+    return <Navigate to="/login" replace />;
   }
 
   return <>{children}</>;
