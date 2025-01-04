@@ -6,11 +6,10 @@ export const Footer = () => {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <img 
-                src="/lovable-uploads/09637a17-236d-44c0-8a5f-aa2d26ea3cd2.png" 
+                src="/lovable-uploads/0c9b5516-6d0d-4761-b5f8-d3ab135daffb.png" 
                 alt="Healplix Logo" 
-                className="h-8 w-auto"
+                className="h-12 w-auto"
               />
-              <span className="text-xl font-bold text-[#9b87f5]">Healplix</span>
             </div>
             <p className="text-[#7E69AB]">
               Making healthcare accessible and convenient for everyone.
