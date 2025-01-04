@@ -35,6 +35,14 @@ export const Hero = () => {
               </Button>
             </div>
           </div>
+          
+          <div className="relative">
+            <img 
+              src="/lovable-uploads/1bda723f-b443-4d8e-9825-ff78d0789664.png"
+              alt="Medical Team"
+              className="w-full h-auto object-cover rounded-lg shadow-xl animate-fade-up"
+            />
+          </div>
         </div>
       </div>
     </div>
