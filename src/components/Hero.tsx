@@ -1,40 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
-import { generateMedicalImage } from "@/services/imageService";
-import { toast } from "sonner";
 
 export const Hero = () => {
-  const [heroImage, setHeroImage] = useState<string>("https://images.unsplash.com/photo-1581091226825-a6a2a5aee158");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const generateHeroImage = async () => {
-      try {
-        console.log("Starting hero image generation...");
-        const prompt = "Modern hospital building exterior, professional medical facility, clean and welcoming environment, photorealistic style";
-        const imageUrl = await generateMedicalImage(prompt);
-        console.log("Generated hero image:", imageUrl);
-        if (imageUrl) {
-          setHeroImage(imageUrl);
-        } else {
-          toast.error("Failed to generate hero image");
-        }
-      } catch (error) {
-        console.error("Error generating hero image:", error);
-        toast.error("Failed to generate hero image");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    generateHeroImage();
-  }, []);
-
   return (
     <div className="relative min-h-screen flex items-center">
-      <div className="absolute inset-0 bg-cover bg-center transition-opacity duration-500" 
-           style={{ backgroundImage: `url(${heroImage})` }}>
-        {loading && <div className="absolute inset-0 bg-gray-200 animate-pulse" />}
+      <div className="absolute inset-0 bg-cover bg-center" 
+           style={{ backgroundImage: `url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158')` }}>
         <div className="absolute inset-0 hero-gradient" />
       </div>
       <div className="container mx-auto px-4 relative z-10">
