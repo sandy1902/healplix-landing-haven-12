@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -40,13 +41,52 @@ export function useSignupForm() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    toast({
-      title: "Account created successfully!",
-      description: "You can now login with your credentials.",
-    });
-    navigate("/login");
+  const formatPhoneNumber = (phone: string) => {
+    const cleaned = phone.replace(/\D/g, '');
+    return cleaned.startsWith('91') ? `+${cleaned}` : `+91${cleaned}`;
+  };
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      console.log('Starting signup process with values:', values);
+
+      const formattedPhone = formatPhoneNumber(values.phoneNumber);
+      
+      // First, create the auth user
+      const { data: authData, error: signUpError } = await supabase.auth.signUp({
+        email: values.email,
+        password: values.password,
+        phone: formattedPhone,
+        options: {
+          data: {
+            full_name: values.name,
+            role: values.role,
+            phone_number: formattedPhone,
+          },
+        },
+      });
+
+      if (signUpError) {
+        console.error('Signup error:', signUpError);
+        throw signUpError;
+      }
+
+      console.log('Auth signup successful:', authData);
+
+      toast({
+        title: "Account created successfully!",
+        description: "You can now login with your credentials.",
+      });
+      
+      navigate("/login");
+    } catch (error) {
+      console.error('Error in signup process:', error);
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to create account",
+        variant: "destructive",
+      });
+    }
   };
 
   return { form, onSubmit };
