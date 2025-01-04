@@ -111,6 +111,18 @@ export function LoginForm() {
         <Button type="submit" className="w-full bg-[#9b87f5] hover:bg-[#7E69AB] text-white font-sans">
           Login
         </Button>
+
+        <div className="text-center mt-4">
+          <p className="text-[#1A1F2C] font-sans">
+            Don't have an account?{" "}
+            <Link 
+              to="/signup" 
+              className="text-[#9b87f5] hover:text-[#7E69AB] transition-colors font-medium"
+            >
+              Sign up here
+            </Link>
+          </p>
+        </div>
       </form>
     </Form>
   );
