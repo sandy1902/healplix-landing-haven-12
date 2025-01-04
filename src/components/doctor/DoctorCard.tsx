@@ -18,19 +18,19 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
   return (
     <>
       <Card className="border-0 bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
-        <CardContent className="p-6">
-          <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-2 flex justify-center items-start">
-              <Avatar className="h-32 w-32 rounded-lg">
+        <CardContent className="p-4 md:p-6">
+          <div className="flex flex-col md:grid md:grid-cols-12 gap-4">
+            <div className="flex justify-center md:col-span-2 md:justify-start">
+              <Avatar className="h-24 w-24 md:h-32 md:w-32 rounded-lg">
                 <AvatarImage src={doctor.image} alt={doctor.name} />
                 <AvatarFallback>DR</AvatarFallback>
               </Avatar>
             </div>
 
-            <div className="col-span-4">
+            <div className="text-center md:text-left md:col-span-4">
               <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-2xl font-bold text-[#1A1F2C]">{doctor.name}</h3>
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-2">
+                  <h3 className="text-xl md:text-2xl font-bold text-[#1A1F2C]">{doctor.name}</h3>
                   <div className="flex items-center gap-1 bg-[#9b87f5]/10 px-2 py-1 rounded-md">
                     <Star className="h-4 w-4 text-[#9b87f5] fill-[#9b87f5]" />
                     <span className="text-sm font-medium text-[#7E69AB]">{doctor.rating}</span>
@@ -42,17 +42,17 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
               </div>
             </div>
 
-            <div className="col-span-3">
+            <div className="md:col-span-3">
               <div className="w-full p-4 bg-[#9b87f5]/5 rounded-lg">
-                <h4 className="font-semibold text-[#1A1F2C] mb-3">{doctor.clinicName}</h4>
-                <p className="text-[#7E69AB] flex items-center gap-2">
+                <h4 className="font-semibold text-[#1A1F2C] mb-3 text-center md:text-left">{doctor.clinicName}</h4>
+                <p className="text-[#7E69AB] flex items-center gap-2 justify-center md:justify-start">
                   <MapPin className="h-4 w-4 text-[#9b87f5]" /> 
                   <span className="flex-1">{doctor.location}</span>
                 </p>
               </div>
             </div>
 
-            <div className="col-span-3 flex flex-col justify-center space-y-4">
+            <div className="md:col-span-3 flex flex-col justify-center space-y-4">
               <Button 
                 variant="outline"
                 className="w-full border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10"

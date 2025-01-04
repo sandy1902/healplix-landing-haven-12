@@ -93,19 +93,19 @@ export default function DoctorSearch() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10">
       <Navbar />
-      <div className="container mx-auto py-24 px-4">
+      <div className="container mx-auto py-8 md:py-24 px-4">
         <Card className="mb-8 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
           <CardHeader className="text-center pb-2">
-            <CardTitle className="text-3xl font-bold text-[#1A1F2C]">Find a Doctor</CardTitle>
+            <CardTitle className="text-2xl md:text-3xl font-bold text-[#1A1F2C]">Find a Doctor</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
               <GlobalSearchBar
                 value={searchQuery}
                 onChange={setSearchQuery}
-                placeholder="Search doctors, locations, specialities, services, clinics..."
+                placeholder="Search doctors, specialities, services..."
               />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div>
                   <Input
                     placeholder="Search by location..."
@@ -132,7 +132,7 @@ export default function DoctorSearch() {
           </CardContent>
         </Card>
 
-        <div className="space-y-6">
+        <div className="space-y-4 md:space-y-6">
           {filteredDoctors.map((doctor) => (
             <DoctorCard
               key={doctor.id}
@@ -143,7 +143,7 @@ export default function DoctorSearch() {
 
           {filteredDoctors.length === 0 && (
             <Card className="border-0 bg-white/90 backdrop-blur-sm">
-              <CardContent className="p-8 text-center text-[#8E9196]">
+              <CardContent className="p-6 md:p-8 text-center text-[#8E9196]">
                 No doctors found matching your criteria
               </CardContent>
             </Card>
