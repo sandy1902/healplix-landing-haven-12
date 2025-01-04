@@ -49,22 +49,11 @@ export function LoginForm() {
       // Fetch user profile to get role
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
-        .select('role, registration_status')
+        .select('role')
         .eq('id', authData.user.id)
         .single();
 
       if (profileError) throw profileError;
-
-      // Check registration status
-      if (profileData.registration_status !== 'approved') {
-        toast({
-          title: "Access Denied",
-          description: "Your account is pending approval. Please wait for administrator approval.",
-          variant: "destructive",
-        });
-        await supabase.auth.signOut();
-        return;
-      }
 
       toast({
         title: "Success",
