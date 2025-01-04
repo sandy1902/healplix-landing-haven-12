@@ -51,50 +51,42 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[1000px] h-[90vh] bg-white shadow-2xl border-2 border-secondary/20">
-        <div className="px-8 py-6">
+        <div className="px-8 py-6 overflow-y-auto h-full">
           <DialogHeader className="border-b pb-6 mb-8">
             <DialogTitle className="text-2xl font-bold text-center text-primary">
               Book Appointment with {doctor.name}
             </DialogTitle>
           </DialogHeader>
 
-          <div className="grid grid-cols-1 gap-8">
-            <div className="grid grid-cols-2 gap-8">
-              {/* Left Column */}
-              <div className="space-y-6">
-                <ConsultationTypeSection
-                  consultationType={consultationType}
-                  setConsultationType={setConsultationType}
-                  doctor={doctor}
-                />
+          <div className="space-y-8">
+            <ConsultationTypeSection
+              consultationType={consultationType}
+              setConsultationType={setConsultationType}
+              doctor={doctor}
+            />
 
-                <PatientSelectionSection
-                  selectedPatient={selectedPatient}
-                  setSelectedPatient={setSelectedPatient}
-                  dependents={dependents}
-                />
-              </div>
+            <PatientSelectionSection
+              selectedPatient={selectedPatient}
+              setSelectedPatient={setSelectedPatient}
+              dependents={dependents}
+            />
 
-              {/* Right Column */}
-              <div className="space-y-6">
-                <DateTimeSection
-                  date={date}
-                  setDate={setDate}
-                  selectedTime={selectedTime}
-                  setSelectedTime={setSelectedTime}
-                  timeSlots={timeSlots}
-                />
+            <DateTimeSection
+              date={date}
+              setDate={setDate}
+              selectedTime={selectedTime}
+              setSelectedTime={setSelectedTime}
+              timeSlots={timeSlots}
+            />
 
-                <AppointmentSummary
-                  doctor={doctor}
-                  selectedPatient={selectedPatient}
-                  consultationType={consultationType}
-                  date={date}
-                  selectedTime={selectedTime}
-                  dependents={dependents}
-                />
-              </div>
-            </div>
+            <AppointmentSummary
+              doctor={doctor}
+              selectedPatient={selectedPatient}
+              consultationType={consultationType}
+              date={date}
+              selectedTime={selectedTime}
+              dependents={dependents}
+            />
 
             <div className="flex justify-end pt-6 border-t">
               <div className="space-x-4">
