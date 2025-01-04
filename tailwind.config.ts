@@ -25,10 +25,10 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        background: "#F2FCE2",
+        foreground: "#1A1F2C",
         primary: {
-          DEFAULT: "#1A1F2C",
+          DEFAULT: "#0EA5E9",
           foreground: "#FFFFFF",
         },
         secondary: {
@@ -36,7 +36,7 @@ export default {
           foreground: "#FFFFFF",
         },
         accent: {
-          DEFAULT: "#F8F9FA",
+          DEFAULT: "#D3E4FD",
           foreground: "#1A1F2C",
         },
         popover: {
