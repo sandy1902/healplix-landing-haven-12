@@ -9,7 +9,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 export const AuthUI = () => {
   const [role, setRole] = useState("subscriber");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   return (
@@ -61,18 +60,6 @@ export const AuthUI = () => {
         }}
       >
         <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="password">Create Password</Label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              className="w-full"
-            />
-          </div>
-
           <div className="space-y-2">
             <Label htmlFor="confirmPassword">Confirm Password</Label>
             <Input
