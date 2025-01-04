@@ -22,7 +22,7 @@ export const AuthUI = () => {
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
             placeholder="Enter your phone number"
-            className="w-full"
+            className="w-full bg-background"
           />
         </div>
       </div>
@@ -36,7 +36,7 @@ export const AuthUI = () => {
               colors: {
                 brand: '#1e3a8a',
                 brandAccent: '#1e40af',
-                inputBackground: 'white',
+                inputBackground: '#F0F9FF',
                 inputText: '#1e3a8a',
                 inputBorder: 'hsl(var(--input))',
                 inputBorderFocus: 'hsl(var(--ring))',
@@ -85,14 +85,14 @@ export const AuthUI = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm your password"
-              className="w-full"
+              className="w-full bg-background"
             />
           </div>
           
           <div className="space-y-2">
             <Label htmlFor="role">Role</Label>
             <Select value={role} onValueChange={setRole}>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full bg-background">
                 <SelectValue placeholder="Select your role" />
               </SelectTrigger>
               <SelectContent>
