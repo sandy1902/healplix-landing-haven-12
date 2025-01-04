@@ -32,23 +32,22 @@ export function HospitalProfileDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[1000px] h-[90vh] bg-white/95 backdrop-blur-sm shadow-xl border-2 border-secondary/20">
-        <div className="px-8 py-6 overflow-y-auto h-full">
-          <DialogHeader className="border-b pb-6 mb-8">
-            <DialogTitle className="text-2xl font-bold text-center text-primary">
-              {hospital.name}
-            </DialogTitle>
-          </DialogHeader>
+        <DialogHeader className="border-b pb-6">
+          <DialogTitle className="text-2xl font-bold text-center text-primary">
+            {hospital.name}
+          </DialogTitle>
+        </DialogHeader>
 
-          <ScrollArea className="h-[calc(100vh-280px)] pr-4">
-            <div className="space-y-8">
-              <ImageCarousel images={[
-                "https://images.unsplash.com/photo-1586773860418-d37222d8fce3",
-                "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d",
-                "https://images.unsplash.com/photo-1516549655169-df83a0774514",
-                "https://images.unsplash.com/photo-1538108149393-fbbd81895907",
-                "https://images.unsplash.com/photo-1559000357-f6b52ddfbe37",
-                "https://images.unsplash.com/photo-1579684385127-1ef15d508118"
-              ]} />
+        <ScrollArea className="h-[calc(100vh-280px)] px-8">
+          <div className="space-y-8 pb-24">
+            <ImageCarousel images={[
+              "https://images.unsplash.com/photo-1586773860418-d37222d8fce3",
+              "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d",
+              "https://images.unsplash.com/photo-1516549655169-df83a0774514",
+              "https://images.unsplash.com/photo-1538108149393-fbbd81895907",
+              "https://images.unsplash.com/photo-1559000357-f6b52ddfbe37",
+              "https://images.unsplash.com/photo-1579684385127-1ef15d508118"
+            ]} />
 
               <div className="space-y-6">
                 <div className="bg-accent/50 p-6 rounded-lg shadow-sm">
@@ -150,26 +149,25 @@ export function HospitalProfileDialog({
                     </div>
                   )}
                 </div>
-              </div>
-            </div>
-          </ScrollArea>
 
-          <div className="sticky bottom-0 bg-white pt-6 border-t mt-8">
-            <div className="flex gap-4">
-              <Button
-                onClick={() => onRequestCallback(hospital)}
-                variant="outline"
-                className="flex-1 border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10"
-              >
-                Request Callback
-              </Button>
-              <Button
-                onClick={() => onAdmissionEnquiry(hospital)}
-                className="flex-1 bg-[#9b87f5] hover:bg-[#8b77e5] text-white"
-              >
-                Send Admission Enquiry
-              </Button>
-            </div>
+          </div>
+        </ScrollArea>
+
+        <div className="bg-white py-6 border-t mt-auto">
+          <div className="flex gap-4 px-8">
+            <Button
+              onClick={() => onRequestCallback(hospital)}
+              variant="outline"
+              className="flex-1 border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10"
+            >
+              Request Callback
+            </Button>
+            <Button
+              onClick={() => onAdmissionEnquiry(hospital)}
+              className="flex-1 bg-[#9b87f5] hover:bg-[#8b77e5] text-white"
+            >
+              Send Admission Enquiry
+            </Button>
           </div>
         </div>
       </DialogContent>
