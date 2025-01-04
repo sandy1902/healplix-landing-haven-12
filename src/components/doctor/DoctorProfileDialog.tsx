@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MapPin, Award, Star, BookOpen } from "lucide-react";
+import { Award, Star, BookOpen } from "lucide-react";
 import { Doctor } from "@/types/doctor";
 import { Button } from "@/components/ui/button";
 
@@ -40,18 +40,6 @@ export function DoctorProfileDialog({ doctor, open, onOpenChange }: DoctorProfil
                   <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
                   <span className="font-medium text-[#333333]">4.8</span>
                   <span className="text-[#8E9196]">(120+ Reviews)</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Clinic Details */}
-            <div className="bg-white/50 p-6 rounded-lg">
-              <h3 className="text-lg font-semibold text-[#333333] mb-4">Clinic Details</h3>
-              <div className="flex items-start gap-2 text-[#555555]">
-                <MapPin className="h-4 w-4 mt-1 text-[#7E69AB]" />
-                <div>
-                  <p className="font-medium">{doctor.clinicName}</p>
-                  <p>{doctor.clinicLocation}</p>
                 </div>
               </div>
             </div>

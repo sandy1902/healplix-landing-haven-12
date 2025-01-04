@@ -22,7 +22,7 @@ export function DoctorsList({ doctors }: DoctorsListProps) {
       experience: "5+ years",
       rating: 4.5,
       clinicName: "Main Hospital Clinic",
-      location: "Hospital Location",
+      location: window.location.pathname === "/search-hospitals" ? "Hospital Location" : "Private Clinic",
       clinicVisit: { 
         charges: 500,
         available: true 
@@ -33,7 +33,7 @@ export function DoctorsList({ doctors }: DoctorsListProps) {
       },
       email: "doctor@hospital.com",
       contactNumber: "+1234567890",
-      clinicLocation: "Hospital Location",
+      clinicLocation: window.location.pathname === "/search-hospitals" ? "Hospital Location" : "Private Clinic",
       clinicTimings: "9:00 AM - 5:00 PM",
       image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d"
     };
@@ -51,7 +51,7 @@ export function DoctorsList({ doctors }: DoctorsListProps) {
       experience: "5+ years",
       rating: 4.5,
       clinicName: "Main Hospital Clinic",
-      location: "Hospital Location",
+      location: window.location.pathname === "/search-hospitals" ? "Hospital Location" : "Private Clinic",
       clinicVisit: { 
         charges: 500,
         available: true 
@@ -62,7 +62,7 @@ export function DoctorsList({ doctors }: DoctorsListProps) {
       },
       email: "doctor@hospital.com",
       contactNumber: "+1234567890",
-      clinicLocation: "Hospital Location",
+      clinicLocation: window.location.pathname === "/search-hospitals" ? "Hospital Location" : "Private Clinic",
       clinicTimings: "9:00 AM - 5:00 PM",
       image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d"
     };
