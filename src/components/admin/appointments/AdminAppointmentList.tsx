@@ -13,6 +13,10 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { format } from "date-fns";
 
+interface Profile {
+  full_name: string | null;
+}
+
 interface Appointment {
   id: string;
   user_id: string;
@@ -22,9 +26,13 @@ interface Appointment {
   time: string;
   location: string;
   status: string;
-  user: {
-    full_name: string;
-  };
+  user: Profile;
+  created_at: string;
+  doctor_id: string;
+  for_whom: string;
+  rating: number | null;
+  review: string | null;
+  type: string;
 }
 
 export function AdminAppointmentList() {
