@@ -5,6 +5,7 @@ import { Menu, X, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileMenu } from "./navbar/MobileMenu";
 import { SearchDropdown } from "./navbar/SearchDropdown";
+import { DashboardMenu } from "./navbar/DashboardMenu";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,6 +64,7 @@ export const Navbar = () => {
                 <Link to="/about-us" className="text-gray-700 hover:text-primary capitalize text-lg">About us</Link>
                 <Link to="/contact" className="text-gray-700 hover:text-primary capitalize text-lg">Contact us</Link>
                 <SearchDropdown />
+                <DashboardMenu />
                 <div className="flex items-center space-x-3">
                   <Link to="/login">
                     <Button variant="outline" className="font-roboto text-base">
