@@ -371,9 +371,12 @@ export type Database = {
         Row: {
           address: string | null
           bio: string | null
+          clinic_address: string | null
+          clinic_name: string | null
           full_name: string | null
           id: string
           phone_number: string | null
+          practice_locations: string[] | null
           profile_image_url: string | null
           role: Database["public"]["Enums"]["user_role"]
           specialization: string | null
@@ -382,9 +385,12 @@ export type Database = {
         Insert: {
           address?: string | null
           bio?: string | null
+          clinic_address?: string | null
+          clinic_name?: string | null
           full_name?: string | null
           id: string
           phone_number?: string | null
+          practice_locations?: string[] | null
           profile_image_url?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           specialization?: string | null
@@ -393,9 +399,12 @@ export type Database = {
         Update: {
           address?: string | null
           bio?: string | null
+          clinic_address?: string | null
+          clinic_name?: string | null
           full_name?: string | null
           id?: string
           phone_number?: string | null
+          practice_locations?: string[] | null
           profile_image_url?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           specialization?: string | null
