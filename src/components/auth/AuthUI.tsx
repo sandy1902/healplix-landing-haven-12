@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 export const AuthUI = () => {
   const [role, setRole] = useState("subscriber");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   return (
     <div className="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -24,11 +26,6 @@ export const AuthUI = () => {
               },
             },
           },
-          className: {
-            input: 'hidden',
-            label: 'hidden',
-            container: 'password-container-hide',
-          },
         }}
         providers={[]}
         redirectTo={window.location.origin}
@@ -37,8 +34,8 @@ export const AuthUI = () => {
             sign_up: {
               email_label: "Email address",
               email_input_placeholder: "Your email address",
-              password_label: "",
-              password_input_placeholder: "",
+              password_label: "Create password",
+              password_input_placeholder: "Create a secure password",
               button_label: "Sign up",
             },
           },
@@ -58,6 +55,30 @@ export const AuthUI = () => {
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               placeholder="Enter your phone number"
+              className="w-full"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="password">Create Password</Label>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              className="w-full"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="confirmPassword">Confirm Password</Label>
+            <Input
+              id="confirmPassword"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm your password"
               className="w-full"
             />
           </div>
