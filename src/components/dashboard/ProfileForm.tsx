@@ -3,6 +3,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { Textarea } from "@/components/ui/textarea";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function ProfileForm() {
   const { toast } = useToast();
@@ -16,10 +18,13 @@ export default function ProfileForm() {
     city: '',
     district: '',
     state: '',
-    pincode: ''
+    pincode: '',
+    phoneNumber: '',
+    bio: '',
+    specialization: ''
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -27,14 +32,46 @@ export default function ProfileForm() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically make an API call to update the profile
-    console.log('Form submitted with data:', formData);
-    toast({
-      title: "Profile Updated",
-      description: "Your profile has been successfully updated.",
-    });
+    
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "You must be logged in to update your profile.",
+        });
+        return;
+      }
+
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          full_name: `${formData.firstName} ${formData.lastName}`,
+          phone_number: formData.phoneNumber,
+          address: `${formData.address}, ${formData.city}, ${formData.district}, ${formData.state}, ${formData.pincode}`,
+          bio: formData.bio,
+          specialization: formData.specialization
+        })
+        .eq('id', user.id);
+
+      if (error) throw error;
+
+      toast({
+        title: "Profile Updated",
+        description: "Your profile has been successfully updated.",
+      });
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to update profile. Please try again.",
+      });
+    }
   };
 
   return (
@@ -60,12 +97,11 @@ export default function ProfileForm() {
           />
         </div>
         <div className="space-y-4">
-          <Label htmlFor="age">Age</Label>
+          <Label htmlFor="phoneNumber">Phone Number</Label>
           <Input 
-            id="age" 
-            type="number" 
-            placeholder="Enter age" 
-            value={formData.age}
+            id="phoneNumber" 
+            placeholder="Enter phone number" 
+            value={formData.phoneNumber}
             onChange={handleChange}
           />
         </div>
@@ -89,6 +125,15 @@ export default function ProfileForm() {
             id="dob" 
             type="date" 
             value={formData.dob}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="space-y-4">
+          <Label htmlFor="specialization">Specialization</Label>
+          <Input 
+            id="specialization" 
+            placeholder="Enter specialization (if applicable)" 
+            value={formData.specialization}
             onChange={handleChange}
           />
         </div>
@@ -144,6 +189,18 @@ export default function ProfileForm() {
             />
           </div>
         </div>
+      </div>
+
+      {/* Bio */}
+      <div className="space-y-4">
+        <Label htmlFor="bio">Bio</Label>
+        <Textarea
+          id="bio"
+          placeholder="Tell us about yourself"
+          value={formData.bio}
+          onChange={handleChange}
+          className="min-h-[100px]"
+        />
       </div>
 
       <div className="flex justify-end">
