@@ -116,6 +116,44 @@ export type Database = {
           },
         ]
       }
+      executive_reports: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          id: string
+          metrics: Json | null
+          report_date: string
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          metrics?: Json | null
+          report_date: string
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          metrics?: Json | null
+          report_date?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "executive_reports_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       favorites: {
         Row: {
           created_at: string | null
@@ -225,6 +263,36 @@ export type Database = {
         }
         Relationships: []
       }
+      revenue_metrics: {
+        Row: {
+          appointment_revenue: number
+          created_at: string | null
+          date: string
+          id: string
+          other_revenue: number
+          subscription_revenue: number
+          total_revenue: number
+        }
+        Insert: {
+          appointment_revenue?: number
+          created_at?: string | null
+          date: string
+          id?: string
+          other_revenue?: number
+          subscription_revenue?: number
+          total_revenue?: number
+        }
+        Update: {
+          appointment_revenue?: number
+          created_at?: string | null
+          date?: string
+          id?: string
+          other_revenue?: number
+          subscription_revenue?: number
+          total_revenue?: number
+        }
+        Relationships: []
+      }
       reward_points: {
         Row: {
           amount: number | null
@@ -301,6 +369,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_analytics: {
+        Row: {
+          active_users: number
+          appointments_booked: number
+          created_at: string | null
+          date: string
+          id: string
+          new_users: number
+          total_users: number
+        }
+        Insert: {
+          active_users?: number
+          appointments_booked?: number
+          created_at?: string | null
+          date: string
+          id?: string
+          new_users?: number
+          total_users?: number
+        }
+        Update: {
+          active_users?: number
+          appointments_booked?: number
+          created_at?: string | null
+          date?: string
+          id?: string
+          new_users?: number
+          total_users?: number
+        }
+        Relationships: []
       }
     }
     Views: {
