@@ -12,6 +12,7 @@ export default function MedicalRecords() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showCamera, setShowCamera] = useState(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
+  const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
   const [records, setRecords] = useState<MedicalRecord[]>([
     {
       id: "1",
@@ -60,9 +61,13 @@ export default function MedicalRecords() {
 
   const startCamera = async () => {
     try {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+
       const mediaStream = await navigator.mediaDevices.getUserMedia({ 
         video: { 
-          facingMode: "user",
+          facingMode: facingMode,
           width: { ideal: 1280 },
           height: { ideal: 720 }
         },
@@ -114,6 +119,7 @@ export default function MedicalRecords() {
       setStream(null);
     }
     setShowCamera(false);
+    setFacingMode(prev => prev === "user" ? "environment" : "user");
   };
 
   const handleDownload = (record: MedicalRecord) => {
