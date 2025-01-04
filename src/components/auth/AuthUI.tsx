@@ -24,14 +24,11 @@ export const AuthUI = () => {
               },
             },
           },
-          style: {
-            input: {
-              password: {
-                display: 'none',
-              },
-            },
+          className: {
+            input: 'hidden',
+            label: 'hidden',
+            container: 'password-container-hide',
           },
-          extend: true,
         }}
         providers={[]}
         redirectTo={window.location.origin}
