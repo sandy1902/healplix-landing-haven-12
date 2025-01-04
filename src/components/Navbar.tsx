@@ -22,7 +22,7 @@ export const Navbar = () => {
             <img 
               src="/lovable-uploads/09637a17-236d-44c0-8a5f-aa2d26ea3cd2.png" 
               alt="Logo" 
-              className="h-8 w-auto"
+              className="h-12 w-auto" // Increased from h-8 to h-12
             />
           </Link>
 
