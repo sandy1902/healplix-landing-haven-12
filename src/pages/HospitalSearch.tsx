@@ -3,7 +3,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { AdmissionEnquiryForm } from "@/components/hospital/AdmissionEnquiryForm";
 import { SearchFilters } from "@/components/hospital/SearchFilters";
 import { HospitalResults } from "@/components/hospital/HospitalResults";
-import { GlobalSearchBar } from "@/components/search/GlobalSearchBar";
 import { Hospital } from "@/types/hospital";
 
 export default function HospitalSearch() {
@@ -146,14 +145,6 @@ export default function HospitalSearch() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10">
       <div className="container mx-auto py-12 px-4">
-        <div className="mb-8">
-          <GlobalSearchBar
-            value={searchQuery}
-            onChange={setSearchQuery}
-            placeholder="Search hospitals, locations, specialities, doctors..."
-          />
-        </div>
-
         <SearchFilters
           location={location}
           setLocation={setLocation}
@@ -161,6 +152,8 @@ export default function HospitalSearch() {
           setSpeciality={setSpeciality}
           insuranceProvider={insuranceProvider}
           setInsuranceProvider={setInsuranceProvider}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
         />
 
         <HospitalResults
