@@ -12,6 +12,14 @@ export const Hero = () => {
               <span>24/7 EMERGENCY SERVICE</span>
             </div>
             
+            <div className="flex items-center space-x-2 mb-4">
+              <img 
+                src="/lovable-uploads/0c9b5516-6d0d-4761-b5f8-d3ab135daffb.png" 
+                alt="Logo" 
+                className="h-12 w-auto"
+              />
+            </div>
+            
             <h1 className="text-4xl md:text-6xl font-bold text-[#1e3a8a] leading-tight">
               Caring for <span className="text-[#00b341] relative">Health
                 <span className="absolute bottom-0 left-0 w-full h-1 bg-[#00b341]"></span>
@@ -38,7 +46,7 @@ export const Hero = () => {
           
           <div className="relative">
             <img 
-              src="/lovable-uploads/1bda723f-b443-4d8e-9825-ff78d0789664.png"
+              src="/lovable-uploads/572154e7-48e3-4ed7-b56d-7d0f2948a46d.png"
               alt="Medical Team"
               className="w-full h-auto object-cover rounded-lg shadow-xl animate-fade-up"
             />
