@@ -12,12 +12,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, X } from "lucide-react";
+import { Database } from "@/integrations/supabase/types";
+
+type RegistrationStatus = Database["public"]["Enums"]["registration_status"];
 
 interface Registration {
   id: string;
   full_name: string;
   role: string;
-  registration_status: string;
+  registration_status: RegistrationStatus;
 }
 
 export function RegistrationApprovals() {
@@ -47,7 +50,7 @@ export function RegistrationApprovals() {
     setRegistrations(data || []);
   };
 
-  const updateRegistrationStatus = async (userId: string, status: string) => {
+  const updateRegistrationStatus = async (userId: string, status: RegistrationStatus) => {
     const { error } = await supabase
       .from("profiles")
       .update({ registration_status: status })

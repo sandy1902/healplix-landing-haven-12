@@ -18,11 +18,14 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { UserCheck, Trash } from "lucide-react";
+import { Database } from "@/integrations/supabase/types";
+
+type UserRole = Database["public"]["Enums"]["user_role"];
 
 interface User {
   id: string;
   full_name: string;
-  role: string;
+  role: UserRole;
 }
 
 export function UserRolesManagement() {
@@ -51,7 +54,7 @@ export function UserRolesManagement() {
     setUsers(data || []);
   };
 
-  const updateUserRole = async (userId: string, newRole: string) => {
+  const updateUserRole = async (userId: string, newRole: UserRole) => {
     const { error } = await supabase
       .from("profiles")
       .update({ role: newRole })
@@ -112,7 +115,7 @@ export function UserRolesManagement() {
               <TableCell>
                 <Select
                   defaultValue={user.role}
-                  onValueChange={(value) => updateUserRole(user.id, value)}
+                  onValueChange={(value: UserRole) => updateUserRole(user.id, value)}
                 >
                   <SelectTrigger className="w-32">
                     <SelectValue />
