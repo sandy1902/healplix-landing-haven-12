@@ -6,7 +6,7 @@ import { ConsultationTypeSection } from "./appointment/ConsultationTypeSection";
 import { PatientSelectionSection } from "./appointment/PatientSelectionSection";
 import { DateTimeSection } from "./appointment/DateTimeSection";
 import { AppointmentSummary } from "./appointment/AppointmentSummary";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 interface AppointmentDialogProps {
   doctor: Doctor;
@@ -34,14 +34,13 @@ export function AppointmentDialog({
   const handleBookAppointment = () => {
     if (!selectedDate || !selectedTime) {
       toast({
+        title: "Please select date and time",
+        description: "Date and time are required to book an appointment",
         variant: "destructive",
-        title: "Error",
-        description: "Please select both date and time for your appointment",
       });
       return;
     }
 
-    // If validation passes, show success toast and close dialog
     toast({
       title: "Appointment Booked Successfully",
       description: "We'll send you a confirmation email shortly",
@@ -64,7 +63,6 @@ export function AppointmentDialog({
               <ConsultationTypeSection
                 consultationType={consultationType}
                 setConsultationType={setConsultationType}
-                doctor={doctor}
               />
               <PatientSelectionSection
                 selectedPatient={selectedPatient}
@@ -74,8 +72,8 @@ export function AppointmentDialog({
             </div>
 
             <DateTimeSection
-              date={selectedDate}
-              setDate={setSelectedDate}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
               selectedTime={selectedTime}
               setSelectedTime={setSelectedTime}
               doctor={doctor}

@@ -1,18 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Upload, Camera } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState, useRef } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { CameraModal } from "./CameraModal";
 import { RecordsList } from "./RecordsList";
 import { MedicalRecord } from "./types";
-import { useCamera } from "@/hooks/useCamera";
 
 export default function MedicalRecords() {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showCamera, setShowCamera] = useState(false);
-  const { stream, startCamera, stopCamera, toggleFacingMode } = useCamera();
+  const [stream, setStream] = useState<MediaStream | null>(null);
   const [records, setRecords] = useState<MedicalRecord[]>([
     {
       id: "1",
@@ -59,10 +58,31 @@ export default function MedicalRecords() {
     }
   };
 
-  const handleStartCamera = async () => {
-    const mediaStream = await startCamera();
-    if (mediaStream) {
+  const startCamera = async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({ 
+        video: { 
+          facingMode: "user",
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        },
+        audio: false 
+      });
+      
+      setStream(mediaStream);
       setShowCamera(true);
+      
+      toast({
+        title: "Camera Started",
+        description: "Camera is now active. Click 'Capture' to take a photo.",
+      });
+    } catch (err) {
+      console.error('Camera error:', err);
+      toast({
+        variant: "destructive",
+        title: "Camera Error",
+        description: "Unable to access camera. Please check permissions.",
+      });
     }
   };
 
@@ -89,7 +109,10 @@ export default function MedicalRecords() {
   };
 
   const handleCloseCamera = () => {
-    stopCamera();
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+    }
     setShowCamera(false);
   };
 
@@ -109,7 +132,7 @@ export default function MedicalRecords() {
             <Upload className="h-4 w-4 mr-2" />
             Upload Record
           </Button>
-          <Button variant="secondary" onClick={handleStartCamera}>
+          <Button variant="secondary" onClick={startCamera}>
             <Camera className="h-4 w-4 mr-2" />
             Capture Image
           </Button>
@@ -129,7 +152,6 @@ export default function MedicalRecords() {
             stream={stream}
             onCapture={handleCameraCapture}
             onClose={handleCloseCamera}
-            onToggleCamera={toggleFacingMode}
           />
         )}
       </CardContent>

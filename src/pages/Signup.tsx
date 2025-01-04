@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
+import { SignupForm } from "@/components/signup/SignupForm";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { SignupForm } from "@/components/signup/SignupForm";
 
 export default function Signup() {
   return (
@@ -13,7 +14,15 @@ export default function Signup() {
               <h1 className="text-3xl font-bold text-[#1A1F2C] font-poppins mb-2">Create an Account</h1>
               <p className="text-[#7E69AB] font-sans">Join us and start your journey</p>
             </div>
+            
             <SignupForm />
+
+            <p className="text-center text-sm text-[#7E69AB] font-sans">
+              Already have an account?{" "}
+              <Link to="/login" className="font-medium text-[#9b87f5] hover:text-[#7E69AB] underline underline-offset-4">
+                Login here
+              </Link>
+            </p>
           </div>
         </div>
       </div>
