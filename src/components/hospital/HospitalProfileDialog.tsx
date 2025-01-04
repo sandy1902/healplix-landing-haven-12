@@ -27,6 +27,7 @@ export function HospitalProfileDialog({
   onAdmissionEnquiry,
 }: HospitalProfileDialogProps) {
   const [showReviews, setShowReviews] = useState(false);
+  const [showInsurance, setShowInsurance] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -67,18 +68,32 @@ export function HospitalProfileDialog({
                   </div>
                 </div>
 
+                <DoctorsList doctors={hospital.doctors} />
+
                 <div className="bg-white p-6 rounded-lg shadow-sm">
-                  <h3 className="text-xl font-semibold mb-4 text-primary">Insurance Providers</h3>
-                  <div className="flex flex-wrap gap-3">
-                    {hospital.insuranceProviders.map((provider) => (
-                      <span
-                        key={provider}
-                        className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium"
-                      >
-                        {provider}
-                      </span>
-                    ))}
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-semibold text-primary">Insurance Providers</h3>
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowInsurance(!showInsurance)}
+                      className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10"
+                    >
+                      {showInsurance ? 'Hide Insurance' : 'View Insurance'}
+                    </Button>
                   </div>
+                  
+                  {showInsurance && (
+                    <div className="flex flex-wrap gap-3 mt-4">
+                      {hospital.insuranceProviders.map((provider) => (
+                        <span
+                          key={provider}
+                          className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium"
+                        >
+                          {provider}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -108,8 +123,6 @@ export function HospitalProfileDialog({
                     </div>
                   )}
                 </div>
-
-                <DoctorsList doctors={hospital.doctors} />
               </div>
             </div>
           </ScrollArea>
