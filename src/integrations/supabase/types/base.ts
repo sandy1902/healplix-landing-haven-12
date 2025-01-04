@@ -1,16 +1,12 @@
 import { Database } from './database.types';
-import type { ProfilesTable } from './profiles';
-import type { SystemSettingsTable } from './system-settings';
-import type { UserAnalyticsTable } from './user-analytics';
-import type { RevenueMetricsTable } from './revenue-metrics';
-import type { AppointmentsTable } from './appointments';
+
+export type { SystemSettingsTable } from './system-settings';
+export type { Database };
 
 export type Tables = Database['public']['Tables'];
 export type Enums = Database['public']['Enums'];
-export type Functions = Database['public']['Functions'];
 
-export type { ProfilesTable };
-export type { SystemSettingsTable };
-export type { UserAnalyticsTable };
-export type { RevenueMetricsTable };
-export type { AppointmentsTable };
+export type ProfilesTable = Tables['profiles']['Row'];
+export type AppointmentsTable = Tables['appointments']['Row'];
+export type UserAnalyticsTable = Tables['user_analytics']['Row'];
+export type RevenueMetricsTable = Tables['revenue_metrics']['Row'];
