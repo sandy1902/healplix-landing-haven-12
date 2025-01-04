@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 0;
   text-align: center;
+  overflow-x: hidden;
 }
 
 .logo {
@@ -41,9 +42,22 @@
   color: #888;
 }
 
+/* Mobile responsiveness improvements */
 @media (max-width: 768px) {
   .container {
     padding-left: 1rem;
     padding-right: 1rem;
+    width: 100%;
+  }
+  
+  /* Ensure content doesn't overflow on mobile */
+  body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
+  /* Adjust padding for mobile */
+  .section-padding {
+    padding: 2rem 1rem;
   }
 }
