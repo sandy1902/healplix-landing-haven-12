@@ -36,45 +36,39 @@ export const SearchFilters = ({
             onChange={setSearchQuery}
             placeholder="Search hospitals, specialities..."
           />
-          <div className="flex flex-col space-y-4">
-            <div className="w-full">
-              <Input
-                placeholder="Search by location..."
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20"
-              />
-            </div>
-            <div className="w-full">
-              <Select value={speciality} onValueChange={setSpeciality}>
-                <SelectTrigger className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20">
-                  <SelectValue placeholder="Select Speciality" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Cardiology">Cardiology</SelectItem>
-                  <SelectItem value="Neurology">Neurology</SelectItem>
-                  <SelectItem value="Orthopedics">Orthopedics</SelectItem>
-                  <SelectItem value="Pediatrics">Pediatrics</SelectItem>
-                  <SelectItem value="Oncology">Oncology</SelectItem>
-                  <SelectItem value="Dermatology">Dermatology</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="w-full">
-              <Select value={insuranceProvider} onValueChange={setInsuranceProvider}>
-                <SelectTrigger className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20">
-                  <SelectValue placeholder="Select Insurance Provider" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Blue Cross">Blue Cross</SelectItem>
-                  <SelectItem value="Aetna">Aetna</SelectItem>
-                  <SelectItem value="United Healthcare">United Healthcare</SelectItem>
-                  <SelectItem value="Kaiser">Kaiser</SelectItem>
-                  <SelectItem value="Cigna">Cigna</SelectItem>
-                  <SelectItem value="Blue Shield">Blue Shield</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Input
+              placeholder="Search by location..."
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20"
+            />
+            <Select value={speciality} onValueChange={setSpeciality}>
+              <SelectTrigger className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20">
+                <SelectValue placeholder="Select Speciality" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Cardiology">Cardiology</SelectItem>
+                <SelectItem value="Neurology">Neurology</SelectItem>
+                <SelectItem value="Orthopedics">Orthopedics</SelectItem>
+                <SelectItem value="Pediatrics">Pediatrics</SelectItem>
+                <SelectItem value="Oncology">Oncology</SelectItem>
+                <SelectItem value="Dermatology">Dermatology</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={insuranceProvider} onValueChange={setInsuranceProvider}>
+              <SelectTrigger className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20">
+                <SelectValue placeholder="Select Insurance Provider" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Blue Cross">Blue Cross</SelectItem>
+                <SelectItem value="Aetna">Aetna</SelectItem>
+                <SelectItem value="United Healthcare">United Healthcare</SelectItem>
+                <SelectItem value="Kaiser">Kaiser</SelectItem>
+                <SelectItem value="Cigna">Cigna</SelectItem>
+                <SelectItem value="Blue Shield">Blue Shield</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </CardContent>
