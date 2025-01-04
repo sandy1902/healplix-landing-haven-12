@@ -49,17 +49,17 @@ export function LoginForm() {
           name="emailOrPhone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-white text-base font-medium mb-1">
+              <FormLabel className="text-gray-700 text-base font-medium mb-1">
                 Email or Phone Number
               </FormLabel>
               <FormControl>
                 <Input 
                   placeholder="Enter your email or phone number" 
                   {...field}
-                  className="bg-white/5 backdrop-blur-sm border-gray-700"
+                  className="bg-white/50 backdrop-blur-sm border-gray-200 focus:border-primary/50 focus:ring-primary/50"
                 />
               </FormControl>
-              <FormMessage className="text-red-300" />
+              <FormMessage className="text-red-500" />
             </FormItem>
           )}
         />
@@ -69,7 +69,7 @@ export function LoginForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-white text-base font-medium mb-1">
+              <FormLabel className="text-gray-700 text-base font-medium mb-1">
                 Password
               </FormLabel>
               <FormControl>
@@ -78,7 +78,7 @@ export function LoginForm() {
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     {...field}
-                    className="bg-white/5 backdrop-blur-sm border-gray-700 pr-10"
+                    className="bg-white/50 backdrop-blur-sm border-gray-200 focus:border-primary/50 focus:ring-primary/50 pr-10"
                   />
                   <Button
                     type="button"
@@ -88,9 +88,9 @@ export function LoginForm() {
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
+                      <EyeOff className="h-4 w-4 text-gray-500" />
                     ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-4 w-4 text-gray-500" />
                     )}
                   </Button>
                 </div>
@@ -98,17 +98,17 @@ export function LoginForm() {
               <div className="flex justify-end mt-1">
                 <Link 
                   to="/forgot-password" 
-                  className="text-sm text-gray-300 hover:text-white transition-colors"
+                  className="text-sm text-primary hover:text-primary/80 transition-colors"
                 >
                   Forgot Password?
                 </Link>
               </div>
-              <FormMessage className="text-red-300" />
+              <FormMessage className="text-red-500" />
             </FormItem>
           )}
         />
 
-        <Button type="submit" className="w-full bg-secondary hover:bg-secondary/90">
+        <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white">
           Login
         </Button>
       </form>
