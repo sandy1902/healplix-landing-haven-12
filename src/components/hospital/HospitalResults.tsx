@@ -16,7 +16,7 @@ export const HospitalResults = ({
   return (
     <div className="space-y-6">
       {hospitals.map((hospital) => (
-        <Card key={hospital.id} className="border-0 bg-white/90 backdrop-blur-sm">
+        <Card key={hospital.id} className="border-0 bg-gradient-to-r from-[#9b87f5]/5 to-[#7E69AB]/5 backdrop-blur-sm">
           <CardContent className="p-6">
             <HospitalCard
               hospital={hospital}
@@ -28,8 +28,8 @@ export const HospitalResults = ({
       ))}
 
       {hospitals.length === 0 && (
-        <Card className="border-0 bg-white/90 backdrop-blur-sm">
-          <CardContent className="p-8 text-center text-[#8E9196]">
+        <Card className="border-0 bg-gradient-to-r from-[#9b87f5]/5 to-[#7E69AB]/5 backdrop-blur-sm">
+          <CardContent className="p-8 text-center text-[#7E69AB]">
             No hospitals found matching your criteria
           </CardContent>
         </Card>
