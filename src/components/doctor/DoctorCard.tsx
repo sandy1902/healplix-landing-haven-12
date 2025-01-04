@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Video, MapPin, Star, Clock, IndianRupee } from "lucide-react";
+import { Video, MapPin, Star, Clock, IndianRupee, UserCircle } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Doctor } from "@/types/doctor";
 
@@ -52,6 +52,15 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
 
           {/* Column 4: Appointment Details */}
           <div className="col-span-3 flex flex-col justify-center space-y-4">
+            <Button 
+              variant="outline"
+              className="w-full border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10"
+              onClick={() => {/* Add view profile handler here */}}
+            >
+              <UserCircle className="mr-2 h-4 w-4" />
+              View Profile
+            </Button>
+
             {doctor.videoConsultation.available && (
               <div className="flex items-center justify-between p-3 bg-[#9b87f5]/10 rounded-lg">
                 <Badge variant="outline" className="flex items-center gap-2 border-[#9b87f5]">
