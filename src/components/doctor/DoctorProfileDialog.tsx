@@ -24,7 +24,7 @@ export function DoctorProfileDialog({ doctor, open, onOpenChange }: DoctorProfil
           <DialogTitle className="text-2xl font-bold text-[#333333] text-center">Doctor Profile</DialogTitle>
         </DialogHeader>
         
-        <ScrollArea className="h-full px-6 pb-20">
+        <ScrollArea className="h-full px-6 pb-20 overflow-y-auto [&_[data-radix-scroll-area-viewport]]:!block [&_[data-radix-scroll-area-scrollbar]]:!w-2.5 [&_[data-radix-scroll-area-thumb]]:!bg-[#7E69AB]/50">
           <div className="space-y-8">
             {/* Profile Header */}
             <div className="flex items-start gap-6 bg-white/50 p-6 rounded-lg">
