@@ -63,6 +63,7 @@ export function AppointmentDialog({
               <ConsultationTypeSection
                 consultationType={consultationType}
                 setConsultationType={setConsultationType}
+                doctor={doctor}
               />
               <PatientSelectionSection
                 selectedPatient={selectedPatient}
@@ -72,8 +73,8 @@ export function AppointmentDialog({
             </div>
 
             <DateTimeSection
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
+              date={selectedDate}
+              setDate={setSelectedDate}
               selectedTime={selectedTime}
               setSelectedTime={setSelectedTime}
               doctor={doctor}
