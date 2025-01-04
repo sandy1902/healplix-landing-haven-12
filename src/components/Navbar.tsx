@@ -63,18 +63,6 @@ export const Navbar = () => {
                 <Link to="/" className="text-gray-700 hover:text-primary capitalize text-lg">Home</Link>
                 <SearchDropdown />
                 <DashboardMenu />
-                <div className="flex items-center space-x-3">
-                  <Link to="/login">
-                    <Button variant="outline" className="font-roboto text-base">
-                      Login
-                    </Button>
-                  </Link>
-                  <Link to="/signup">
-                    <Button className="bg-[#1e40af] hover:bg-[#1e3a8a] font-roboto text-base">
-                      Sign Up
-                    </Button>
-                  </Link>
-                </div>
               </div>
             )}
           </div>
@@ -84,4 +72,4 @@ export const Navbar = () => {
       <MobileMenu isOpen={isOpen} onClose={toggleMenu} />
     </div>
   );
-};
+}
