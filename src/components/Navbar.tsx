@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Facebook, Twitter, Instagram, Linkedin, LogOut } from "lucide-react";
+import { Menu, X, Facebook, Twitter, Instagram, Linkedin, LogOut, Search, User } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileMenu } from "./navbar/MobileMenu";
 import { SearchDropdown } from "./navbar/SearchDropdown";
-import { DashboardMenu } from "./navbar/DashboardMenu";
+import { UserMenu } from "./navbar/UserMenu";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [firstName, setFirstName] = useState("");
   const isMobile = useIsMobile();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -18,6 +20,49 @@ export const Navbar = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        setIsAuthenticated(true);
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('first_name')
+          .eq('id', session.user.id)
+          .single();
+        
+        if (profile) {
+          setFirstName(profile.first_name || "User");
+        }
+      } else {
+        setIsAuthenticated(false);
+        setFirstName("");
+      }
+    };
+
+    getUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        setIsAuthenticated(true);
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('first_name')
+          .eq('id', session.user.id)
+          .single();
+        
+        if (profile) {
+          setFirstName(profile.first_name || "User");
+        }
+      } else if (event === 'SIGNED_OUT') {
+        setIsAuthenticated(false);
+        setFirstName("");
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -77,33 +122,43 @@ export const Navbar = () => {
 
             {isMobile ? (
               <div className="flex items-center gap-2">
-                <Button variant="ghost" size="icon" onClick={handleLogout}>
-                  <LogOut className="h-5 w-5" />
-                </Button>
                 <Button variant="ghost" size="icon" onClick={toggleMenu}>
                   {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                 </Button>
               </div>
             ) : (
               <div className="flex items-center space-x-6 font-poppins">
-                <Link to="/" className="text-gray-700 hover:text-primary capitalize text-lg">Home</Link>
-                <SearchDropdown />
-                <DashboardMenu />
-                <Button 
-                  variant="ghost" 
-                  onClick={handleLogout}
-                  className="flex items-center gap-2"
-                >
-                  <LogOut className="h-5 w-5" />
-                  Logout
-                </Button>
+                <Link to="/" className="text-gray-700 hover:text-primary capitalize text-lg">
+                  Home
+                </Link>
+                <Link to="/about-us" className="text-gray-700 hover:text-primary capitalize text-lg">
+                  About Us
+                </Link>
+                <Link to="/contact" className="text-gray-700 hover:text-primary capitalize text-lg">
+                  Contact Us
+                </Link>
+                
+                {isAuthenticated ? (
+                  <>
+                    <SearchDropdown />
+                    <UserMenu firstName={firstName} onLogout={handleLogout} />
+                  </>
+                ) : (
+                  <Link 
+                    to="/login" 
+                    className="text-gray-700 hover:text-primary capitalize text-lg flex items-center gap-2"
+                  >
+                    <User className="h-5 w-5" />
+                    Login/Signup
+                  </Link>
+                )}
               </div>
             )}
           </div>
         </div>
       </nav>
 
-      <MobileMenu isOpen={isOpen} onClose={toggleMenu} />
+      <MobileMenu isOpen={isOpen} onClose={toggleMenu} isAuthenticated={isAuthenticated} />
     </div>
   );
 };
