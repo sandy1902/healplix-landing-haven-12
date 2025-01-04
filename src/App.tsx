@@ -9,6 +9,7 @@ import DoctorSearch from "./pages/DoctorSearch";
 import HospitalSearch from "./pages/HospitalSearch";
 import ForgotPassword from "./pages/ForgotPassword";
 import AboutUs from "./pages/AboutUs";
+import Contact from "./pages/Contact";
 import { Toaster } from "./components/ui/toaster";
 import "./App.css";
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/dashboard" element={<UserDashboard />} />
         <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
         <Route path="/executive-dashboard" element={<ExecutiveDashboard />} />
