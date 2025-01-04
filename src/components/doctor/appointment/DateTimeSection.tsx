@@ -1,12 +1,28 @@
 import { Calendar } from "@/components/ui/calendar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { format } from "date-fns";
+import { useEffect, useState } from "react";
+import { Doctor } from "@/types/doctor";
 
 interface DateTimeSectionProps {
   date: Date | undefined;
   setDate: (date: Date | undefined) => void;
   selectedTime: string | undefined;
   setSelectedTime: (time: string) => void;
-  timeSlots: string[];
+  doctor: Doctor;
+}
+
+interface TimeSlot {
+  time: string;
+  available: boolean;
+  videoConsultation: boolean;
+  clinicAppointment: boolean;
+}
+
+interface DaySchedule {
+  day: string;
+  slots: TimeSlot[];
+  isAvailable: boolean;
 }
 
 export function DateTimeSection({
@@ -14,8 +30,50 @@ export function DateTimeSection({
   setDate,
   selectedTime,
   setSelectedTime,
-  timeSlots,
+  doctor,
 }: DateTimeSectionProps) {
+  const [availableSlots, setAvailableSlots] = useState<TimeSlot[]>([]);
+
+  // This would typically come from an API call to get doctor's schedule
+  const doctorSchedule: DaySchedule[] = [
+    {
+      day: "Mon",
+      isAvailable: true,
+      slots: [
+        {
+          time: "09:00 AM",
+          available: true,
+          videoConsultation: true,
+          clinicAppointment: true
+        },
+        {
+          time: "10:00 AM",
+          available: true,
+          videoConsultation: true,
+          clinicAppointment: true
+        },
+        // Add more slots as needed
+      ]
+    },
+    // Add more days as needed
+  ];
+
+  useEffect(() => {
+    if (date) {
+      const dayOfWeek = format(date, 'EEE');
+      const daySchedule = doctorSchedule.find(schedule => schedule.day === dayOfWeek);
+      
+      if (daySchedule && daySchedule.isAvailable) {
+        setAvailableSlots(daySchedule.slots.filter(slot => slot.available));
+      } else {
+        setAvailableSlots([]);
+      }
+      
+      // Reset selected time when date changes
+      setSelectedTime(undefined);
+    }
+  }, [date, setSelectedTime]);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div className="bg-accent rounded-lg p-3">
@@ -26,44 +84,41 @@ export function DateTimeSection({
             selected={date}
             onSelect={setDate}
             className="w-full"
-            classNames={{
-              months: "space-y-4",
-              month: "space-y-4",
-              caption: "flex justify-center pt-1 relative items-center",
-              caption_label: "text-sm font-medium",
-              nav: "space-x-1 flex items-center",
-              table: "w-full border-collapse space-y-1",
-              head_row: "flex",
-              head_cell: "text-muted-foreground rounded-md w-8 font-normal text-[0.8rem]",
-              row: "flex w-full mt-2",
-              cell: "text-center text-sm relative p-0 hover:bg-accent",
-              day: "h-8 w-8 p-0 font-normal",
-              day_range_end: "day-range-end",
-              day_selected: "bg-primary text-primary-foreground hover:bg-primary",
-              day_today: "bg-accent text-accent-foreground",
-              day_outside: "text-muted-foreground opacity-50",
-              day_disabled: "text-muted-foreground opacity-50",
-              day_hidden: "invisible",
+            disabled={(date) => {
+              const dayOfWeek = format(date, 'EEE');
+              const daySchedule = doctorSchedule.find(schedule => schedule.day === dayOfWeek);
+              return date < new Date() || !daySchedule?.isAvailable;
             }}
-            disabled={(date) => date < new Date()}
           />
         </div>
       </div>
 
       <div className="bg-accent rounded-lg p-3">
         <h3 className="text-lg font-semibold mb-2 text-primary">Select Time</h3>
-        <Select value={selectedTime} onValueChange={setSelectedTime}>
-          <SelectTrigger className="w-full bg-white">
-            <SelectValue placeholder="Select a time slot" />
-          </SelectTrigger>
-          <SelectContent>
-            {timeSlots.map((time) => (
-              <SelectItem key={time} value={time}>
-                {time}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        {date ? (
+          availableSlots.length > 0 ? (
+            <Select value={selectedTime} onValueChange={setSelectedTime}>
+              <SelectTrigger className="w-full bg-white">
+                <SelectValue placeholder="Select a time slot" />
+              </SelectTrigger>
+              <SelectContent>
+                {availableSlots.map((slot) => (
+                  <SelectItem key={slot.time} value={slot.time}>
+                    {slot.time}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          ) : (
+            <p className="text-gray-500 text-sm bg-white p-3 rounded-md">
+              No available time slots for this date
+            </p>
+          )
+        ) : (
+          <p className="text-gray-500 text-sm bg-white p-3 rounded-md">
+            Please select a date first
+          </p>
+        )}
       </div>
     </div>
   );

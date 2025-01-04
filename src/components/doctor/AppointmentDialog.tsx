@@ -21,11 +21,6 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
   const [date, setDate] = useState<Date>();
   const [selectedTime, setSelectedTime] = useState<string>();
 
-  const timeSlots = [
-    "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
-    "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM",
-  ];
-
   const dependents = [
     { id: "1", name: "John Doe Jr.", relation: "Son", status: "approved" as const },
     { id: "2", name: "Jane Doe", relation: "Daughter", status: "approved" as const },
@@ -78,7 +73,7 @@ export function AppointmentDialog({ doctor, open, onOpenChange }: AppointmentDia
               setDate={setDate}
               selectedTime={selectedTime}
               setSelectedTime={setSelectedTime}
-              timeSlots={timeSlots}
+              doctor={doctor}
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
