@@ -1,13 +1,6 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Hospital } from "@/types/hospital";
-import { Star } from "lucide-react";
 import { ImageCarousel } from "./ImageCarousel";
 import { DoctorsList } from "./DoctorsList";
 
@@ -19,111 +12,97 @@ interface HospitalProfileDialogProps {
   onAdmissionEnquiry: (hospital: Hospital) => void;
 }
 
-export function HospitalProfileDialog({ 
-  hospital, 
-  open, 
+export function HospitalProfileDialog({
+  hospital,
+  open,
   onOpenChange,
   onRequestCallback,
-  onAdmissionEnquiry 
+  onAdmissionEnquiry,
 }: HospitalProfileDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[800px] h-[90vh] p-0 bg-[#F1F0FB]/95 backdrop-blur-sm">
-        <DialogHeader className="p-6 bg-[#F1F0FB]/95 backdrop-blur-sm">
-          <DialogTitle className="text-2xl font-bold text-[#333333] text-center">Hospital Profile</DialogTitle>
+      <DialogContent className="max-w-[1000px] h-[90vh]">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-bold">{hospital.name}</DialogTitle>
         </DialogHeader>
         
-        <ScrollArea className="h-full px-6 pb-20 overflow-y-auto [&_[data-radix-scroll-area-viewport]]:!block [&_[data-radix-scroll-area-scrollbar]]:!w-4 [&_[data-radix-scroll-area-thumb]]:!bg-[#7E69AB]/50">
-          <div className="space-y-8">
-            {/* Hospital Images Carousel */}
+        <div className="overflow-y-auto flex-1 px-2">
+          <div className="space-y-6">
             <ImageCarousel images={hospital.images} />
 
-            {/* Hospital Details */}
-            <div className="bg-white/50 p-6 rounded-lg">
-              <h3 className="text-lg font-semibold text-[#333333] mb-4">{hospital.name}</h3>
-              <p className="text-[#8E9196]">{hospital.location}</p>
-              <div className="flex items-center mt-2">
-                <div className="flex items-center">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star
-                      key={star}
-                      className={`h-5 w-5 ${
-                        star <= hospital.rating
-                          ? "fill-yellow-400 text-yellow-400"
-                          : "text-gray-300"
-                      }`}
-                    />
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-lg font-semibold mb-2">About</h3>
+                <p className="text-gray-600">{hospital.location}</p>
+                <div className="mt-2">
+                  <span className="text-[#1A1F2C] font-semibold">Rating: {hospital.rating}/5</span>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Specialities</h3>
+                <div className="flex flex-wrap gap-2">
+                  {hospital.specialities.map((spec) => (
+                    <span
+                      key={spec}
+                      className="px-3 py-1.5 bg-[#9b87f5]/10 text-[#9b87f5] rounded-full text-sm font-medium"
+                    >
+                      {spec}
+                    </span>
                   ))}
                 </div>
-                <span className="ml-2 text-[#7E69AB] font-medium">
-                  {hospital.rating}/5
-                </span>
               </div>
-            </div>
 
-            {/* Doctors */}
-            <div className="bg-white/50 p-6 rounded-lg">
-              <h3 className="text-lg font-semibold text-[#333333] mb-4">Our Doctors</h3>
-              <DoctorsList doctors={hospital.doctors} />
-            </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Insurance Providers</h3>
+                <div className="flex flex-wrap gap-2">
+                  {hospital.insuranceProviders.map((provider) => (
+                    <span
+                      key={provider}
+                      className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm"
+                    >
+                      {provider}
+                    </span>
+                  ))}
+                </div>
+              </div>
 
-            {/* Reviews */}
-            <div className="bg-white/50 p-6 rounded-lg">
-              <h3 className="text-lg font-semibold text-[#333333] mb-4">Patient Reviews</h3>
-              <div className="space-y-4">
-                {hospital.reviews?.map((review) => (
-                  <div key={review.id} className="bg-white p-4 rounded-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-medium">{review.userName}</span>
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Reviews</h3>
+                <div className="space-y-4">
+                  {hospital.reviews.map((review) => (
+                    <div key={review.id} className="bg-gray-50 p-4 rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-medium">{review.userName}</span>
+                        <span className="text-[#9b87f5]">{review.rating}/5</span>
+                      </div>
+                      <p className="text-gray-600">{review.comment}</p>
                       <span className="text-sm text-gray-500">{review.date}</span>
                     </div>
-                    <div className="flex items-center mb-2">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star
-                          key={star}
-                          className={`h-4 w-4 ${
-                            star <= review.rating
-                              ? "fill-yellow-400 text-yellow-400"
-                              : "text-gray-300"
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    <p className="text-gray-600">{review.comment}</p>
-                  </div>
-                ))}
+                  ))}
+                </div>
+              </div>
+
+              <DoctorsList doctors={hospital.doctors} />
+
+              <div className="flex gap-4 mt-6">
+                <Button
+                  onClick={() => onRequestCallback(hospital)}
+                  variant="outline"
+                  className="flex-1 border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10"
+                >
+                  Request Callback
+                </Button>
+                <Button
+                  onClick={() => onAdmissionEnquiry(hospital)}
+                  className="flex-1 bg-[#9b87f5] hover:bg-[#8b77e5] text-white"
+                >
+                  Send Admission Enquiry
+                </Button>
               </div>
             </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col gap-3">
-              <Button 
-                onClick={() => onRequestCallback(hospital)}
-                variant="outline"
-                className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10 w-full"
-              >
-                Request Callback
-              </Button>
-              <Button 
-                onClick={() => onAdmissionEnquiry(hospital)}
-                className="bg-[#9b87f5] hover:bg-[#8b77e5] text-white w-full"
-              >
-                Send Admission Enquiry
-              </Button>
-            </div>
-
-            {/* Back to Search Results Button */}
-            <div className="mt-8 flex justify-center">
-              <Button
-                onClick={() => onOpenChange(false)}
-                variant="outline"
-                className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10"
-              >
-                Back to Search Results
-              </Button>
-            </div>
           </div>
-        </ScrollArea>
+        </div>
       </DialogContent>
     </Dialog>
   );

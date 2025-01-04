@@ -1,50 +1,63 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
-
-interface Doctor {
-  name: string;
-  qualification: string;
-  speciality: string;
-}
+import { Doctor } from "@/types/doctor";
+import { AppointmentDialog } from "@/components/doctor/AppointmentDialog";
 
 interface DoctorsListProps {
-  doctors: Doctor[];
+  doctors: Array<{ name: string; qualification: string; speciality: string; }>;
 }
 
 export function DoctorsList({ doctors }: DoctorsListProps) {
-  const { toast } = useToast();
+  const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
+  const [isAppointmentOpen, setIsAppointmentOpen] = useState(false);
 
-  const handleBookAppointment = (doctor: Doctor) => {
-    toast({
-      title: "Appointment Request Sent",
-      description: `We'll contact you shortly to schedule your appointment with ${doctor.name}.`,
-    });
+  const handleBookAppointment = (doctor: any) => {
+    // Convert hospital doctor format to Doctor type
+    const formattedDoctor: Doctor = {
+      id: doctor.name.toLowerCase().replace(/\s+/g, '-'),
+      name: doctor.name,
+      speciality: doctor.speciality,
+      qualification: doctor.qualification,
+      experience: "5+ years",
+      rating: 4.5,
+      clinicName: "Main Hospital Clinic",
+      location: "Hospital Location",
+      clinicVisit: { charges: 500 },
+      videoConsultation: { charges: 400 },
+      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d",
+      about: `Dr. ${doctor.name} is a highly qualified ${doctor.speciality} specialist.`
+    };
+    
+    setSelectedDoctor(formattedDoctor);
+    setIsAppointmentOpen(true);
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {doctors.map((doctor) => (
-        <div key={doctor.name} className="flex items-start space-x-4 p-4 bg-white rounded-lg">
-          <Avatar className="h-12 w-12">
-            <AvatarImage src="/placeholder.svg" />
-            <AvatarFallback>DR</AvatarFallback>
-          </Avatar>
-          <div className="flex-1">
-            <h4 className="font-medium text-[#333333]">{doctor.name}</h4>
-            <p className="text-sm text-[#7E69AB]">{doctor.speciality}</p>
-            <p className="text-sm text-[#8E9196] mb-2">{doctor.qualification}</p>
+    <div className="space-y-4">
+      <h3 className="text-lg font-semibold mb-4">Our Doctors</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {doctors.map((doctor, index) => (
+          <div key={index} className="p-4 border rounded-lg bg-white/50 backdrop-blur-sm">
+            <h4 className="font-semibold">{doctor.name}</h4>
+            <p className="text-sm text-gray-600">{doctor.qualification}</p>
+            <p className="text-sm text-gray-600 mb-3">{doctor.speciality}</p>
             <Button 
-              variant="outline" 
-              size="sm"
-              className="w-full border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5]/10"
               onClick={() => handleBookAppointment(doctor)}
+              className="w-full bg-[#9b87f5] hover:bg-[#8b77e5] text-white"
             >
               Book Appointment
             </Button>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+
+      {selectedDoctor && (
+        <AppointmentDialog
+          doctor={selectedDoctor}
+          open={isAppointmentOpen}
+          onOpenChange={setIsAppointmentOpen}
+        />
+      )}
     </div>
   );
 }
