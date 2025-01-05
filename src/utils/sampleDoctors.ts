@@ -9,7 +9,7 @@ export const sampleDoctors: Doctor[] = [
     specialization: 'General Medicine',
     experience: '10+ years',
     rating: 4.8,
-    clinicName: 'Apollo Hospital',
+    clinicName: 'UK Hospital',
     clinicLocation: 'Room 302',
     location: 'Bangalore',
     videoConsultation: {
