@@ -33,7 +33,7 @@ export function DashboardTabs() {
 
         <TabSection
           value="history"
-          label="History"
+          label="Past Appointments"
           icon={History}
           isOpen={openSection === 'history'}
           onToggle={() => handleSectionClick('history')}
