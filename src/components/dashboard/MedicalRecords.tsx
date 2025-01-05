@@ -127,7 +127,7 @@ export default function MedicalRecords() {
     <Card>
       <CardHeader className="space-y-4">
         <CardTitle>Medical Records</CardTitle>
-        <div className="flex flex-col space-y-2 w-40">
+        <div className="flex flex-col space-y-2 w-40 mx-auto">
           <Button variant="secondary" size="sm" onClick={handleUploadClick}>
             <Upload className="h-4 w-4 mr-2" />
             Upload Record
