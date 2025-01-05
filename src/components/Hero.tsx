@@ -13,9 +13,7 @@ export const Hero = () => {
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold text-[#1e3a8a] leading-tight">
-              Caring for <span className="text-[#00b341] relative">Health
-                <span className="absolute bottom-0 left-0 w-full h-1 bg-[#00b341]"></span>
-              </span>
+              Caring for <span className="text-[#00b341]">Health</span>
               <br />
               Always, There for You
             </h1>
