@@ -4,6 +4,7 @@ import BMICalculator from "./BMICalculator";
 import PregnancyCalculator from "./PregnancyCalculator";
 import SafePeriodCalculator from "./SafePeriodCalculator";
 import DiabeticMonitoringChart from "./DiabeticMonitoringChart";
+import VaccinationChart from "./VaccinationChart";
 
 export default function HealthCalculators() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
@@ -94,6 +95,26 @@ export default function HealthCalculators() {
         {expandedSection === 'diabetic' && (
           <div className="p-4 border-t">
             <DiabeticMonitoringChart />
+          </div>
+        )}
+      </div>
+
+      {/* Vaccination Chart Section */}
+      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <button
+          onClick={() => toggleSection('vaccination')}
+          className="w-full flex items-center justify-between p-4 hover:bg-gray-50"
+        >
+          <span className="text-lg font-medium">Vaccination Chart</span>
+          {expandedSection === 'vaccination' ? (
+            <Minus className="h-5 w-5 text-[#0EA5E9]" />
+          ) : (
+            <Plus className="h-5 w-5 text-[#0EA5E9]" />
+          )}
+        </button>
+        {expandedSection === 'vaccination' && (
+          <div className="p-4 border-t">
+            <VaccinationChart />
           </div>
         )}
       </div>
