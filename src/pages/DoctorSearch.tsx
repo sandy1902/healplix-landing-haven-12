@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { AppointmentDialog } from "@/components/doctor/AppointmentDialog";
 import { Doctor } from "@/types/doctor";
 import { Navbar } from "@/components/Navbar";
 import { SearchHeader } from "@/components/search/SearchHeader";
 import { SearchResults } from "@/components/search/SearchResults";
+import { supabase } from "@/integrations/supabase/client";
+import { transformProfileToDoctor } from "@/utils/doctorUtils";
 
 export default function DoctorSearch() {
   const { toast } = useToast();
@@ -13,55 +15,37 @@ export default function DoctorSearch() {
   const [speciality, setSpeciality] = useState<string>("");
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  
-  const [doctors] = useState<Doctor[]>([
-    {
-      id: "1",
-      name: "Dr. Sarah Wilson",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
-      qualification: "MBBS, MD - Cardiology",
-      specialization: "Cardiologist",
-      experience: "15 years",
-      clinicName: "Heart Care Clinic",
-      location: "Los Angeles, CA",
-      rating: 4.8,
-      email: "sarah.wilson@heartcare.com",
-      contactNumber: "+1 (555) 123-4567",
-      clinicLocation: "123 Medical Center Drive, Los Angeles, CA",
-      clinicTimings: "Mon-Fri: 9:00 AM - 5:00 PM",
-      videoConsultation: {
-        available: true,
-        charges: 1000
-      },
-      clinicVisit: {
-        available: true,
-        charges: 1500
-      }
-    },
-    {
-      id: "2",
-      name: "Dr. Michael Chen",
-      image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952",
-      qualification: "MBBS, MD - Dermatology",
-      specialization: "Dermatologist",
-      experience: "12 years",
-      clinicName: "Skin Care Center",
-      location: "San Francisco, CA",
-      rating: 4.5,
-      email: "michael.chen@skincare.com",
-      contactNumber: "+1 (555) 987-6543",
-      clinicLocation: "456 Medical Plaza, San Francisco, CA",
-      clinicTimings: "Mon-Sat: 10:00 AM - 6:00 PM",
-      videoConsultation: {
-        available: true,
-        charges: 800
-      },
-      clinicVisit: {
-        available: true,
-        charges: 1200
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchDoctors() {
+      try {
+        const { data: profiles, error } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('role', 'doctor');
+
+        if (error) {
+          throw error;
+        }
+
+        const transformedDoctors = profiles.map(transformProfileToDoctor);
+        setDoctors(transformedDoctors);
+      } catch (error) {
+        console.error('Error fetching doctors:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load doctors. Please try again later.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoading(false);
       }
     }
-  ]);
+
+    fetchDoctors();
+  }, [toast]);
 
   const handleBookAppointment = (doctor: Doctor) => {
     setSelectedDoctor(doctor);

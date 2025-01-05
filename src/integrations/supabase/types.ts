@@ -251,28 +251,61 @@ export type Database = {
       }
       profiles: {
         Row: {
+          city: string | null
+          consultation_fee: number | null
           created_at: string
+          district: string | null
+          experience: string | null
           first_name: string | null
+          hospital_address: string | null
+          hospital_name: string | null
           id: string
           last_name: string | null
           phone_number: string | null
+          pincode: string | null
+          qualification: string | null
           role: Database["public"]["Enums"]["user_role"] | null
+          specialization: string | null
+          video_consultation_available: boolean | null
+          video_consultation_fee: number | null
         }
         Insert: {
+          city?: string | null
+          consultation_fee?: number | null
           created_at?: string
+          district?: string | null
+          experience?: string | null
           first_name?: string | null
+          hospital_address?: string | null
+          hospital_name?: string | null
           id: string
           last_name?: string | null
           phone_number?: string | null
+          pincode?: string | null
+          qualification?: string | null
           role?: Database["public"]["Enums"]["user_role"] | null
+          specialization?: string | null
+          video_consultation_available?: boolean | null
+          video_consultation_fee?: number | null
         }
         Update: {
+          city?: string | null
+          consultation_fee?: number | null
           created_at?: string
+          district?: string | null
+          experience?: string | null
           first_name?: string | null
+          hospital_address?: string | null
+          hospital_name?: string | null
           id?: string
           last_name?: string | null
           phone_number?: string | null
+          pincode?: string | null
+          qualification?: string | null
           role?: Database["public"]["Enums"]["user_role"] | null
+          specialization?: string | null
+          video_consultation_available?: boolean | null
+          video_consultation_fee?: number | null
         }
         Relationships: []
       }
