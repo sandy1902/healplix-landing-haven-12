@@ -4,7 +4,6 @@ import AppointmentList from "./AppointmentList";
 import MedicalRecords from "./MedicalRecords";
 import Dependents from "./Dependents";
 import Favorites from "./Favorites";
-import ProfileForm from "./ProfileForm";
 import HealthCalculators from "./calculators/HealthCalculators";
 import MedicalHistoryForm from "./MedicalHistoryForm";
 
@@ -33,17 +32,6 @@ export function DashboardContent() {
 
       <TabsContent value="favorites" className="mt-0">
         <Favorites />
-      </TabsContent>
-
-      <TabsContent value="profile" className="mt-0">
-        <Card className="border-none shadow-none">
-          <CardHeader className="px-0 pt-0">
-            <CardTitle>Profile Settings</CardTitle>
-          </CardHeader>
-          <CardContent className="px-0">
-            <ProfileForm />
-          </CardContent>
-        </Card>
       </TabsContent>
 
       <TabsContent value="calculators" className="mt-0 space-y-6">
