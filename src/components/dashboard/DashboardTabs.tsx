@@ -51,7 +51,7 @@ export function DashboardTabs() {
         className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3"
       >
         <Calculator className="h-5 w-5" />
-        Calculators
+        Health Calculators
       </TabsTrigger>
     </TabsList>
   );
