@@ -20,9 +20,6 @@ export function ReadingInputRow({
   readingDate,
   showRemove,
   onInputChange,
-  onPreviousDay,
-  onNextDay,
-  onRemoveRow,
 }: ReadingInputRowProps) {
   return (
     <div className="flex flex-col md:flex-row gap-4">
@@ -40,8 +37,6 @@ export function ReadingInputRow({
       </div>
       <DateNavigator
         date={readingDate}
-        onPreviousDay={() => onPreviousDay(id)}
-        onNextDay={() => onNextDay(id)}
         onDateChange={(value) => onInputChange(id, 'readingDate', value)}
       />
       {showRemove && (
