@@ -41,7 +41,7 @@ export function DashboardContent() {
         </Card>
       </TabsContent>
 
-      <TabsContent value="calculators" className="mt-0">
+      <TabsContent value="calculators" className="mt-0 space-y-6">
         <HealthCalculators />
       </TabsContent>
     </div>

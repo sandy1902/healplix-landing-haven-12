@@ -4,7 +4,7 @@ import BMICalculator from "./BMICalculator";
 import PregnancyCalculator from "./PregnancyCalculator";
 import SafePeriodCalculator from "./SafePeriodCalculator";
 import DiabeticMonitoringChart from "./DiabeticMonitoringChart";
-import VaccinationChart from "./VaccinationChart";
+import VaccinationChart from "./vaccination/VaccinationChart";
 
 export default function HealthCalculators() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
