@@ -1,16 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock, History, FileText, UserCog, Users, Heart } from "lucide-react";
+import { Tabs } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
 import ProfileSummary from "@/components/dashboard/ProfileSummary";
 import QuickStats from "@/components/dashboard/QuickStats";
-import ProfileForm from "@/components/dashboard/ProfileForm";
-import AppointmentList from "@/components/dashboard/AppointmentList";
-import MedicalRecords from "@/components/dashboard/MedicalRecords";
-import Dependents from "@/components/dashboard/Dependents";
-import Favorites from "@/components/dashboard/Favorites";
 import { Navbar } from "@/components/Navbar";
+import { DashboardTabs } from "@/components/dashboard/DashboardTabs";
+import { DashboardContent } from "@/components/dashboard/DashboardContent";
 
 export default function UserDashboard() {
   const navigate = useNavigate();
@@ -43,65 +39,8 @@ export default function UserDashboard() {
         {/* Main Content */}
         <div className="animate-fade-up" style={{ animationDelay: "200ms" }}>
           <Tabs defaultValue="appointments" className="w-full">
-            <TabsList className="w-full justify-start overflow-x-auto bg-white py-6 px-4 rounded-lg mb-4">
-              <TabsTrigger value="appointments" className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white">
-                <Clock className="h-4 w-4" />
-                Appointments
-              </TabsTrigger>
-              <TabsTrigger value="history" className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white">
-                <History className="h-4 w-4" />
-                History
-              </TabsTrigger>
-              <TabsTrigger value="records" className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white">
-                <FileText className="h-4 w-4" />
-                Medical Records
-              </TabsTrigger>
-              <TabsTrigger value="dependents" className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white">
-                <Users className="h-4 w-4" />
-                Dependents
-              </TabsTrigger>
-              <TabsTrigger value="favorites" className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white">
-                <Heart className="h-4 w-4" />
-                Favorites
-              </TabsTrigger>
-              <TabsTrigger value="profile" className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white">
-                <UserCog className="h-4 w-4" />
-                Profile Settings
-              </TabsTrigger>
-            </TabsList>
-
-            <div className="bg-white rounded-lg p-6 shadow-lg">
-              <TabsContent value="appointments" className="mt-0">
-                <AppointmentList type="upcoming" />
-              </TabsContent>
-
-              <TabsContent value="history" className="mt-0">
-                <AppointmentList type="past" />
-              </TabsContent>
-
-              <TabsContent value="records" className="mt-0">
-                <MedicalRecords />
-              </TabsContent>
-
-              <TabsContent value="dependents" className="mt-0">
-                <Dependents />
-              </TabsContent>
-
-              <TabsContent value="favorites" className="mt-0">
-                <Favorites />
-              </TabsContent>
-
-              <TabsContent value="profile" className="mt-0">
-                <Card className="border-none shadow-none">
-                  <CardHeader className="px-0 pt-0">
-                    <CardTitle>Profile Settings</CardTitle>
-                  </CardHeader>
-                  <CardContent className="px-0">
-                    <ProfileForm />
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </div>
+            <DashboardTabs />
+            <DashboardContent />
           </Tabs>
         </div>
       </div>
