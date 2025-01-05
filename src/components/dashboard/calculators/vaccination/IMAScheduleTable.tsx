@@ -53,7 +53,7 @@ const vaccineSchedule = [
 export function IMAScheduleTable() {
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
         <h3 className="text-lg font-semibold">IMA Recommended Vaccination Schedule</h3>
         <div className="flex items-center gap-2">
           <TooltipProvider>
@@ -69,7 +69,7 @@ export function IMAScheduleTable() {
         </div>
       </div>
 
-      <div className="flex gap-4 mb-4">
+      <div className="flex flex-wrap gap-4 mb-4">
         <div className="flex items-center gap-2">
           <Calendar className="h-4 w-4 text-gray-500" />
           <span className="text-sm">Age-based schedule</span>
@@ -84,28 +84,28 @@ export function IMAScheduleTable() {
         </div>
       </div>
 
-      <div className="rounded-lg border">
+      <div className="overflow-x-auto rounded-lg border">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[150px]">Age</TableHead>
-              <TableHead>Vaccines</TableHead>
-              <TableHead className="w-[250px]">Notes</TableHead>
+              <TableHead className="w-[100px] min-w-[100px]">Age</TableHead>
+              <TableHead className="min-w-[200px]">Vaccines</TableHead>
+              <TableHead className="min-w-[150px]">Notes</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {vaccineSchedule.map((schedule, index) => (
               <TableRow key={index}>
-                <TableCell className="font-medium">{schedule.age}</TableCell>
-                <TableCell>{schedule.vaccines.join(", ")}</TableCell>
-                <TableCell className="text-muted-foreground">{schedule.notes}</TableCell>
+                <TableCell className="font-medium whitespace-nowrap">{schedule.age}</TableCell>
+                <TableCell className="break-words">{schedule.vaccines.join(", ")}</TableCell>
+                <TableCell className="text-muted-foreground break-words">{schedule.notes}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </div>
 
-      <p className="text-sm text-muted-foreground mt-4">
+      <p className="text-sm text-muted-foreground mt-4 px-2">
         Note: This schedule is based on IMA recommendations. Please consult with your pediatrician for personalized advice.
       </p>
     </div>
