@@ -1,76 +1,59 @@
-import { Doctor } from "@/types/doctor";
-
-export const sampleDoctors: Doctor[] = [
+export const sampleDoctors = [
   {
     id: '1',
-    name: 'Dr. Rohith Kumar',
+    name: 'Dr. John Smith',
     image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop",
     qualification: 'MBBS, MD',
-    specialization: 'Cardiologist',
-    experience: '12+ years',
-    clinicName: 'City Heart Hospital',
-    location: 'Hyderabad, Telangana',
+    specialization: 'General Medicine',
+    experience: '10+ years',
     rating: 4.8,
-    email: 'dr.rohith@cityheart.com',
-    contactNumber: '+91 9876543210',
-    clinicLocation: '123 Medical Lane, Hyderabad',
-    clinicTimings: '9:00 AM - 5:00 PM',
-    services: ['ECG', 'Echo', 'Stress Test'],
-    videoConsultation: {
-      available: true,
-      charges: 800
+    videoConsultation: true,
+    videoConsultationFee: 800,
+    consultationFee: 500,
+    availability: {
+      days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      timeSlots: ['09:00 AM', '10:00 AM', '11:00 AM', '02:00 PM', '03:00 PM', '04:00 PM'],
     },
-    clinicVisit: {
-      available: true,
-      charges: 1000
-    }
+    location: 'Apollo Hospital, Bangalore',
+    languages: ['English', 'Hindi', 'Kannada'],
+    about: 'Dr. John Smith is a highly experienced general physician with over 10 years of practice.',
   },
   {
     id: '2',
     name: 'Dr. Divya Renuka',
-    image: "/lovable-uploads/5a7832a0-a72c-4407-b66b-f4ac642b2cb2.png",
+    image: "",
     qualification: 'MBBS, MS',
     specialization: 'Gynecologist',
     experience: '8+ years',
-    clinicName: "Women's Care Center",
-    location: 'Hyderabad, Telangana',
-    rating: 4.7,
-    email: 'dr.divya@womenscare.com',
-    contactNumber: '+91 9876543211',
-    clinicLocation: '456 Health Street, Hyderabad',
-    clinicTimings: '10:00 AM - 6:00 PM',
-    services: ['Prenatal Care', 'Women Health', 'Fertility Treatment'],
-    videoConsultation: {
-      available: true,
-      charges: 700
+    rating: 4.9,
+    videoConsultation: true,
+    videoConsultationFee: 1000,
+    consultationFee: 800,
+    availability: {
+      days: ['Monday', 'Wednesday', 'Friday'],
+      timeSlots: ['10:00 AM', '11:00 AM', '12:00 PM', '04:00 PM', '05:00 PM'],
     },
-    clinicVisit: {
-      available: true,
-      charges: 900
-    }
+    location: 'Manipal Hospital, Bangalore',
+    languages: ['English', 'Hindi', 'Telugu'],
+    about: 'Dr. Divya Renuka is a dedicated gynecologist with expertise in women\'s health.',
   },
   {
     id: '3',
-    name: 'Dr. Sandeep Kumar',
-    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=2070&auto=format&fit=crop",
-    qualification: 'MBBS, MD',
-    specialization: 'Neurologist',
-    experience: '15+ years',
-    clinicName: 'Brain & Spine Center',
-    location: 'Hyderabad, Telangana',
-    rating: 4.9,
-    email: 'dr.sandeep@neurocare.com',
-    contactNumber: '+91 9876543212',
-    clinicLocation: '789 Brain Street, Hyderabad',
-    clinicTimings: '9:00 AM - 7:00 PM',
-    services: ['EEG', 'EMG', 'Nerve Conduction Studies'],
-    videoConsultation: {
-      available: true,
-      charges: 1200
+    name: 'Dr. Rajesh Kumar',
+    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070&auto=format&fit=crop",
+    qualification: 'MBBS, DNB',
+    specialization: 'Pediatrician',
+    experience: '12+ years',
+    rating: 4.7,
+    videoConsultation: false,
+    videoConsultationFee: null,
+    consultationFee: 600,
+    availability: {
+      days: ['Tuesday', 'Thursday', 'Saturday'],
+      timeSlots: ['09:00 AM', '10:00 AM', '11:00 AM', '03:00 PM', '04:00 PM'],
     },
-    clinicVisit: {
-      available: true,
-      charges: 1500
-    }
-  }
+    location: 'Rainbow Children\'s Hospital, Bangalore',
+    languages: ['English', 'Hindi', 'Kannada'],
+    about: 'Dr. Rajesh Kumar is a skilled pediatrician with extensive experience in child healthcare.',
+  },
 ];
