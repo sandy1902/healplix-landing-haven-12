@@ -37,7 +37,7 @@ export const UserMenu = ({ firstName, onLogout }: UserMenuProps) => {
             className="flex items-center gap-2 hover:text-primary font-poppins capitalize text-lg"
           >
             <User className="h-5 w-5" />
-            Hello, {firstName}
+            {firstName ? `Hello, ${firstName}` : "Hello, User"}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent 

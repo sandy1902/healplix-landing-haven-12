@@ -26,14 +26,22 @@ export const Navbar = () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
         setIsAuthenticated(true);
-        const { data: profile } = await supabase
+        const { data: profile, error } = await supabase
           .from('profiles')
           .select('first_name')
           .eq('id', session.user.id)
           .single();
         
-        if (profile) {
-          setFirstName(profile.first_name || "User");
+        if (error) {
+          console.error('Error fetching profile:', error);
+          setFirstName("User");
+          return;
+        }
+        
+        if (profile && profile.first_name) {
+          setFirstName(profile.first_name);
+        } else {
+          setFirstName("User");
         }
       } else {
         setIsAuthenticated(false);
@@ -46,14 +54,22 @@ export const Navbar = () => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session) {
         setIsAuthenticated(true);
-        const { data: profile } = await supabase
+        const { data: profile, error } = await supabase
           .from('profiles')
           .select('first_name')
           .eq('id', session.user.id)
           .single();
         
-        if (profile) {
-          setFirstName(profile.first_name || "User");
+        if (error) {
+          console.error('Error fetching profile:', error);
+          setFirstName("User");
+          return;
+        }
+        
+        if (profile && profile.first_name) {
+          setFirstName(profile.first_name);
+        } else {
+          setFirstName("User");
         }
       } else if (event === 'SIGNED_OUT') {
         setIsAuthenticated(false);
