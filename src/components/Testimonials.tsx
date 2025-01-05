@@ -11,14 +11,18 @@ export const Testimonials = () => {
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
-          {[1, 2, 3].map((_, index) => (
+          {[
+            { name: "Mr Ravi", initial: "R" },
+            { name: "Mrs Jyothi", initial: "J" },
+            { name: "Mr Kiran", initial: "K" }
+          ].map((user, index) => (
             <div key={index} className="feature-card">
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-white font-bold">
-                  {String.fromCharCode(65 + index)}
+                  {user.initial}
                 </div>
                 <div className="ml-4">
-                  <h4 className="font-semibold">Happy User</h4>
+                  <h4 className="font-semibold">{user.name}</h4>
                   <p className="text-gray-600 text-sm">Patient</p>
                 </div>
               </div>
