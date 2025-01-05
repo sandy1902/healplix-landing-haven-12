@@ -28,11 +28,11 @@ export default {
         background: "#F0F9FF",
         foreground: "#1E3A8A",
         primary: {
-          DEFAULT: "#00B341",
+          DEFAULT: "#9b87f5",
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#1E3A8A",
+          DEFAULT: "#7E69AB",
           foreground: "#FFFFFF",
         },
         accent: {
@@ -60,9 +60,20 @@ export default {
             transform: "translateY(0)",
           },
         },
+        "scale-in": {
+          "0%": {
+            opacity: "0",
+            transform: "scale(0.95)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "scale(1)",
+          },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.5s ease-out",
+        "scale-in": "scale-in 0.3s ease-out",
       },
     },
   },
