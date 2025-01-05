@@ -22,7 +22,7 @@ export default function DoctorDashboard() {
       <Navbar />
       <div className="container mx-auto py-24 px-4 space-y-6">
         <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="w-full justify-start overflow-x-auto bg-white p-2 rounded-lg mb-4">
+          <TabsList className="w-full justify-start overflow-x-auto bg-white p-4 rounded-lg mb-6 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
             <TabsTrigger value="profile" className="flex items-center gap-2">
               <UserCog className="h-4 w-4" />
               Profile
