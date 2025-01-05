@@ -1,6 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
+import { DateNavigator } from "./DateNavigator";
 
 interface ReadingInputRowProps {
   id: string;
@@ -37,35 +38,12 @@ export function ReadingInputRow({
           className="w-full"
         />
       </div>
-      <div className="flex-1">
-        <label className="block text-sm font-medium mb-2">
-          Reading Date
-        </label>
-        <div className="flex gap-2">
-          <Button 
-            variant="outline" 
-            size="icon"
-            onClick={() => onPreviousDay(id)}
-            className="shrink-0"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <Input
-            type="date"
-            value={readingDate}
-            onChange={(e) => onInputChange(id, 'readingDate', e.target.value)}
-            className="w-full"
-          />
-          <Button 
-            variant="outline" 
-            size="icon"
-            onClick={() => onNextDay(id)}
-            className="shrink-0"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
+      <DateNavigator
+        date={readingDate}
+        onPreviousDay={() => onPreviousDay(id)}
+        onNextDay={() => onNextDay(id)}
+        onDateChange={(value) => onInputChange(id, 'readingDate', value)}
+      />
       {showRemove && (
         <div className="flex items-end mb-2">
           <Button 
