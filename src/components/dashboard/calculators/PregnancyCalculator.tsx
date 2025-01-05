@@ -44,14 +44,14 @@ export default function PregnancyCalculator() {
         <Button onClick={calculateDueDate} className="w-full">Calculate Due Date</Button>
         {dueDate && (
           <div className="mt-4 space-y-2">
-            <div className="text-center">
-              <p className="text-lg font-semibold">Estimated Due Date:</p>
-              <p className="text-md text-muted-foreground">{dueDate}</p>
+            <div className="text-center p-4 rounded-lg bg-[#F2FCE2]">
+              <p className="text-lg font-semibold text-[#0EA5E9]">Estimated Due Date:</p>
+              <p className="text-md font-medium text-[#1A1F2C]">{dueDate}</p>
             </div>
             {weeksPregnant !== null && weeksPregnant >= 0 && (
-              <div className="text-center">
-                <p className="text-lg font-semibold">Current Progress:</p>
-                <p className="text-md text-muted-foreground">
+              <div className="text-center p-4 rounded-lg bg-[#D3E4FD]">
+                <p className="text-lg font-semibold text-[#0EA5E9]">Current Progress:</p>
+                <p className="text-md font-medium text-[#1A1F2C]">
                   {weeksPregnant} weeks pregnant
                 </p>
               </div>
