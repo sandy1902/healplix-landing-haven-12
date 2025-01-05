@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Calendar, Check, Info, Syringe } from "lucide-react";
+import { Check, Info, Syringe } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -43,14 +43,13 @@ export function VaccinationItem({
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div className="flex items-center gap-2 w-full sm:w-auto">
-          <Calendar className="h-4 w-4 text-gray-500 flex-shrink-0" />
+      <div className="flex flex-col sm:flex-row items-center sm:items-center gap-4">
+        <div className="w-full sm:w-40">
           <Input
             type="date"
             value={vaccination.date}
             onChange={(e) => onDateChange(vaccination.id, e.target.value)}
-            className="w-full sm:w-40"
+            className="w-full text-center"
           />
         </div>
 
