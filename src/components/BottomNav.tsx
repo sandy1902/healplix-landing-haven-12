@@ -1,4 +1,4 @@
-import { Doctor, Hospital, Send } from "lucide-react";
+import { User, Building2, SendHorizontal } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -14,7 +14,7 @@ export const BottomNav = () => {
           to="/search-doctors"
           className="flex flex-col items-center gap-1"
         >
-          <Doctor className="h-6 w-6 text-primary" />
+          <User className="h-6 w-6 text-primary" />
           <span className="text-xs text-gray-600">Find Doctor</span>
         </Link>
 
@@ -22,7 +22,7 @@ export const BottomNav = () => {
           to="/search-hospitals"
           className="flex flex-col items-center gap-1"
         >
-          <Hospital className="h-6 w-6 text-primary" />
+          <Building2 className="h-6 w-6 text-primary" />
           <span className="text-xs text-gray-600">Find Hospital</span>
         </Link>
 
@@ -30,7 +30,7 @@ export const BottomNav = () => {
           to="/contact"
           className="flex flex-col items-center gap-1"
         >
-          <Send className="h-6 w-6 text-primary" />
+          <SendHorizontal className="h-6 w-6 text-primary" />
           <span className="text-xs text-gray-600">Submit Enquiry</span>
         </Link>
       </div>
