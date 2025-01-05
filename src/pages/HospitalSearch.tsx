@@ -11,13 +11,14 @@ export default function HospitalSearch() {
   const [searchQuery, setSearchQuery] = useState("");
   const [location, setLocation] = useState("");
   const [speciality, setSpeciality] = useState("");
+  const [insuranceProvider, setInsuranceProvider] = useState("");
   const [hospitals, setHospitals] = useState<Hospital[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchHospitals() {
       try {
-        const { data: hospitalsData, error } = await supabase
+        let query = supabase
           .from('hospitals')
           .select(`
             *,
@@ -25,9 +26,11 @@ export default function HospitalSearch() {
               name
             ),
             insurance_affiliations (
-              insurance_provider: insurance_providers ( name )
+              insurance_provider: insurance_providers ( id, name )
             )
           `);
+
+        const { data: hospitalsData, error } = await query;
 
         if (error) {
           throw error;
@@ -101,8 +104,11 @@ export default function HospitalSearch() {
 
     const matchesLocation = !location || hospital.location.toLowerCase().includes(location.toLowerCase());
     const matchesSpeciality = !speciality || hospital.specialities.includes(speciality);
+    const matchesInsurance = !insuranceProvider || hospital.insuranceProviders.some(
+      provider => provider.toLowerCase() === insuranceProvider.toLowerCase()
+    );
 
-    return matchesSearch && matchesLocation && matchesSpeciality;
+    return matchesSearch && matchesLocation && matchesSpeciality && matchesInsurance;
   });
 
   const handleRequestCallback = (hospital: Hospital) => {
@@ -130,6 +136,8 @@ export default function HospitalSearch() {
           setLocation={setLocation}
           speciality={speciality}
           setSpeciality={setSpeciality}
+          insuranceProvider={insuranceProvider}
+          setInsuranceProvider={setInsuranceProvider}
         />
         
         <HospitalResults 
