@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Card } from "@/components/ui/card";
 import { Info, Calendar, Syringe, Baby } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -84,25 +84,27 @@ export function IMAScheduleTable() {
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-lg border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px] min-w-[100px]">Age</TableHead>
-              <TableHead className="min-w-[200px]">Vaccines</TableHead>
-              <TableHead className="min-w-[150px]">Notes</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {vaccineSchedule.map((schedule, index) => (
-              <TableRow key={index}>
-                <TableCell className="font-medium whitespace-nowrap">{schedule.age}</TableCell>
-                <TableCell className="break-words">{schedule.vaccines.join(", ")}</TableCell>
-                <TableCell className="text-muted-foreground break-words">{schedule.notes}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+      <div className="grid gap-4">
+        {vaccineSchedule.map((schedule, index) => (
+          <Card key={index} className="p-4">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Calendar className="h-4 w-4 text-blue-500" />
+                <h4 className="font-semibold">{schedule.age}</h4>
+              </div>
+              
+              <div className="flex items-start gap-2">
+                <Syringe className="h-4 w-4 text-blue-500 mt-1" />
+                <p className="text-sm">{schedule.vaccines.join(", ")}</p>
+              </div>
+              
+              <div className="flex items-start gap-2">
+                <Info className="h-4 w-4 text-blue-500 mt-1" />
+                <p className="text-sm text-muted-foreground">{schedule.notes}</p>
+              </div>
+            </div>
+          </Card>
+        ))}
       </div>
 
       <p className="text-sm text-muted-foreground mt-4 px-2">
