@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
-import { User, UserPlus } from "lucide-react";
+import { UserPlus, User } from "lucide-react";
 
 interface UserData {
   id: string;
@@ -14,7 +13,6 @@ interface UserData {
 }
 
 export default function UsersList() {
-  const { toast } = useToast();
   const [users] = useState<UserData[]>([
     {
       id: "1",
@@ -33,23 +31,6 @@ export default function UsersList() {
       joinDate: "2024-03-10"
     }
   ]);
-
-  const handleViewUser = (userId: string) => {
-    const user = users.find(u => u.id === userId);
-    if (!user?.subscriptionPaid) {
-      toast({
-        variant: "destructive",
-        title: "Access Denied",
-        description: "Please complete the subscription payment to view user details.",
-      });
-      return;
-    }
-    // Handle viewing user details
-    toast({
-      title: "Success",
-      description: "Accessing user details...",
-    });
-  };
 
   return (
     <Card>
@@ -77,15 +58,6 @@ export default function UsersList() {
                   <h3 className="font-medium">{user.name}</h3>
                   <p className="text-sm text-muted-foreground">{user.email}</p>
                 </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleViewUser(user.id)}
-                >
-                  View Details
-                </Button>
               </div>
             </div>
           ))}
