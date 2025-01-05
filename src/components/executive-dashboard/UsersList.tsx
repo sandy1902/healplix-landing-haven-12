@@ -80,24 +80,24 @@ export default function UsersList() {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
+        <div className="space-y-6">
           {users.map((user) => (
             <div
               key={user.id}
-              className="flex flex-col p-4 border rounded-lg hover:bg-accent/5 space-y-4"
+              className="flex flex-col p-6 border rounded-lg hover:bg-accent/5 space-y-6 shadow-sm"
             >
               <div className="flex items-center gap-4">
-                <div className="h-10 w-10 rounded-full bg-secondary/20 flex items-center justify-center">
-                  <User className="h-5 w-5 text-secondary" />
+                <div className="h-12 w-12 rounded-full bg-secondary/20 flex items-center justify-center">
+                  <User className="h-6 w-6 text-secondary" />
                 </div>
                 <div>
-                  <h3 className="font-medium">{user.name}</h3>
+                  <h3 className="font-medium text-lg">{user.name}</h3>
                   <p className="text-sm text-muted-foreground">{user.email}</p>
                 </div>
               </div>
               <Button 
                 variant="secondary"
-                className="flex items-center gap-2 w-full"
+                className="flex items-center gap-2 w-full py-6"
                 onClick={() => handleBookAppointment(user)}
               >
                 <Calendar className="h-4 w-4" />
