@@ -22,14 +22,10 @@ const mockDoctor: Doctor = {
   qualification: "MBBS, MD",
   specialization: "General Physician",
   experience: "15 years",
-  clinicName: "Health Plus Clinic",
-  location: "123 Medical Street",
   rating: 4.5,
-  email: "dr.smith@healthplus.com",
-  contactNumber: "+1 234 567 8900",
-  clinicLocation: "123 Medical Street, Medical District",
-  clinicTimings: "Mon-Fri: 9:00 AM - 5:00 PM",
-  services: ["General Consultation", "Health Checkup", "Vaccinations"],
+  clinicName: "Health Plus Clinic",
+  clinicLocation: "123 Medical Street",
+  location: "Medical District",
   videoConsultation: {
     available: true,
     charges: 800
@@ -37,7 +33,10 @@ const mockDoctor: Doctor = {
   clinicVisit: {
     available: true,
     charges: 1000
-  }
+  },
+  languages: ["English", "Hindi"],
+  about: "Dr. Smith is an experienced general physician with expertise in primary healthcare.",
+  services: ["General Consultation", "Health Checkup", "Vaccinations"]
 };
 
 export default function UsersList() {
