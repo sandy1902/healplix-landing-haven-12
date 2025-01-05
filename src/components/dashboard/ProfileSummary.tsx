@@ -15,7 +15,6 @@ export default function ProfileSummary() {
   const [showCamera, setShowCamera] = useState(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
 
-  // Effect to handle video stream initialization
   useEffect(() => {
     if (showCamera && videoRef.current && stream) {
       videoRef.current.srcObject = stream;
@@ -105,7 +104,7 @@ export default function ProfileSummary() {
       fileInputRef.current.click();
     }
   };
-
+  
   return (
     <div className="space-y-6">
       <div className="flex flex-col items-center p-8 bg-white rounded-lg shadow-lg animate-fade-up">
@@ -146,7 +145,7 @@ export default function ProfileSummary() {
           
           <div className="text-center flex-grow">
             <div className="flex flex-col items-center gap-4">
-              <h1 className="text-3xl font-bold text-primary">Welcome, User Name</h1>
+              <h1 className="text-xl font-bold text-primary">Welcome, User Name</h1>
               <p className="text-gray-500">user@example.com</p>
               <Button 
                 variant="outline"
