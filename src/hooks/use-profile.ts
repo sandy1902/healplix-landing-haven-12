@@ -18,32 +18,54 @@ export function useProfile() {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
-        console.log("Current user:", user); // Debug log
+        // First, check if we have a session
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        console.log("Current session:", session); // Debug log
         
-        if (!user) {
-          console.log("No user found"); // Debug log
+        if (sessionError) {
+          console.error("Session error:", sessionError);
+          return;
+        }
+
+        if (!session) {
+          console.log("No active session found");
           setLoading(false);
           return;
         }
 
-        const { data: profile, error } = await supabase
+        // Get user from session
+        const user = session.user;
+        console.log("Current user:", user);
+
+        // Fetch profile data
+        const { data: profile, error: profileError } = await supabase
           .from('profiles')
           .select('first_name')
           .eq('id', user.id)
           .single();
 
-        console.log("Profile data:", profile); // Debug log
-        console.log("Profile error:", error); // Debug log
+        console.log("Profile query result:", { data: profile, error: profileError });
 
-        if (error) {
-          console.error('Error fetching user profile:', error);
+        if (profileError) {
+          console.error('Error fetching user profile:', profileError);
           toast({
             variant: "destructive",
             title: "Error",
             description: "Failed to load user profile",
           });
           return;
+        }
+
+        if (!profile) {
+          console.log("No profile found for user");
+          // Create a profile if one doesn't exist
+          const { error: insertError } = await supabase
+            .from('profiles')
+            .insert([{ id: user.id, first_name: "User" }]);
+
+          if (insertError) {
+            console.error('Error creating profile:', insertError);
+          }
         }
 
         setUserProfile({
