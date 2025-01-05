@@ -3,16 +3,52 @@ import { Button } from "@/components/ui/button";
 import { Camera, Upload } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useState, useRef, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function ProfileSummary() {
   const { toast } = useToast();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [userProfile, setUserProfile] = useState<{
+    first_name: string;
+    email: string;
+  }>({ first_name: "", email: "" });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [showCamera, setShowCamera] = useState(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
 
-  // Effect to handle video stream initialization
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        // Get the current user's session
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (user) {
+          // Get the user's profile data
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('first_name')
+            .eq('id', user.id)
+            .single();
+
+          setUserProfile({
+            first_name: profile?.first_name || "User",
+            email: user.email || "",
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Failed to load user profile",
+        });
+      }
+    };
+
+    fetchUserProfile();
+  }, [toast]);
+
   useEffect(() => {
     if (showCamera && videoRef.current && stream) {
       videoRef.current.srcObject = stream;
@@ -97,18 +133,14 @@ export default function ProfileSummary() {
     }
   };
 
-  const handleUploadClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
   return (
     <div className="flex flex-col md:flex-row items-center gap-6 p-8 bg-white rounded-lg shadow-lg animate-fade-up">
       <div className="relative">
         <Avatar className="h-32 w-32 border-4 border-secondary/20">
           <AvatarImage src={imagePreview || "/placeholder.svg"} className="object-cover" />
-          <AvatarFallback className="bg-secondary/10 text-secondary text-2xl">UN</AvatarFallback>
+          <AvatarFallback className="bg-secondary/10 text-secondary text-2xl">
+            {userProfile.first_name.charAt(0).toUpperCase()}
+          </AvatarFallback>
         </Avatar>
         <div className="absolute -bottom-3 -right-3 flex gap-2">
           <Button
@@ -116,7 +148,7 @@ export default function ProfileSummary() {
             size="icon"
             variant="secondary"
             className="h-8 w-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
-            onClick={handleUploadClick}
+            onClick={() => fileInputRef.current?.click()}
           >
             <Upload className="h-4 w-4" />
           </Button>
@@ -169,8 +201,10 @@ export default function ProfileSummary() {
       )}
 
       <div className="text-center md:text-left">
-        <h1 className="text-3xl font-bold text-primary">Welcome, User Name</h1>
-        <p className="text-gray-500 mt-1">user@example.com</p>
+        <h1 className="text-3xl font-bold text-primary">
+          Welcome, {userProfile.first_name}
+        </h1>
+        <p className="text-gray-500 mt-1">{userProfile.email}</p>
       </div>
     </div>
   );
