@@ -1,10 +1,9 @@
 export interface Hospital {
   id: string;
   name: string;
-  registrationNumber?: string;
-  address?: string;
-  city?: string;
-  district?: string;
+  address: string;
+  city: string;
+  district: string;
   phoneNumber?: string;
   managingDirector?: string;
   managingDirectorPhone?: string;
@@ -14,6 +13,7 @@ export interface Hospital {
     name: string;
     qualification: string;
     speciality: string;
+    image?: string;
   }[];
   reviews: {
     id: number;

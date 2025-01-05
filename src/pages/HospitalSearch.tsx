@@ -1,54 +1,60 @@
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Hospital } from "@/types/hospital";
-import { Navbar } from "@/components/Navbar";
-import { SearchFilters } from "@/components/hospital/SearchFilters";
-import { HospitalResults } from "@/components/hospital/HospitalResults";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { HospitalResults } from "@/components/hospital/HospitalResults";
+import { SearchFilters } from "@/components/hospital/SearchFilters";
+import { Navbar } from "@/components/Navbar";
 
 export default function HospitalSearch() {
   const { toast } = useToast();
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
-  const [speciality, setSpeciality] = useState<string>("");
   const [hospitals, setHospitals] = useState<Hospital[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedSpecialty, setSelectedSpecialty] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchHospitals() {
       try {
-        const { data: hospitalsData, error: hospitalsError } = await supabase
+        const { data: hospitalsData, error } = await supabase
           .from('hospitals')
           .select(`
             *,
-            departments (name),
+            departments (*),
             insurance_affiliations (
-              insurance_providers (name)
+              insurance_providers (*)
             )
           `);
 
-        if (hospitalsError) {
-          throw hospitalsError;
+        if (error) {
+          throw error;
         }
 
         const transformedHospitals = hospitalsData.map((hospital: any) => ({
           id: hospital.id,
           name: hospital.name,
-          location: `${hospital.address}, ${hospital.city}, ${hospital.district}`,
+          address: hospital.address,
+          city: hospital.city,
+          district: hospital.district,
+          phoneNumber: hospital.phone_number,
+          managingDirector: hospital.managing_director,
+          managingDirectorPhone: hospital.managing_director_phone,
           departments: hospital.departments?.map((dept: any) => dept.name) || [],
           insuranceProviders: hospital.insurance_affiliations?.map((aff: any) => aff.insurance_providers.name) || [],
           rating: 4.5, // Placeholder rating
           specialities: hospital.departments?.map((dept: any) => dept.name) || [],
           doctors: [
             {
-              name: hospital.managing_director || "Dr. John Doe",
-              qualification: "MBBS",
-              speciality: hospital.departments?.[0]?.name || "General Medicine"
+              name: "Dr. Rohith",
+              qualification: "MBBS, MD",
+              speciality: "Internal Medicine",
+              image: "/lovable-uploads/0f34eb7c-2e0a-4f28-a8b6-f1f533395d1f.png"
             }
-          ], // Transform managing director into doctor format
+          ],
           reviews: [], // To be implemented
-          image: "https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?q=80&w=1000&auto=format&fit=crop"
+          image: "https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?q=80&w=1000&auto=format&fit=crop",
+          location: `${hospital.city}, ${hospital.district}`
         }));
 
         setHospitals(transformedHospitals);
@@ -67,64 +73,40 @@ export default function HospitalSearch() {
     fetchHospitals();
   }, [toast]);
 
-  const handleRequestCallback = (hospital: Hospital) => {
-    toast({
-      title: "Request Sent",
-      description: `We'll contact you shortly about ${hospital.name}`,
-    });
-  };
-
-  const handleAdmissionEnquiry = (hospital: Hospital) => {
-    toast({
-      title: "Enquiry Sent",
-      description: `Your admission enquiry for ${hospital.name} has been received`,
-    });
-  };
-
   const filteredHospitals = hospitals.filter(hospital => {
-    const searchTerms = searchQuery.toLowerCase().split(" ");
-    const matchesSearch = searchQuery === "" || searchTerms.every(term =>
-      hospital.name.toLowerCase().includes(term) ||
-      hospital.location.toLowerCase().includes(term) ||
+    const matchesSearch = searchQuery === "" || 
+      hospital.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       hospital.specialities.some(spec => 
-        spec.toLowerCase().includes(term)
-      )
-    );
+        spec.toLowerCase().includes(searchQuery.toLowerCase())
+      );
 
-    const matchesLocation = !location || hospital.location.toLowerCase().includes(location.toLowerCase());
-    const matchesSpeciality = !speciality || hospital.specialities.some(spec => 
-      spec.toLowerCase() === speciality.toLowerCase()
-    );
-    
-    return matchesSearch && matchesLocation && matchesSpeciality;
+    const matchesLocation = !selectedLocation || 
+      hospital.location.toLowerCase().includes(selectedLocation.toLowerCase());
+
+    const matchesSpecialty = !selectedSpecialty ||
+      hospital.specialities.some(spec => 
+        spec.toLowerCase() === selectedSpecialty.toLowerCase()
+      );
+
+    return matchesSearch && matchesLocation && matchesSpecialty;
   });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10">
       <Navbar />
-      <div className="container mx-auto px-4 py-6 md:py-32">
-        <Card className="mb-6 md:mb-12 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-          <CardHeader className="text-center pb-2 pt-12 md:pt-16">
-            <CardTitle className="text-2xl md:text-3xl font-bold text-[#1A1F2C]">
-              Find a Hospital
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <SearchFilters
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              location={location}
-              setLocation={setLocation}
-              speciality={speciality}
-              setSpeciality={setSpeciality}
-            />
-          </CardContent>
-        </Card>
+      <div className="container mx-auto px-4 py-8">
+        <SearchFilters
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          selectedLocation={selectedLocation}
+          setSelectedLocation={setSelectedLocation}
+          selectedSpecialty={selectedSpecialty}
+          setSelectedSpecialty={setSelectedSpecialty}
+        />
         
         <HospitalResults 
           hospitals={filteredHospitals}
-          onRequestCallback={handleRequestCallback}
-          onAdmissionEnquiry={handleAdmissionEnquiry}
+          isLoading={isLoading}
         />
       </div>
     </div>
