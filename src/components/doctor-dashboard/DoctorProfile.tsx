@@ -33,8 +33,8 @@ export default function DoctorProfile() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg animate-fade-up">
-        <div className="flex flex-col items-center gap-4 w-full">
+      <div className="flex flex-col items-center p-3 bg-white rounded-lg shadow-md animate-fade-up max-w-2xl mx-auto">
+        <div className="flex flex-col items-center gap-3 w-full">
           <div className="relative">
             <ProfileImage 
               imagePreview={imagePreview} 
@@ -43,7 +43,7 @@ export default function DoctorProfile() {
           </div>
           
           <div className="text-center flex-grow">
-            <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-col items-center gap-2">
               <h1 className="text-xl font-bold text-primary">{profile.name}</h1>
               <p className="text-gray-500">{profile.email}</p>
               <p className="text-sm text-gray-600">{profile.specialization}</p>
@@ -57,8 +57,8 @@ export default function DoctorProfile() {
             </div>
           </div>
 
-          <Card className="w-full mt-4">
-            <div className="p-4">
+          <Card className="w-full mt-3">
+            <div className="p-3">
               <div className="flex justify-around">
                 <div className="flex flex-col items-center gap-1">
                   <div className="p-2 bg-secondary/20 rounded-full">
