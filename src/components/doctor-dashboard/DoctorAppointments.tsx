@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Appointment } from "./types/appointment";
 import AppointmentCard from "./AppointmentCard";
 import PatientRecordsDialog from "./PatientRecordsDialog";
+import { filterAppointmentsByDate } from "@/utils/dateUtils";
 
 export default function DoctorAppointments() {
   const [showRecords, setShowRecords] = useState(false);
@@ -111,6 +112,14 @@ export default function DoctorAppointments() {
     }
   ];
 
+  const upcomingAppointments = appointments.filter(appointment => 
+    filterAppointmentsByDate(appointment, "upcoming")
+  );
+
+  const pastAppointments = appointments.filter(appointment => 
+    filterAppointmentsByDate(appointment, "past")
+  );
+
   const handleViewRecords = (appointment: Appointment) => {
     setSelectedPatient(appointment);
     setShowRecords(true);
@@ -118,22 +127,49 @@ export default function DoctorAppointments() {
 
   return (
     <>
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle className="text-xl md:text-2xl">Upcoming Appointments</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {appointments.map((appointment) => (
-              <AppointmentCard
-                key={appointment.id}
-                appointment={appointment}
-                onViewRecords={handleViewRecords}
-              />
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="space-y-6">
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle className="text-xl md:text-2xl">Upcoming Appointments</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {upcomingAppointments.length > 0 ? (
+                upcomingAppointments.map((appointment) => (
+                  <AppointmentCard
+                    key={appointment.id}
+                    appointment={appointment}
+                    onViewRecords={handleViewRecords}
+                  />
+                ))
+              ) : (
+                <p className="text-gray-500">No upcoming appointments</p>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle className="text-xl md:text-2xl">Past Appointments</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {pastAppointments.length > 0 ? (
+                pastAppointments.map((appointment) => (
+                  <AppointmentCard
+                    key={appointment.id}
+                    appointment={appointment}
+                    onViewRecords={handleViewRecords}
+                  />
+                ))
+              ) : (
+                <p className="text-gray-500">No past appointments</p>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       <Dialog open={showRecords} onOpenChange={setShowRecords}>
         <PatientRecordsDialog selectedPatient={selectedPatient} />
