@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Tabs } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import ProfileSummary from "@/components/dashboard/ProfileSummary";
-import QuickStats from "@/components/dashboard/QuickStats";
 import { Navbar } from "@/components/Navbar";
 import { DashboardTabs } from "@/components/dashboard/DashboardTabs";
 
@@ -29,11 +28,6 @@ export default function UserDashboard() {
             <ProfileSummary />
           </CardContent>
         </Card>
-
-        {/* Quick Stats */}
-        <div className="animate-fade-up" style={{ animationDelay: "100ms" }}>
-          <QuickStats />
-        </div>
 
         {/* Main Content */}
         <div className="animate-fade-up" style={{ animationDelay: "200ms" }}>
