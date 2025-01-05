@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ChartContainer } from "@/components/ui/chart";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine } from "recharts";
 import { format, addDays, subDays } from "date-fns";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 
 interface GlucoseReading {
   timestamp: string;
@@ -18,6 +18,7 @@ export default function DiabeticMonitoringChart() {
   const [readings, setReadings] = useState<GlucoseReading[]>([]);
   const [glucoseLevel, setGlucoseLevel] = useState("");
   const [readingDate, setReadingDate] = useState(format(new Date(), 'yyyy-MM-dd'));
+  const [showNewRow, setShowNewRow] = useState(false);
 
   const handleAddReading = () => {
     if (glucoseLevel) {
@@ -30,6 +31,7 @@ export default function DiabeticMonitoringChart() {
       };
       setReadings([...readings, newReading]);
       setGlucoseLevel("");
+      setShowNewRow(false);
     }
   };
 
@@ -51,52 +53,63 @@ export default function DiabeticMonitoringChart() {
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-4 items-end">
-        <div className="flex-1">
-          <label className="block text-sm font-medium mb-2">
-            Blood Glucose Level (mg/dL)
-          </label>
-          <Input
-            type="number"
-            value={glucoseLevel}
-            onChange={(e) => setGlucoseLevel(e.target.value)}
-            placeholder="Enter blood glucose level"
-            className="w-full"
-          />
-        </div>
-        <div className="flex-1">
-          <label className="block text-sm font-medium mb-2">
-            Reading Date
-          </label>
-          <div className="flex gap-2">
-            <Button 
-              variant="outline" 
-              size="icon"
-              onClick={handlePreviousDay}
-              className="shrink-0"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
+      {showNewRow ? (
+        <div className="flex gap-4 items-end">
+          <div className="flex-1">
+            <label className="block text-sm font-medium mb-2">
+              Blood Glucose Level (mg/dL)
+            </label>
             <Input
-              type="date"
-              value={readingDate}
-              onChange={(e) => setReadingDate(e.target.value)}
+              type="number"
+              value={glucoseLevel}
+              onChange={(e) => setGlucoseLevel(e.target.value)}
+              placeholder="Enter blood glucose level"
               className="w-full"
             />
-            <Button 
-              variant="outline" 
-              size="icon"
-              onClick={handleNextDay}
-              className="shrink-0"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
           </div>
+          <div className="flex-1">
+            <label className="block text-sm font-medium mb-2">
+              Reading Date
+            </label>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                size="icon"
+                onClick={handlePreviousDay}
+                className="shrink-0"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Input
+                type="date"
+                value={readingDate}
+                onChange={(e) => setReadingDate(e.target.value)}
+                className="w-full"
+              />
+              <Button 
+                variant="outline" 
+                size="icon"
+                onClick={handleNextDay}
+                className="shrink-0"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+          <Button onClick={handleAddReading} className="mb-0">
+            Add Reading
+          </Button>
         </div>
-        <Button onClick={handleAddReading} className="mb-0">
-          Add Reading
+      ) : (
+        <Button 
+          onClick={() => setShowNewRow(true)}
+          variant="outline"
+          className="w-full py-6 border-dashed"
+        >
+          <Plus className="h-4 w-4 mr-2" />
+          Add New Reading
         </Button>
-      </div>
+      )}
 
       <Card className="p-4">
         <div className="h-[300px] w-full">
