@@ -2,26 +2,34 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import { ChartContainer } from "@/components/ui/chart";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine } from "recharts";
+import { format } from "date-fns";
 
 interface GlucoseReading {
   timestamp: string;
+  fullDate: string;
   level: number;
+  note: string;
 }
 
 export default function DiabeticMonitoringChart() {
   const [readings, setReadings] = useState<GlucoseReading[]>([]);
   const [glucoseLevel, setGlucoseLevel] = useState("");
+  const [note, setNote] = useState("");
 
   const handleAddReading = () => {
     if (glucoseLevel) {
+      const now = new Date();
       const newReading: GlucoseReading = {
-        timestamp: new Date().toLocaleTimeString(),
-        level: parseFloat(glucoseLevel)
+        timestamp: format(now, 'HH:mm'),
+        fullDate: format(now, 'MMM dd, yyyy'),
+        level: parseFloat(glucoseLevel),
+        note: note
       };
       setReadings([...readings, newReading]);
       setGlucoseLevel("");
+      setNote("");
     }
   };
 
@@ -46,6 +54,18 @@ export default function DiabeticMonitoringChart() {
             className="w-full"
           />
         </div>
+        <div className="flex-1">
+          <label className="block text-sm font-medium mb-2">
+            Note (optional)
+          </label>
+          <Input
+            type="text"
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder="Add a note (e.g., Before breakfast)"
+            className="w-full"
+          />
+        </div>
         <Button onClick={handleAddReading} className="mb-0">
           Add Reading
         </Button>
@@ -66,23 +86,36 @@ export default function DiabeticMonitoringChart() {
           >
             <LineChart data={readings} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="timestamp" />
-              <YAxis domain={[0, 300]} />
+              <XAxis 
+                dataKey="timestamp" 
+                label={{ value: 'Time', position: 'bottom' }}
+              />
+              <YAxis 
+                domain={[0, 300]}
+                label={{ value: 'Blood Glucose (mg/dL)', angle: -90, position: 'left' }}
+              />
               <Tooltip content={({ active, payload }) => {
                 if (active && payload && payload.length) {
                   const data = payload[0].payload;
                   return (
                     <div className="bg-white p-2 border rounded shadow">
+                      <p className="text-sm font-medium">{data.fullDate}</p>
                       <p className="text-sm">Time: {data.timestamp}</p>
                       <p className="text-sm" style={{ color: getStatusColor(data.level) }}>
                         Level: {data.level} mg/dL
                       </p>
+                      {data.note && (
+                        <p className="text-sm text-gray-600">Note: {data.note}</p>
+                      )}
                     </div>
                   );
                 }
                 return null;
               }} />
               <Legend />
+              {/* Normal range reference lines */}
+              <ReferenceLine y={70} stroke="#EF4444" strokeDasharray="3 3" label="Low" />
+              <ReferenceLine y={180} stroke="#EF4444" strokeDasharray="3 3" label="High" />
               <Line
                 type="monotone"
                 dataKey="level"
@@ -104,7 +137,13 @@ export default function DiabeticMonitoringChart() {
                   className="flex justify-between items-center p-2 rounded"
                   style={{ backgroundColor: `${getStatusColor(reading.level)}15` }}
                 >
-                  <span>{reading.timestamp}</span>
+                  <div>
+                    <span className="text-sm font-medium">{reading.fullDate}</span>
+                    <span className="text-sm text-gray-600 ml-2">{reading.timestamp}</span>
+                    {reading.note && (
+                      <p className="text-xs text-gray-600 mt-1">{reading.note}</p>
+                    )}
+                  </div>
                   <span
                     className="font-medium"
                     style={{ color: getStatusColor(reading.level) }}
