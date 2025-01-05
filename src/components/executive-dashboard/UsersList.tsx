@@ -84,7 +84,7 @@ export default function UsersList() {
           {users.map((user) => (
             <div
               key={user.id}
-              className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/5"
+              className="flex flex-col p-4 border rounded-lg hover:bg-accent/5 space-y-4"
             >
               <div className="flex items-center gap-4">
                 <div className="h-10 w-10 rounded-full bg-secondary/20 flex items-center justify-center">
@@ -97,7 +97,7 @@ export default function UsersList() {
               </div>
               <Button 
                 variant="secondary"
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 w-full"
                 onClick={() => handleBookAppointment(user)}
               >
                 <Calendar className="h-4 w-4" />
