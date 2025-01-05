@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ChartContainer } from "@/components/ui/chart";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine } from "recharts";
-import { format } from "date-fns";
+import { format, addDays, subDays } from "date-fns";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface GlucoseReading {
   timestamp: string;
@@ -32,6 +33,16 @@ export default function DiabeticMonitoringChart() {
     }
   };
 
+  const handleNextDay = () => {
+    const currentDate = new Date(readingDate);
+    setReadingDate(format(addDays(currentDate, 1), 'yyyy-MM-dd'));
+  };
+
+  const handlePreviousDay = () => {
+    const currentDate = new Date(readingDate);
+    setReadingDate(format(subDays(currentDate, 1), 'yyyy-MM-dd'));
+  };
+
   const getStatusColor = (level: number) => {
     if (level < 70) return "#EF4444"; // Red for low
     if (level > 180) return "#EF4444"; // Red for high
@@ -57,12 +68,30 @@ export default function DiabeticMonitoringChart() {
           <label className="block text-sm font-medium mb-2">
             Reading Date
           </label>
-          <Input
-            type="date"
-            value={readingDate}
-            onChange={(e) => setReadingDate(e.target.value)}
-            className="w-full"
-          />
+          <div className="flex gap-2">
+            <Button 
+              variant="outline" 
+              size="icon"
+              onClick={handlePreviousDay}
+              className="shrink-0"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Input
+              type="date"
+              value={readingDate}
+              onChange={(e) => setReadingDate(e.target.value)}
+              className="w-full"
+            />
+            <Button 
+              variant="outline" 
+              size="icon"
+              onClick={handleNextDay}
+              className="shrink-0"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
         <Button onClick={handleAddReading} className="mb-0">
           Add Reading
