@@ -118,9 +118,9 @@ export default function DoctorAppointments() {
 
   return (
     <>
-      <Card>
+      <Card className="w-full">
         <CardHeader>
-          <CardTitle>Upcoming Appointments</CardTitle>
+          <CardTitle className="text-xl md:text-2xl">Upcoming Appointments</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
