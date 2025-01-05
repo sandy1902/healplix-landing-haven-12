@@ -1,5 +1,6 @@
 import ProfileImage from "./ProfileImage";
 import { useProfile } from "@/hooks/use-profile";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ProfileSummary() {
   const { userProfile, loading } = useProfile();
@@ -7,10 +8,10 @@ export default function ProfileSummary() {
   if (loading) {
     return (
       <div className="flex flex-col md:flex-row items-center gap-6 p-8 bg-white rounded-lg shadow-lg animate-fade-up">
-        <div className="animate-pulse w-16 h-16 rounded-full bg-gray-200" />
+        <Skeleton className="w-16 h-16 rounded-full" />
         <div className="space-y-2">
-          <div className="animate-pulse h-8 w-48 bg-gray-200 rounded" />
-          <div className="animate-pulse h-4 w-32 bg-gray-200 rounded" />
+          <Skeleton className="h-8 w-48" />
+          <Skeleton className="h-4 w-32" />
         </div>
       </div>
     );
@@ -23,7 +24,7 @@ export default function ProfileSummary() {
         <h1 className="text-3xl font-bold text-primary">
           Welcome, {userProfile.first_name || "User"}
         </h1>
-        <p className="text-gray-500 mt-1">{userProfile.email}</p>
+        <p className="text-gray-500 mt-1">{userProfile.email || "No email available"}</p>
       </div>
     </div>
   );
