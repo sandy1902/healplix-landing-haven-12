@@ -17,7 +17,7 @@ export function RecordsList({ records, onDownload }: RecordsListProps) {
       {records.map((record) => (
         <div
           key={record.id}
-          className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent transition-colors"
+          className="flex flex-col p-4 border rounded-lg hover:bg-accent transition-colors"
         >
           <div className="flex items-center gap-4">
             <FileText className="h-6 w-6 text-secondary" />
@@ -28,9 +28,15 @@ export function RecordsList({ records, onDownload }: RecordsListProps) {
               </p>
             </div>
           </div>
-          <Button variant="outline" onClick={() => onDownload(record)}>
-            Download
-          </Button>
+          <div className="mt-4">
+            <Button 
+              variant="outline" 
+              onClick={() => onDownload(record)}
+              className="w-full"
+            >
+              Download
+            </Button>
+          </div>
         </div>
       ))}
     </div>
