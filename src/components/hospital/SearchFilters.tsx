@@ -2,6 +2,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { RotateCcw } from "lucide-react";
 
 interface SearchFiltersProps {
   searchQuery: string;
@@ -40,14 +42,32 @@ export function SearchFilters({
     fetchInsuranceProviders();
   }, []);
 
+  const handleReset = () => {
+    setSearchQuery("");
+    setLocation("");
+    setSpeciality("");
+    setInsuranceProvider("");
+  };
+
   return (
     <div className="space-y-4">
-      <Input
-        placeholder="Search hospitals by name..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20"
-      />
+      <div className="flex items-center justify-between gap-4">
+        <Input
+          placeholder="Search hospitals by name..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20"
+        />
+        <Button 
+          variant="outline" 
+          size="icon"
+          onClick={handleReset}
+          className="shrink-0"
+          title="Reset filters"
+        >
+          <RotateCcw className="h-4 w-4" />
+        </Button>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Input
           placeholder="Search by location..."
