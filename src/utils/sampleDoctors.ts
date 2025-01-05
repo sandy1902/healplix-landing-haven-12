@@ -1,4 +1,6 @@
-export const sampleDoctors = [
+import { Doctor } from "@/types/doctor";
+
+export const sampleDoctors: Doctor[] = [
   {
     id: '1',
     name: 'Dr. John Smith',

@@ -5,22 +5,17 @@ export interface Doctor {
   qualification: string;
   specialization: string;
   experience: string;
-  clinicName: string;
-  location: string;
   rating: number;
-  email: string;
-  contactNumber: string;
-  clinicLocation: string;
-  clinicTimings: string;
-  services?: string[];
-  videoConsultation: {
-    available: boolean;
-    charges: number;
+  videoConsultation: boolean;
+  videoConsultationFee: number | null;
+  consultationFee: number;
+  availability: {
+    days: string[];
+    timeSlots: string[];
   };
-  clinicVisit: {
-    available: boolean;
-    charges: number;
-  };
+  location: string;
+  languages: string[];
+  about: string;
 }
 
 export interface DoctorProfile {
