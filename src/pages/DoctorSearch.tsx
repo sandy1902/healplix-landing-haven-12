@@ -21,13 +21,75 @@ export default function DoctorSearch() {
   useEffect(() => {
     async function fetchDoctors() {
       try {
-        const { data: profiles, error } = await supabase
+        let { data: profiles, error } = await supabase
           .from('profiles')
           .select('*')
           .eq('role', 'doctor');
 
         if (error) {
           throw error;
+        }
+
+        // If no doctors exist in the database, create sample doctors
+        if (!profiles || profiles.length === 0) {
+          const sampleDoctors = [
+            {
+              id: '1',
+              first_name: 'Dr',
+              last_name: 'Rohith',
+              qualification: 'MBBS, MD',
+              specialization: 'Cardiologist',
+              experience: '12+ years',
+              consultation_fee: 1000,
+              video_consultation_available: true,
+              video_consultation_fee: 800,
+            },
+            {
+              id: '2',
+              first_name: 'Dr',
+              last_name: 'Divya Renuka',
+              qualification: 'MBBS, MS',
+              specialization: 'Gynecologist',
+              experience: '8+ years',
+              consultation_fee: 900,
+              video_consultation_available: true,
+              video_consultation_fee: 700,
+            },
+            {
+              id: '3',
+              first_name: 'Dr',
+              last_name: 'Rambabu',
+              qualification: 'MBBS, DNB',
+              specialization: 'Orthopedic',
+              experience: '15+ years',
+              consultation_fee: 1200,
+              video_consultation_available: true,
+              video_consultation_fee: 900,
+            },
+            {
+              id: '4',
+              first_name: 'Dr',
+              last_name: 'Balaji',
+              qualification: 'MBBS, MD',
+              specialization: 'Pediatrician',
+              experience: '10+ years',
+              consultation_fee: 800,
+              video_consultation_available: true,
+              video_consultation_fee: 600,
+            },
+            {
+              id: '5',
+              first_name: 'Dr',
+              last_name: 'Sandeep Goud',
+              qualification: 'MBBS, MD',
+              specialization: 'General Medicine',
+              experience: '7+ years',
+              consultation_fee: 700,
+              video_consultation_available: true,
+              video_consultation_fee: 500,
+            },
+          ];
+          profiles = sampleDoctors;
         }
 
         const transformedDoctors = profiles.map(transformProfileToDoctor);
