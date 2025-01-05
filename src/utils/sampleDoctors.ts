@@ -28,7 +28,7 @@ export const sampleDoctors: Doctor[] = [
   {
     id: '2',
     name: 'Dr. Divya Renuka',
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2070&auto=format&fit=crop",
+    image: "/lovable-uploads/5a7832a0-a72c-4407-b66b-f4ac642b2cb2.png",
     qualification: 'MBBS, MS',
     specialization: 'Gynecologist',
     experience: '8+ years',
