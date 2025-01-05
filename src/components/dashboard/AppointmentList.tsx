@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { AppointmentCard } from "./AppointmentCard";
@@ -6,6 +6,7 @@ import { ShareRecordsDialog } from "./ShareRecordsDialog";
 import { RatingDialog } from "./RatingDialog";
 import { filterAppointmentsByDate } from "@/utils/dateUtils";
 import { PatientSelector } from "./PatientSelector";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Appointment {
   id: string;
@@ -33,58 +34,54 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
   const [showRatingDialog, setShowRatingDialog] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [selectedPatient, setSelectedPatient] = useState<string>("self");
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const [dependents] = useState<Dependent[]>([
-    {
-      id: "1",
-      name: "John Doe Jr",
-      relation: "Son",
-      age: "10",
-      gender: "male",
-      status: "approved"
+  useEffect(() => {
+    fetchAppointments();
+  }, [type, selectedPatient]);
+
+  const fetchAppointments = async () => {
+    try {
+      setLoading(true);
+      const { data: appointmentsData, error } = await supabase
+        .from('appointments')
+        .select(`
+          id,
+          appointment_date,
+          status,
+          notes,
+          doctor:profiles!appointments_doctor_id_fkey(
+            first_name,
+            last_name
+          )
+        `)
+        .eq('patient_id', selectedPatient === 'self' ? (await supabase.auth.getUser()).data.user?.id : selectedPatient);
+
+      if (error) throw error;
+
+      const formattedAppointments = appointmentsData.map(apt => ({
+        id: apt.id,
+        doctorName: `Dr. ${apt.doctor.first_name} ${apt.doctor.last_name}`,
+        specialty: "General Medicine", // You might want to add this to the profiles table
+        date: new Date(apt.appointment_date).toLocaleDateString(),
+        time: new Date(apt.appointment_date).toLocaleTimeString(),
+        location: "Medical Center", // You might want to add this to the appointments table
+        notes: apt.notes
+      }));
+
+      setAppointments(formattedAppointments);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to fetch appointments. Please try again later.",
+      });
+    } finally {
+      setLoading(false);
     }
-  ]);
-
-  const [appointments, setAppointments] = useState<Appointment[]>([
-    {
-      id: "1",
-      doctorName: "Dr. Sarah Wilson",
-      specialty: "Cardiologist",
-      date: "2025-05-25",
-      time: "10:00 AM",
-      location: "Medical Center, Room 302",
-      forWhom: "self"
-    },
-    {
-      id: "2",
-      doctorName: "Dr. Michael Chen",
-      specialty: "Dermatologist",
-      date: "2025-05-28",
-      time: "2:30 PM",
-      location: "Health Clinic, Room 105"
-    },
-    {
-      id: "3",
-      doctorName: "Dr. Emily Rodriguez",
-      specialty: "Neurologist",
-      date: "2025-05-30",
-      time: "11:15 AM",
-      location: "Neurology Center, Room 405"
-    },
-    {
-      id: "4",
-      doctorName: "Dr. James Thompson",
-      specialty: "Orthopedist",
-      date: "2024-02-15",
-      time: "9:00 AM",
-      location: "Orthopedic Clinic, Room 203"
-    }
-  ]);
-
-  const filteredAppointments = appointments.filter(appointment => {
-    const isFiltered = filterAppointmentsByDate(appointment, type);
-    return isFiltered;
-  });
+  };
 
   const handleShareRecords = (appointment: Appointment) => {
     setSelectedAppointment(appointment);
@@ -96,16 +93,34 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
     setShowRatingDialog(true);
   };
 
-  const handleRatingSubmit = (rating: number, review: string) => {
+  const handleRatingSubmit = async (rating: number, review: string) => {
     if (selectedAppointment) {
-      setAppointments(appointments.map(apt => 
-        apt.id === selectedAppointment.id ? { ...apt, rating } : apt
-      ));
-      toast({
-        title: "Review Submitted",
-        description: "Thank you for rating your appointment!",
-      });
+      try {
+        const { error } = await supabase
+          .from('appointments')
+          .update({ rating })
+          .eq('id', selectedAppointment.id);
+
+        if (error) throw error;
+
+        setAppointments(appointments.map(apt => 
+          apt.id === selectedAppointment.id ? { ...apt, rating } : apt
+        ));
+
+        toast({
+          title: "Review Submitted",
+          description: "Thank you for rating your appointment!",
+        });
+      } catch (error) {
+        console.error('Error submitting rating:', error);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Failed to submit rating. Please try again later.",
+        });
+      }
     }
+    setShowRatingDialog(false);
   };
 
   const handleConfirmShare = () => {
@@ -123,10 +138,14 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
     toast({
       title: "Patient Selected",
       description: `Appointment will be booked for ${
-        value === "self" ? "yourself" : dependents.find((d) => d.id === value)?.name
+        value === "self" ? "yourself" : "your dependent"
       }`,
     });
   };
+
+  if (loading) {
+    return <div>Loading appointments...</div>;
+  }
 
   return (
     <>
@@ -134,7 +153,7 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
         <PatientSelector
           selectedPatient={selectedPatient}
           onPatientSelect={handlePatientSelect}
-          dependents={dependents}
+          dependents={[]} // You'll need to fetch this from the dependents table
         />
       )}
 
@@ -145,17 +164,19 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {filteredAppointments.length > 0 ? (
+          {appointments.length > 0 ? (
             <div className="space-y-4">
-              {filteredAppointments.map((appointment) => (
-                <AppointmentCard
-                  key={appointment.id}
-                  appointment={appointment}
-                  type={type}
-                  onShare={handleShareRecords}
-                  onRate={handleRate}
-                />
-              ))}
+              {appointments
+                .filter((appointment) => filterAppointmentsByDate(appointment, type))
+                .map((appointment) => (
+                  <AppointmentCard
+                    key={appointment.id}
+                    appointment={appointment}
+                    type={type}
+                    onShare={handleShareRecords}
+                    onRate={handleRate}
+                  />
+                ))}
             </div>
           ) : (
             <p className="text-gray-500">No {type} appointments</p>
