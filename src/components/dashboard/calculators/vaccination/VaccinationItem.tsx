@@ -26,9 +26,9 @@ export function VaccinationItem({
   onToggleComplete,
 }: VaccinationItemProps) {
   return (
-    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+    <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between p-3 bg-gray-50 rounded-lg">
       <div className="flex items-center gap-3">
-        <Syringe className="h-5 w-5 text-blue-500" />
+        <Syringe className="h-5 w-5 text-blue-500 flex-shrink-0" />
         <div>
           <span className="font-medium">{vaccination.name}</span>
           <Tooltip>
@@ -43,14 +43,14 @@ export function VaccinationItem({
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          <Calendar className="h-4 w-4 text-gray-500" />
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <Calendar className="h-4 w-4 text-gray-500 flex-shrink-0" />
           <Input
             type="date"
             value={vaccination.date}
             onChange={(e) => onDateChange(vaccination.id, e.target.value)}
-            className="w-40"
+            className="w-full sm:w-40"
           />
         </div>
 
@@ -58,7 +58,7 @@ export function VaccinationItem({
           variant={vaccination.completed ? "default" : "outline"}
           size="sm"
           onClick={() => onToggleComplete(vaccination.id)}
-          className="gap-2"
+          className="gap-2 w-full sm:w-auto"
         >
           <Check className="h-4 w-4" />
           {vaccination.completed ? "Completed" : "Mark Complete"}
