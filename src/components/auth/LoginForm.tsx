@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Key } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -14,6 +14,7 @@ export const LoginForm = () => {
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isResettingPassword, setIsResettingPassword] = useState(false);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,6 +46,43 @@ export const LoginForm = () => {
     }
   };
 
+  const handleForgotPassword = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!formData.email) {
+      toast({
+        title: "Email required",
+        description: "Please enter your email address to reset your password.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsResettingPassword(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(formData.email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Password reset email sent",
+        description: "Please check your email for the password reset link.",
+      });
+    } catch (error) {
+      console.error("Password reset error:", error);
+      toast({
+        title: "Password reset failed",
+        description: "Failed to send password reset email. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsResettingPassword(false);
+    }
+  };
+
   return (
     <form onSubmit={handleSignIn} className="space-y-4">
       <div className="space-y-2">
@@ -56,7 +94,7 @@ export const LoginForm = () => {
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           required
           placeholder="Enter your email"
-          disabled={isLoading}
+          disabled={isLoading || isResettingPassword}
         />
       </div>
 
@@ -70,7 +108,7 @@ export const LoginForm = () => {
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             required
             placeholder="Enter your password"
-            disabled={isLoading}
+            disabled={isLoading || isResettingPassword}
           />
           <Button
             type="button"
@@ -78,16 +116,29 @@ export const LoginForm = () => {
             size="icon"
             className="absolute right-2 top-1/2 -translate-y-1/2"
             onClick={() => setShowPassword(!showPassword)}
-            disabled={isLoading}
+            disabled={isLoading || isResettingPassword}
           >
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </Button>
         </div>
       </div>
 
-      <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "Signing in..." : "Sign In"}
-      </Button>
+      <div className="flex flex-col gap-2">
+        <Button type="submit" className="w-full" disabled={isLoading || isResettingPassword}>
+          {isLoading ? "Signing in..." : "Sign In"}
+        </Button>
+        
+        <Button
+          type="button"
+          variant="ghost"
+          className="w-full"
+          onClick={handleForgotPassword}
+          disabled={isLoading || isResettingPassword}
+        >
+          <Key className="mr-2 h-4 w-4" />
+          {isResettingPassword ? "Sending reset email..." : "Forgot Password?"}
+        </Button>
+      </div>
     </form>
   );
 };
