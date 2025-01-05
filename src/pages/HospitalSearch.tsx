@@ -56,7 +56,23 @@ export default function HospitalSearch() {
           ],
           insuranceProviders: hospital.insurance_affiliations?.map(
             (affiliation: any) => affiliation.insurance_provider.name
-          ) || []
+          ) || [],
+          reviews: [
+            {
+              id: "1",
+              userName: "John Doe",
+              rating: 5,
+              comment: "Excellent facilities and staff",
+              date: "2024-01-01"
+            },
+            {
+              id: "2",
+              userName: "Jane Smith",
+              rating: 4,
+              comment: "Good experience overall",
+              date: "2024-01-02"
+            }
+          ]
         }));
 
         setHospitals(transformedHospitals);
@@ -89,6 +105,20 @@ export default function HospitalSearch() {
     return matchesSearch && matchesLocation && matchesSpeciality;
   });
 
+  const handleRequestCallback = (hospital: Hospital) => {
+    toast({
+      title: "Callback Requested",
+      description: `We'll contact you shortly about ${hospital.name}`,
+    });
+  };
+
+  const handleAdmissionEnquiry = (hospital: Hospital) => {
+    toast({
+      title: "Admission Enquiry Sent",
+      description: `Your enquiry for ${hospital.name} has been received`,
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10">
       <Navbar />
@@ -104,6 +134,8 @@ export default function HospitalSearch() {
         
         <HospitalResults 
           hospitals={filteredHospitals}
+          onRequestCallback={handleRequestCallback}
+          onAdmissionEnquiry={handleAdmissionEnquiry}
         />
       </div>
     </div>
