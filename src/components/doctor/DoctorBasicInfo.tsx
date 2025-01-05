@@ -10,8 +10,14 @@ export function DoctorBasicInfo({ doctor }: DoctorBasicInfoProps) {
   return (
     <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4">
       <Avatar className="h-20 w-20 md:h-32 md:w-32 rounded-lg">
-        <AvatarImage src={doctor.image} alt={doctor.name} />
-        <AvatarFallback>DR</AvatarFallback>
+        <AvatarImage 
+          src={doctor.image} 
+          alt={doctor.name} 
+          className="object-cover"
+        />
+        <AvatarFallback className="text-lg">
+          {doctor.name.split(' ').map(n => n[0]).join('')}
+        </AvatarFallback>
       </Avatar>
       
       <div className="text-center md:text-left flex-1">
