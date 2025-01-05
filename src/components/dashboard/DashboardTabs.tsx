@@ -1,4 +1,4 @@
-import { Clock, History, FileText, Users, Heart, Calculator, Stethoscope } from "lucide-react";
+import { Clock, History, FileText, Users, Heart, Calculator, Stethoscope, Plus } from "lucide-react";
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function DashboardTabs() {
@@ -10,6 +10,7 @@ export function DashboardTabs() {
       >
         <Clock className="h-5 w-5 mr-3" />
         Appointments
+        <Plus className="h-4 w-4 ml-auto" />
       </TabsTrigger>
       <TabsTrigger 
         value="history" 
@@ -17,6 +18,7 @@ export function DashboardTabs() {
       >
         <History className="h-5 w-5 mr-3" />
         History
+        <Plus className="h-4 w-4 ml-auto" />
       </TabsTrigger>
       <TabsTrigger 
         value="records" 
@@ -24,6 +26,7 @@ export function DashboardTabs() {
       >
         <FileText className="h-5 w-5 mr-3" />
         Medical Records
+        <Plus className="h-4 w-4 ml-auto" />
       </TabsTrigger>
       <TabsTrigger 
         value="medical-history" 
@@ -31,6 +34,7 @@ export function DashboardTabs() {
       >
         <Stethoscope className="h-5 w-5 mr-3" />
         Medical History
+        <Plus className="h-4 w-4 ml-auto" />
       </TabsTrigger>
       <TabsTrigger 
         value="dependents" 
@@ -38,6 +42,7 @@ export function DashboardTabs() {
       >
         <Users className="h-5 w-5 mr-3" />
         Dependents
+        <Plus className="h-4 w-4 ml-auto" />
       </TabsTrigger>
       <TabsTrigger 
         value="favorites" 
@@ -45,6 +50,7 @@ export function DashboardTabs() {
       >
         <Heart className="h-5 w-5 mr-3" />
         Favorites
+        <Plus className="h-4 w-4 ml-auto" />
       </TabsTrigger>
       <TabsTrigger 
         value="calculators" 
@@ -52,6 +58,7 @@ export function DashboardTabs() {
       >
         <Calculator className="h-5 w-5 mr-3" />
         Health Calculators
+        <Plus className="h-4 w-4 ml-auto" />
       </TabsTrigger>
     </TabsList>
   );
