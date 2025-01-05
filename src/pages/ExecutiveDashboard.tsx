@@ -9,9 +9,11 @@ import BookAppointment from "@/components/executive-dashboard/BookAppointment";
 import DetailedRevenue from "@/components/executive-dashboard/DetailedRevenue";
 import UserAnalytics from "@/components/executive-dashboard/UserAnalytics";
 import { Navbar } from "@/components/Navbar";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function ExecutiveDashboard() {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const isAuthenticated = true; // TODO: Replace with actual auth check
 
   useEffect(() => {
@@ -23,60 +25,64 @@ export default function ExecutiveDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-accent to-background">
       <Navbar />
-      <div className="container mx-auto py-24 px-4 space-y-6">
-        <h1 className="text-3xl font-bold text-primary mb-8 animate-fade-up">
+      <div className="container mx-auto py-6 md:py-24 px-4 space-y-6">
+        <h1 className="text-2xl md:text-3xl font-bold text-primary mb-4 md:mb-8 animate-fade-up">
           Executive Dashboard
         </h1>
         
         <Tabs defaultValue="analytics" className="w-full">
-          <TabsList className="w-full justify-start overflow-x-auto bg-white/80 backdrop-blur-sm p-2 rounded-lg mb-6 shadow-md">
+          <TabsList 
+            className={`w-full justify-start ${
+              isMobile ? 'flex-wrap gap-2' : 'overflow-x-auto'
+            } bg-white/80 backdrop-blur-sm p-2 rounded-lg mb-6 shadow-md`}
+          >
             <TabsTrigger 
               value="analytics" 
               className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white transition-all duration-200"
             >
               <BarChart className="h-4 w-4" />
-              Analytics
+              <span className="hidden md:inline">Analytics</span>
             </TabsTrigger>
             <TabsTrigger 
               value="users" 
               className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white transition-all duration-200"
             >
               <Users className="h-4 w-4" />
-              Users
+              <span className="hidden md:inline">Users</span>
             </TabsTrigger>
             <TabsTrigger 
               value="appointments" 
               className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white transition-all duration-200"
             >
               <Calendar className="h-4 w-4" />
-              Book Appointments
+              <span className="hidden md:inline">Appointments</span>
             </TabsTrigger>
             <TabsTrigger 
               value="revenue" 
               className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white transition-all duration-200"
             >
               <DollarSign className="h-4 w-4" />
-              Revenue
+              <span className="hidden md:inline">Revenue</span>
             </TabsTrigger>
             <TabsTrigger 
               value="affiliate" 
               className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white transition-all duration-200"
             >
               <Link className="h-4 w-4" />
-              Affiliate Link
+              <span className="hidden md:inline">Affiliate</span>
             </TabsTrigger>
             <TabsTrigger 
               value="profile" 
               className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white transition-all duration-200"
             >
               <UserCog className="h-4 w-4" />
-              Profile
+              <span className="hidden md:inline">Profile</span>
             </TabsTrigger>
           </TabsList>
 
-          <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 shadow-lg">
+          <div className="bg-white/80 backdrop-blur-sm rounded-lg p-3 md:p-6 shadow-lg">
             <TabsContent value="analytics" className="mt-0 space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6">
                 <UserAnalytics />
               </div>
             </TabsContent>
