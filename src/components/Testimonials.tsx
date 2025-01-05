@@ -12,9 +12,21 @@ export const Testimonials = () => {
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {[
-            { name: "Mr Ravi", initial: "R" },
-            { name: "Mrs Jyothi", initial: "J" },
-            { name: "Mr Kiran", initial: "K" }
+            { 
+              name: "Mr Ravi", 
+              initial: "R",
+              description: "The online consultation feature saved me so much time. The doctors are very professional and the platform is easy to use!"
+            },
+            { 
+              name: "Mrs Jyothi", 
+              initial: "J",
+              description: "Managing my family's health records and appointments has never been easier. The reminders feature is particularly helpful."
+            },
+            { 
+              name: "Mr Kiran", 
+              initial: "K",
+              description: "I appreciate how quickly I can schedule appointments and get medical advice. The service is truly exceptional!"
+            }
           ].map((user, index) => (
             <div key={index} className="feature-card">
               <div className="flex items-center mb-4">
@@ -23,11 +35,11 @@ export const Testimonials = () => {
                 </div>
                 <div className="ml-4">
                   <h4 className="font-semibold">{user.name}</h4>
-                  <p className="text-gray-600 text-sm">Patient</p>
+                  <p className="text-gray-600 text-sm">Subscriber</p>
                 </div>
               </div>
               <p className="text-gray-600">
-                "Healplix has made it so much easier to manage my healthcare appointments. The platform is intuitive and saves me so much time!"
+                "{user.description}"
               </p>
             </div>
           ))}
