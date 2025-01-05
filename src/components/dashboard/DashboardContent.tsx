@@ -6,6 +6,7 @@ import Dependents from "./Dependents";
 import Favorites from "./Favorites";
 import ProfileForm from "./ProfileForm";
 import HealthCalculators from "./calculators/HealthCalculators";
+import MedicalHistoryForm from "./MedicalHistoryForm";
 
 export function DashboardContent() {
   return (
@@ -20,6 +21,10 @@ export function DashboardContent() {
 
       <TabsContent value="records" className="mt-0">
         <MedicalRecords />
+      </TabsContent>
+
+      <TabsContent value="medical-history" className="mt-0">
+        <MedicalHistoryForm />
       </TabsContent>
 
       <TabsContent value="dependents" className="mt-0">

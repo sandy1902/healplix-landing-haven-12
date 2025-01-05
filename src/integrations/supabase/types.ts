@@ -134,6 +134,47 @@ export type Database = {
           },
         ]
       }
+      medical_history: {
+        Row: {
+          allergies: string | null
+          chronic_diseases: string | null
+          created_at: string | null
+          drug_allergies: string | null
+          id: string
+          previous_surgeries: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          allergies?: string | null
+          chronic_diseases?: string | null
+          created_at?: string | null
+          drug_allergies?: string | null
+          id?: string
+          previous_surgeries?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          allergies?: string | null
+          chronic_diseases?: string | null
+          created_at?: string | null
+          drug_allergies?: string | null
+          id?: string
+          previous_surgeries?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medical_history_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       medical_records: {
         Row: {
           file_url: string | null
