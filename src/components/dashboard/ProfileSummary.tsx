@@ -7,7 +7,11 @@ export default function ProfileSummary() {
   if (loading) {
     return (
       <div className="flex flex-col md:flex-row items-center gap-6 p-8 bg-white rounded-lg shadow-lg animate-fade-up">
-        <div className="animate-pulse">Loading...</div>
+        <div className="animate-pulse w-16 h-16 rounded-full bg-gray-200" />
+        <div className="space-y-2">
+          <div className="animate-pulse h-8 w-48 bg-gray-200 rounded" />
+          <div className="animate-pulse h-4 w-32 bg-gray-200 rounded" />
+        </div>
       </div>
     );
   }

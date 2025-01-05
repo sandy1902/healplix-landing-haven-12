@@ -21,14 +21,18 @@ export function useProfile() {
         const { data: { user } } = await supabase.auth.getUser();
         
         if (user) {
-          const { data: profile } = await supabase
+          const { data: profile, error } = await supabase
             .from('profiles')
             .select('first_name')
             .eq('id', user.id)
             .single();
 
+          if (error) {
+            throw error;
+          }
+
           setUserProfile({
-            first_name: profile?.first_name || "User",
+            first_name: profile?.first_name || "",
             email: user.email || "",
           });
         }
