@@ -67,39 +67,41 @@ export default function VaccinationChart() {
   const nextVaccination = vaccinations.find(v => !v.completed);
 
   return (
-    <Card className="p-6 space-y-8">
-      <VaccinationForm
-        selectedChild={selectedChild}
-        childBirthDate={childBirthDate}
-        onChildNameChange={setSelectedChild}
-        onBirthDateChange={handleBirthDateChange}
-      />
+    <div className="space-y-8">
+      <Card className="p-6">
+        <VaccinationForm
+          selectedChild={selectedChild}
+          childBirthDate={childBirthDate}
+          onChildNameChange={setSelectedChild}
+          onBirthDateChange={handleBirthDateChange}
+        />
 
-      <TooltipProvider>
-        <div className="space-y-4">
-          {vaccinations.map((vaccination) => (
-            <VaccinationItem
-              key={vaccination.id}
-              vaccination={vaccination}
-              onDateChange={handleDateChange}
-              onToggleComplete={toggleVaccination}
-            />
-          ))}
-        </div>
-      </TooltipProvider>
+        <TooltipProvider>
+          <div className="space-y-4 mt-6">
+            {vaccinations.map((vaccination) => (
+              <VaccinationItem
+                key={vaccination.id}
+                vaccination={vaccination}
+                onDateChange={handleDateChange}
+                onToggleComplete={toggleVaccination}
+              />
+            ))}
+          </div>
+        </TooltipProvider>
 
-      <VaccinationSummary
-        selectedChild={selectedChild}
-        childBirthDate={childBirthDate}
-        totalVaccinations={vaccinations.length}
-        completedVaccinations={completedVaccinations}
-        nextVaccinationName={nextVaccination?.name}
-        nextVaccinationDate={nextVaccination?.dueDate}
-      />
+        <VaccinationSummary
+          selectedChild={selectedChild}
+          childBirthDate={childBirthDate}
+          totalVaccinations={vaccinations.length}
+          completedVaccinations={completedVaccinations}
+          nextVaccinationName={nextVaccination?.name}
+          nextVaccinationDate={nextVaccination?.dueDate}
+        />
+      </Card>
 
-      <div className="pt-6 border-t">
+      <Card className="p-6">
         <IMAScheduleTable />
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 }
