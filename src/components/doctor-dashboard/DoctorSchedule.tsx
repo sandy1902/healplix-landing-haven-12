@@ -117,12 +117,12 @@ export default function DoctorSchedule() {
                 selected={date}
                 onSelect={(newDate) => newDate && setDate(newDate)}
                 disabled={(date) => date < new Date()}
-                className="rounded-md border shadow-sm"
+                className="rounded-md border shadow-sm bg-white"
               />
             </div>
           </div>
 
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 bg-white rounded-lg p-4">
             {selectedDayIndex !== -1 && (
               <DayAvailability
                 day={schedule[selectedDayIndex].day}
