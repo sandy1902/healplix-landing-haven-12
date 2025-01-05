@@ -50,6 +50,7 @@ export default function DoctorSearch() {
               pincode: '500081',
               phone_number: '+91 9876543210',
               created_at: new Date().toISOString(),
+              role: 'doctor'
             },
             {
               id: '2',
@@ -68,6 +69,7 @@ export default function DoctorSearch() {
               pincode: '500082',
               phone_number: '+91 9876543211',
               created_at: new Date().toISOString(),
+              role: 'doctor'
             },
             {
               id: '3',
@@ -86,6 +88,7 @@ export default function DoctorSearch() {
               pincode: '500083',
               phone_number: '+91 9876543212',
               created_at: new Date().toISOString(),
+              role: 'doctor'
             },
             {
               id: '4',
@@ -104,6 +107,7 @@ export default function DoctorSearch() {
               pincode: '500084',
               phone_number: '+91 9876543213',
               created_at: new Date().toISOString(),
+              role: 'doctor'
             },
             {
               id: '5',
@@ -122,6 +126,7 @@ export default function DoctorSearch() {
               pincode: '500085',
               phone_number: '+91 9876543214',
               created_at: new Date().toISOString(),
+              role: 'doctor'
             },
           ];
           profiles = sampleDoctors;
