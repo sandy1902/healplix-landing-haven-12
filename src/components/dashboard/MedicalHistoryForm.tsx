@@ -26,7 +26,7 @@ export default function MedicalHistoryForm() {
       const { data, error } = await supabase
         .from("medical_history")
         .select("*")
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
 
@@ -40,6 +40,11 @@ export default function MedicalHistoryForm() {
       }
     } catch (error) {
       console.error("Error fetching medical history:", error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to load medical history. Please try again.",
+      });
     } finally {
       setLoading(false);
     }
@@ -53,10 +58,11 @@ export default function MedicalHistoryForm() {
       const { data: existingRecord } = await supabase
         .from("medical_history")
         .select("id")
-        .single();
+        .maybeSingle();
 
       const payload = {
         ...medicalHistory,
+        user_id: (await supabase.auth.getUser()).data.user?.id,
         updated_at: new Date().toISOString(),
       };
 
