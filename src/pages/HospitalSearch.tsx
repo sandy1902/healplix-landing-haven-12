@@ -1,126 +1,76 @@
-import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { AdmissionEnquiryForm } from "@/components/hospital/AdmissionEnquiryForm";
-import { SearchFilters } from "@/components/hospital/SearchFilters";
-import { HospitalResults } from "@/components/hospital/HospitalResults";
+import { useState, useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
 import { Hospital } from "@/types/hospital";
 import { Navbar } from "@/components/Navbar";
+import { SearchFilters } from "@/components/hospital/SearchFilters";
+import { HospitalResults } from "@/components/hospital/HospitalResults";
+import { supabase } from "@/integrations/supabase/client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function HospitalSearch() {
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [speciality, setSpeciality] = useState<string>("");
-  const [insuranceProvider, setInsuranceProvider] = useState<string>("");
-  const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
-  const [isEnquiryFormOpen, setIsEnquiryFormOpen] = useState(false);
-  const { toast } = useToast();
+  const [hospitals, setHospitals] = useState<Hospital[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [hospitals] = useState<Hospital[]>([
-    {
-      id: "1",
-      name: "General Hospital",
-      image: "https://images.unsplash.com/photo-1587351021355-a479a299d2f9",
-      images: [
-        "https://images.unsplash.com/photo-1586773860418-d37222d8fce3",
-        "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d",
-        "https://images.unsplash.com/photo-1516549655169-df83a0774514"
-      ],
-      location: "Los Angeles, CA",
-      specialities: ["Cardiology", "Neurology", "Orthopedics"],
-      insuranceProviders: ["Blue Cross", "Aetna", "United Healthcare"],
-      rating: 4.8,
-      doctors: [
-        {
-          name: "Dr. John Smith",
-          qualification: "MD, FACC",
-          speciality: "Cardiology"
-        },
-        {
-          name: "Dr. Sarah Johnson",
-          qualification: "MD, FAAN",
-          speciality: "Neurology"
-        },
-        {
-          name: "Dr. Michael Brown",
-          qualification: "MD, FAAOS",
-          speciality: "Orthopedics"
+  useEffect(() => {
+    async function fetchHospitals() {
+      try {
+        const { data: hospitalsData, error: hospitalsError } = await supabase
+          .from('hospitals')
+          .select(`
+            *,
+            departments (name),
+            insurance_affiliations (
+              insurance_providers (name)
+            )
+          `);
+
+        if (hospitalsError) {
+          throw hospitalsError;
         }
-      ],
-      reviews: [
-        {
-          id: "r1",
-          userName: "John Doe",
-          rating: 5,
-          comment: "Excellent care and professional staff",
-          date: "2024-03-15"
-        },
-        {
-          id: "r2",
-          userName: "Jane Smith",
-          rating: 4,
-          comment: "Great experience overall, but waiting times could be improved",
-          date: "2024-03-10"
-        }
-      ]
-    },
-    {
-      id: "2",
-      name: "City Medical Center",
-      image: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3",
-      images: [
-        "https://images.unsplash.com/photo-1587351021355-a479a299d2f9",
-        "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d",
-        "https://images.unsplash.com/photo-1516549655169-df83a0774514"
-      ],
-      location: "San Francisco, CA",
-      specialities: ["Pediatrics", "Oncology", "Dermatology"],
-      insuranceProviders: ["Kaiser", "Cigna", "Blue Shield"],
-      rating: 4.5,
-      doctors: [
-        {
-          name: "Dr. Emily Davis",
-          qualification: "MD, FAAP",
-          speciality: "Pediatrics"
-        },
-        {
-          name: "Dr. Robert Wilson",
-          qualification: "MD, FASCO",
-          speciality: "Oncology"
-        },
-        {
-          name: "Dr. Lisa Chen",
-          qualification: "MD, FAAD",
-          speciality: "Dermatology"
-        }
-      ],
-      reviews: [
-        {
-          id: "r3",
-          userName: "Michael Johnson",
-          rating: 5,
-          comment: "Outstanding pediatric care",
-          date: "2024-03-12"
-        },
-        {
-          id: "r4",
-          userName: "Sarah Williams",
-          rating: 4,
-          comment: "Very professional staff and clean facility",
-          date: "2024-03-08"
-        }
-      ]
+
+        const transformedHospitals = hospitalsData.map((hospital: any) => ({
+          id: hospital.id,
+          name: hospital.name,
+          location: `${hospital.address}, ${hospital.city}, ${hospital.district}`,
+          departments: hospital.departments?.map((dept: any) => dept.name) || [],
+          insuranceProviders: hospital.insurance_affiliations?.map((aff: any) => aff.insurance_providers.name) || [],
+          rating: 4.5, // Placeholder rating
+          specialities: hospital.departments?.map((dept: any) => dept.name) || [],
+          doctors: [], // To be implemented
+          reviews: [], // To be implemented
+        }));
+
+        setHospitals(transformedHospitals);
+      } catch (error) {
+        console.error('Error fetching hospitals:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load hospitals. Please try again later.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoading(false);
+      }
     }
-  ]);
 
-  const handleAdmissionEnquiry = (hospital: Hospital) => {
-    setSelectedHospital(hospital);
-    setIsEnquiryFormOpen(true);
-  };
+    fetchHospitals();
+  }, [toast]);
 
   const handleRequestCallback = (hospital: Hospital) => {
     toast({
-      title: "Callback Requested",
-      description: "We will contact you shortly regarding your inquiry.",
+      title: "Request Sent",
+      description: `We'll contact you shortly about ${hospital.name}`,
+    });
+  };
+
+  const handleAdmissionEnquiry = (hospital: Hospital) => {
+    toast({
+      title: "Enquiry Sent",
+      description: `Your admission enquiry for ${hospital.name} has been received`,
     });
   };
 
@@ -129,51 +79,47 @@ export default function HospitalSearch() {
     const matchesSearch = searchQuery === "" || searchTerms.every(term =>
       hospital.name.toLowerCase().includes(term) ||
       hospital.location.toLowerCase().includes(term) ||
-      hospital.specialities.some(spec => spec.toLowerCase().includes(term)) ||
-      hospital.doctors.some(doc => 
-        doc.name.toLowerCase().includes(term) || 
-        doc.speciality.toLowerCase().includes(term)
-      ) ||
-      hospital.services?.some(service => service.toLowerCase().includes(term))
+      hospital.specialities.some(spec => 
+        spec.toLowerCase().includes(term)
+      )
+    );
+
+    const matchesLocation = !location || hospital.location.toLowerCase().includes(location.toLowerCase());
+    const matchesSpeciality = !speciality || hospital.specialities.some(spec => 
+      spec.toLowerCase() === speciality.toLowerCase()
     );
     
-    const matchesLocation = !location || hospital.location.toLowerCase().includes(location.toLowerCase());
-    const matchesSpeciality = !speciality || hospital.specialities.includes(speciality);
-    const matchesInsurance = !insuranceProvider || hospital.insuranceProviders.includes(insuranceProvider);
-    
-    return matchesSearch && matchesLocation && matchesSpeciality && matchesInsurance;
+    return matchesSearch && matchesLocation && matchesSpeciality;
   });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10">
       <Navbar />
-      <div className="container mx-auto py-24 px-4">
-        <SearchFilters
-          location={location}
-          setLocation={setLocation}
-          speciality={speciality}
-          setSpeciality={setSpeciality}
-          insuranceProvider={insuranceProvider}
-          setInsuranceProvider={setInsuranceProvider}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-        />
-
-        <HospitalResults
+      <div className="container mx-auto px-4 py-6 md:py-32">
+        <Card className="mb-6 md:mb-12 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+          <CardHeader className="text-center pb-2 pt-12 md:pt-16">
+            <CardTitle className="text-2xl md:text-3xl font-bold text-[#1A1F2C]">
+              Find a Hospital
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <SearchFilters
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              location={location}
+              setLocation={setLocation}
+              speciality={speciality}
+              setSpeciality={setSpeciality}
+            />
+          </CardContent>
+        </Card>
+        
+        <HospitalResults 
           hospitals={filteredHospitals}
           onRequestCallback={handleRequestCallback}
           onAdmissionEnquiry={handleAdmissionEnquiry}
         />
       </div>
-
-      {selectedHospital && (
-        <AdmissionEnquiryForm
-          open={isEnquiryFormOpen}
-          onOpenChange={setIsEnquiryFormOpen}
-          hospitalName={selectedHospital.name}
-          insuranceProviders={selectedHospital.insuranceProviders}
-        />
-      )}
     </div>
   );
 }

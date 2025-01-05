@@ -60,6 +60,35 @@ export type Database = {
           },
         ]
       }
+      departments: {
+        Row: {
+          created_at: string | null
+          hospital_id: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string | null
+          hospital_id?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string | null
+          hospital_id?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "departments_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       dependents: {
         Row: {
           created_at: string | null
@@ -130,6 +159,135 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      government_schemes: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      hospital_government_schemes: {
+        Row: {
+          created_at: string | null
+          hospital_id: string | null
+          id: string
+          scheme_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          hospital_id?: string | null
+          id?: string
+          scheme_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          hospital_id?: string | null
+          id?: string
+          scheme_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hospital_government_schemes_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hospital_government_schemes_scheme_id_fkey"
+            columns: ["scheme_id"]
+            isOneToOne: false
+            referencedRelation: "government_schemes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      hospitals: {
+        Row: {
+          address: string | null
+          city: string | null
+          created_at: string | null
+          district: string | null
+          id: string
+          managing_director: string | null
+          managing_director_phone: string | null
+          name: string
+          phone_number: string | null
+          registration_number: string | null
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          created_at?: string | null
+          district?: string | null
+          id: string
+          managing_director?: string | null
+          managing_director_phone?: string | null
+          name: string
+          phone_number?: string | null
+          registration_number?: string | null
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          created_at?: string | null
+          district?: string | null
+          id?: string
+          managing_director?: string | null
+          managing_director_phone?: string | null
+          name?: string
+          phone_number?: string | null
+          registration_number?: string | null
+        }
+        Relationships: []
+      }
+      insurance_affiliations: {
+        Row: {
+          created_at: string | null
+          hospital_id: string | null
+          id: string
+          insurance_provider_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          hospital_id?: string | null
+          id?: string
+          insurance_provider_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          hospital_id?: string | null
+          id?: string
+          insurance_provider_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "insurance_affiliations_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "insurance_affiliations_insurance_provider_id_fkey"
+            columns: ["insurance_provider_id"]
+            isOneToOne: false
+            referencedRelation: "insurance_providers"
             referencedColumns: ["id"]
           },
         ]
