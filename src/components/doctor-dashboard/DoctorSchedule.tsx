@@ -107,22 +107,22 @@ export default function DoctorSchedule() {
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-primary">Schedule & Availability</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="flex flex-col lg:flex-row gap-8">
-          <div className="w-full lg:w-auto space-y-4">
-            <h3 className="text-lg font-semibold text-gray-700">Select Date</h3>
-            <div className="bg-accent rounded-lg p-4 w-full lg:w-auto">
+      <CardContent className="p-4 md:p-6">
+        <div className="flex flex-col lg:flex-row gap-6">
+          <div className="w-full lg:w-auto">
+            <h3 className="text-lg font-semibold text-gray-700 mb-4">Select Date</h3>
+            <div className="bg-accent rounded-lg p-4 flex justify-center lg:justify-start">
               <Calendar
                 mode="single"
                 selected={date}
                 onSelect={(newDate) => newDate && setDate(newDate)}
                 disabled={(date) => date < new Date()}
-                className="rounded-md border mx-auto"
+                className="rounded-md border shadow-sm"
               />
             </div>
           </div>
 
-          <div className="flex-1 space-y-6">
+          <div className="flex-1 min-w-0">
             {selectedDayIndex !== -1 && (
               <DayAvailability
                 day={schedule[selectedDayIndex].day}
@@ -131,12 +131,12 @@ export default function DoctorSchedule() {
               />
             )}
 
-            <h3 className="text-lg font-semibold text-gray-700">
+            <h3 className="text-lg font-semibold text-gray-700 mb-4">
               Time Slots for {format(date, 'EEEE, MMMM d')}
             </h3>
             
             {selectedDayIndex !== -1 && schedule[selectedDayIndex].isAvailable && (
-              <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+              <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2">
                 {schedule[selectedDayIndex].slots.map((slot, slotIndex) => (
                   <TimeSlot
                     key={slot.time}
