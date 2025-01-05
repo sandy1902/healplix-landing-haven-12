@@ -14,6 +14,7 @@ export const DashboardMenu = () => {
 
   return (
     <div 
+      className="relative"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
@@ -34,19 +35,20 @@ export const DashboardMenu = () => {
         <DropdownMenuContent 
           className="w-56 bg-white shadow-lg rounded-lg p-2"
           sideOffset={8}
+          align="start"
         >
-          <DropdownMenuItem>
-            <Link to="/dashboard" className="w-full font-poppins capitalize text-lg">
+          <DropdownMenuItem className="focus:bg-gray-100">
+            <Link to="/dashboard" className="w-full font-poppins capitalize text-base">
               Subscriber Dashboard
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link to="/doctor-dashboard" className="w-full font-poppins capitalize text-lg">
+          <DropdownMenuItem className="focus:bg-gray-100">
+            <Link to="/doctor-dashboard" className="w-full font-poppins capitalize text-base">
               Doctor Dashboard
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link to="/executive-dashboard" className="w-full font-poppins capitalize text-lg">
+          <DropdownMenuItem className="focus:bg-gray-100">
+            <Link to="/executive-dashboard" className="w-full font-poppins capitalize text-base">
               Executive Dashboard
             </Link>
           </DropdownMenuItem>

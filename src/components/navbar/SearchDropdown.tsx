@@ -14,6 +14,7 @@ export const SearchDropdown = () => {
 
   return (
     <div 
+      className="relative"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
@@ -34,14 +35,15 @@ export const SearchDropdown = () => {
         <DropdownMenuContent 
           className="w-48 bg-white shadow-lg rounded-lg p-2"
           sideOffset={8}
+          align="start"
         >
-          <DropdownMenuItem>
-            <Link to="/search-doctors" className="w-full font-poppins capitalize text-lg">
+          <DropdownMenuItem className="focus:bg-gray-100">
+            <Link to="/search-doctors" className="w-full font-poppins capitalize text-base">
               Find a Doctor
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link to="/search-hospitals" className="w-full font-poppins capitalize text-lg">
+          <DropdownMenuItem className="focus:bg-gray-100">
+            <Link to="/search-hospitals" className="w-full font-poppins capitalize text-base">
               Find a Hospital
             </Link>
           </DropdownMenuItem>
