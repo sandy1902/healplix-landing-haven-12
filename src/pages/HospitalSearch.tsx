@@ -40,8 +40,15 @@ export default function HospitalSearch() {
           insuranceProviders: hospital.insurance_affiliations?.map((aff: any) => aff.insurance_providers.name) || [],
           rating: 4.5, // Placeholder rating
           specialities: hospital.departments?.map((dept: any) => dept.name) || [],
-          doctors: [], // To be implemented
+          doctors: [
+            {
+              name: hospital.managing_director || "Dr. John Doe",
+              qualification: "MBBS",
+              speciality: hospital.departments?.[0]?.name || "General Medicine"
+            }
+          ], // Transform managing director into doctor format
           reviews: [], // To be implemented
+          image: "https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?q=80&w=1000&auto=format&fit=crop"
         }));
 
         setHospitals(transformedHospitals);

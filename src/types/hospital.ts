@@ -10,7 +10,11 @@ export interface Hospital {
   managingDirectorPhone?: string;
   departments: string[];
   insuranceProviders: string[];
-  doctors: string[];
+  doctors: {
+    name: string;
+    qualification: string;
+    speciality: string;
+  }[];
   reviews: {
     id: number;
     userName: string;
@@ -21,4 +25,5 @@ export interface Hospital {
   rating: number;
   specialities: string[];
   location: string;
+  image: string;
 }

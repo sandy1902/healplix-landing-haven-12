@@ -15,13 +15,14 @@ export function HospitalCard({
   onAdmissionEnquiry 
 }: HospitalCardProps) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const defaultImage = "https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?q=80&w=1000&auto=format&fit=crop";
 
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 bg-white/90 p-6 rounded-lg hover:shadow-lg transition-all duration-300">
         <div className="w-full max-w-[250px] mx-auto">
           <img
-            src={hospital.image}
+            src={hospital.image || defaultImage}
             alt={hospital.name}
             className="w-full h-36 object-cover rounded-lg shadow-md"
           />
