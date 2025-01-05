@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { DoctorCard } from "@/components/doctor/DoctorCard";
 import { AppointmentDialog } from "@/components/doctor/AppointmentDialog";
-import { GlobalSearchBar } from "@/components/search/GlobalSearchBar";
 import { Doctor } from "@/types/doctor";
 import { Navbar } from "@/components/Navbar";
+import { SearchHeader } from "@/components/search/SearchHeader";
+import { SearchResults } from "@/components/search/SearchResults";
 
 export default function DoctorSearch() {
   const { toast } = useToast();
@@ -94,57 +91,19 @@ export default function DoctorSearch() {
     <div className="min-h-screen bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10">
       <Navbar />
       <div className="container mx-auto px-4 py-6 md:py-32">
-        <Card className="mb-6 md:mb-12 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-          <CardHeader className="text-center pb-2 pt-12 md:pt-16">
-            <CardTitle className="text-2xl md:text-3xl font-bold text-[#1A1F2C]">Find a Doctor</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <GlobalSearchBar
-                value={searchQuery}
-                onChange={setSearchQuery}
-                placeholder="Search doctors, specialities, services..."
-              />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Input
-                  placeholder="Search by location..."
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20"
-                />
-                <Select value={speciality} onValueChange={setSpeciality}>
-                  <SelectTrigger className="w-full border-[#9b87f5]/30 focus:border-[#9b87f5] focus:ring-[#9b87f5]/20">
-                    <SelectValue placeholder="Select Speciality" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="cardiologist">Cardiologist</SelectItem>
-                    <SelectItem value="dermatologist">Dermatologist</SelectItem>
-                    <SelectItem value="neurologist">Neurologist</SelectItem>
-                    <SelectItem value="orthopedist">Orthopedist</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          {filteredDoctors.map((doctor) => (
-            <DoctorCard
-              key={doctor.id}
-              doctor={doctor}
-              onBookAppointment={handleBookAppointment}
-            />
-          ))}
-
-          {filteredDoctors.length === 0 && (
-            <Card className="col-span-full border-0 bg-white/90 backdrop-blur-sm">
-              <CardContent className="p-6 text-center text-[#8E9196]">
-                No doctors found matching your criteria
-              </CardContent>
-            </Card>
-          )}
-        </div>
+        <SearchHeader
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          location={location}
+          setLocation={setLocation}
+          speciality={speciality}
+          setSpeciality={setSpeciality}
+        />
+        
+        <SearchResults 
+          doctors={filteredDoctors}
+          onBookAppointment={handleBookAppointment}
+        />
       </div>
 
       {selectedDoctor && (
