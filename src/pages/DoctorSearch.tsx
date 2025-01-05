@@ -95,7 +95,7 @@ export default function DoctorSearch() {
       <Navbar />
       <div className="container mx-auto px-4 py-6 md:py-32">
         <Card className="mb-6 md:mb-12 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-          <CardHeader className="text-center pb-2 pt-8 md:pt-12">
+          <CardHeader className="text-center pb-2 pt-12 md:pt-16">
             <CardTitle className="text-2xl md:text-3xl font-bold text-[#1A1F2C]">Find a Doctor</CardTitle>
           </CardHeader>
           <CardContent>
