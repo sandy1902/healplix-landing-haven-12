@@ -5,6 +5,7 @@ import PregnancyCalculator from "./PregnancyCalculator";
 import SafePeriodCalculator from "./SafePeriodCalculator";
 import DiabeticMonitoringChart from "./DiabeticMonitoringChart";
 import VaccinationChart from "./vaccination/VaccinationChart";
+import { IMAScheduleTable } from "./vaccination/IMAScheduleTable";
 
 export default function HealthCalculators() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
@@ -115,6 +116,26 @@ export default function HealthCalculators() {
         {expandedSection === 'vaccination' && (
           <div className="p-4 border-t">
             <VaccinationChart />
+          </div>
+        )}
+      </div>
+
+      {/* IMA Vaccination Schedule Section */}
+      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <button
+          onClick={() => toggleSection('ima-schedule')}
+          className="w-full flex items-center justify-between p-4 hover:bg-gray-50"
+        >
+          <span className="text-lg font-medium">IMA Vaccination Schedule</span>
+          {expandedSection === 'ima-schedule' ? (
+            <Minus className="h-5 w-5 text-[#0EA5E9]" />
+          ) : (
+            <Plus className="h-5 w-5 text-[#0EA5E9]" />
+          )}
+        </button>
+        {expandedSection === 'ima-schedule' && (
+          <div className="p-4 border-t">
+            <IMAScheduleTable />
           </div>
         )}
       </div>
