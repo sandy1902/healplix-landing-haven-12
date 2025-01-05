@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
-import ProfileImageUpload from "./profile/ProfileImageUpload";
-import CameraCapture from "./profile/CameraCapture";
+import { useToast } from "@/components/ui/use-toast";
+import ProfileImage from "./profile/ProfileImage";
 import ProfileForm from "./profile/ProfileForm";
 import { Badge } from "@/components/ui/badge";
 
@@ -44,12 +43,12 @@ export default function ExecutiveProfile() {
 
   return (
     <Card>
+      <div className="p-4 border-b border-border">
+        {getApprovalBadge()}
+      </div>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <CardTitle>Executive Profile</CardTitle>
-            {getApprovalBadge()}
-          </div>
+          <CardTitle>Executive Profile</CardTitle>
           <Button 
             variant={isEditing ? "default" : "secondary"}
             onClick={() => isEditing ? handleSave() : setIsEditing(true)}
@@ -60,19 +59,11 @@ export default function ExecutiveProfile() {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex items-center space-x-4">
-          <div className="relative">
-            <ProfileImageUpload 
-              imagePreview={imagePreview} 
-              onImageUpdate={setImagePreview} 
-            />
-            <CameraCapture onPhotoCapture={setImagePreview} />
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold">{profile.name}</h2>
-            <p className="text-muted-foreground">{profile.position}</p>
-          </div>
+          <ProfileImage 
+            imagePreview={imagePreview} 
+            onImageUpdate={setImagePreview} 
+          />
         </div>
-
         <ProfileForm 
           profile={profile}
           isEditing={isEditing}
