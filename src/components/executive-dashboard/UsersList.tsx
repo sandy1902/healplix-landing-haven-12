@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { UserPlus, User } from "lucide-react";
+import { UserPlus, User, Calendar } from "lucide-react";
+import { AppointmentDialog } from "@/components/doctor/AppointmentDialog";
 
 interface UserData {
   id: string;
@@ -11,6 +12,22 @@ interface UserData {
   subscriptionPaid: boolean;
   joinDate: string;
 }
+
+// Mock doctor data for the appointment dialog
+const mockDoctor = {
+  id: "1",
+  name: "Dr. Smith",
+  specialization: "General Physician",
+  experience: "15 years",
+  clinicName: "Health Plus Clinic",
+  clinicAddress: "123 Medical Street",
+  clinicVisit: { charges: 1000 },
+  videoConsultation: { charges: 800 },
+  rating: 4.5,
+  totalRatings: 150,
+  availability: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+  imageUrl: "/placeholder.svg"
+};
 
 export default function UsersList() {
   const [users] = useState<UserData[]>([
@@ -31,6 +48,14 @@ export default function UsersList() {
       joinDate: "2024-03-10"
     }
   ]);
+
+  const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
+  const [isAppointmentDialogOpen, setIsAppointmentDialogOpen] = useState(false);
+
+  const handleBookAppointment = (user: UserData) => {
+    setSelectedUser(user);
+    setIsAppointmentDialogOpen(true);
+  };
 
   return (
     <Card>
@@ -59,10 +84,26 @@ export default function UsersList() {
                   <p className="text-sm text-muted-foreground">{user.email}</p>
                 </div>
               </div>
+              <Button 
+                variant="secondary"
+                className="flex items-center gap-2"
+                onClick={() => handleBookAppointment(user)}
+              >
+                <Calendar className="h-4 w-4" />
+                Book Appointment
+              </Button>
             </div>
           ))}
         </div>
       </CardContent>
+
+      {selectedUser && (
+        <AppointmentDialog
+          doctor={mockDoctor}
+          open={isAppointmentDialogOpen}
+          onOpenChange={setIsAppointmentDialogOpen}
+        />
+      )}
     </Card>
   );
 }
