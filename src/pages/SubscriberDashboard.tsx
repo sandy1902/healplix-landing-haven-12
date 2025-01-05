@@ -43,7 +43,7 @@ export default function UserDashboard() {
         {/* Main Content */}
         <div className="animate-fade-up" style={{ animationDelay: "200ms" }}>
           <Tabs defaultValue="appointments" className="w-full">
-            <TabsList className="w-full justify-start overflow-x-auto bg-white p-2 rounded-lg mb-4">
+            <TabsList className="w-full justify-start overflow-x-auto bg-white py-4 px-4 rounded-lg mb-4">
               <TabsTrigger value="appointments" className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white">
                 <Clock className="h-4 w-4" />
                 Appointments
