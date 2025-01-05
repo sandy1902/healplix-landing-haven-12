@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { AppointmentCard } from "./AppointmentCard";
@@ -7,26 +7,8 @@ import { RatingDialog } from "./RatingDialog";
 import { filterAppointmentsByDate } from "@/utils/dateUtils";
 import { PatientSelector } from "./PatientSelector";
 import { supabase } from "@/integrations/supabase/client";
-
-interface Appointment {
-  id: string;
-  doctorName: string;
-  specialty: string;
-  date: string;
-  time: string;
-  location: string;
-  forWhom?: string;
-  rating?: number;
-}
-
-interface Dependent {
-  id: string;
-  name: string;
-  relation: string;
-  age: string;
-  gender: string;
-  status: "pending" | "approved" | "rejected";
-}
+import { useAppointments } from "@/hooks/use-appointments";
+import type { Appointment } from "@/types/appointments";
 
 export default function AppointmentList({ type }: { type: "upcoming" | "past" }) {
   const { toast } = useToast();
@@ -34,54 +16,12 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
   const [showRatingDialog, setShowRatingDialog] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [selectedPatient, setSelectedPatient] = useState<string>("self");
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchAppointments();
-  }, [type, selectedPatient]);
-
-  const fetchAppointments = async () => {
-    try {
-      setLoading(true);
-      const { data: appointmentsData, error } = await supabase
-        .from('appointments')
-        .select(`
-          id,
-          appointment_date,
-          status,
-          notes,
-          doctor:profiles!appointments_doctor_id_fkey(
-            first_name,
-            last_name
-          )
-        `)
-        .eq('patient_id', selectedPatient === 'self' ? (await supabase.auth.getUser()).data.user?.id : selectedPatient);
-
-      if (error) throw error;
-
-      const formattedAppointments = appointmentsData.map(apt => ({
-        id: apt.id,
-        doctorName: `Dr. ${apt.doctor.first_name} ${apt.doctor.last_name}`,
-        specialty: "General Medicine", // You might want to add this to the profiles table
-        date: new Date(apt.appointment_date).toLocaleDateString(),
-        time: new Date(apt.appointment_date).toLocaleTimeString(),
-        location: "Medical Center", // You might want to add this to the appointments table
-        notes: apt.notes
-      }));
-
-      setAppointments(formattedAppointments);
-    } catch (error) {
-      console.error('Error fetching appointments:', error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to fetch appointments. Please try again later.",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+  
+  const { appointments, loading, refetch } = useAppointments(
+    selectedPatient === 'self' 
+      ? (supabase.auth.getUser()).data.user?.id || '' 
+      : selectedPatient
+  );
 
   const handleShareRecords = (appointment: Appointment) => {
     setSelectedAppointment(appointment);
@@ -98,15 +38,12 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
       try {
         const { error } = await supabase
           .from('appointments')
-          .update({ rating })
+          .update({ rating, notes: review })
           .eq('id', selectedAppointment.id);
 
         if (error) throw error;
 
-        setAppointments(appointments.map(apt => 
-          apt.id === selectedAppointment.id ? { ...apt, rating } : apt
-        ));
-
+        refetch();
         toast({
           title: "Review Submitted",
           description: "Thank you for rating your appointment!",
@@ -153,7 +90,7 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
         <PatientSelector
           selectedPatient={selectedPatient}
           onPatientSelect={handlePatientSelect}
-          dependents={[]} // You'll need to fetch this from the dependents table
+          dependents={[]}
         />
       )}
 

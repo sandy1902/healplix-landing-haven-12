@@ -17,6 +17,7 @@ export type Database = {
           id: string
           notes: string | null
           patient_id: string | null
+          rating: number | null
           status: Database["public"]["Enums"]["appointment_status"] | null
           updated_at: string | null
         }
@@ -27,6 +28,7 @@ export type Database = {
           id?: string
           notes?: string | null
           patient_id?: string | null
+          rating?: number | null
           status?: Database["public"]["Enums"]["appointment_status"] | null
           updated_at?: string | null
         }
@@ -37,6 +39,7 @@ export type Database = {
           id?: string
           notes?: string | null
           patient_id?: string | null
+          rating?: number | null
           status?: Database["public"]["Enums"]["appointment_status"] | null
           updated_at?: string | null
         }
