@@ -53,7 +53,7 @@ export default function BMICalculator() {
         </div>
         <Button onClick={calculateBMI} className="w-full">Calculate BMI</Button>
         {bmi !== null && (
-          <div className="mt-4 space-y-2">
+          <div className="grid grid-cols-2 gap-4">
             <div className="text-center p-4 rounded-lg bg-[#F2FCE2]">
               <p className="text-lg font-semibold text-[#0EA5E9]">Your BMI:</p>
               <p className="text-md font-medium text-[#1A1F2C]">{bmi}</p>
