@@ -18,66 +18,83 @@ export function useProfile() {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        // First, check if we have a session
         const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-        console.log("Current session:", session); // Debug log
-        
+        console.log("Session check:", { session, error: sessionError });
+
         if (sessionError) {
           console.error("Session error:", sessionError);
-          return;
-        }
-
-        if (!session) {
-          console.log("No active session found");
           setLoading(false);
           return;
         }
 
-        // Get user from session
-        const user = session.user;
-        console.log("Current user:", user);
+        if (!session?.user) {
+          console.log("No active session or user found");
+          setLoading(false);
+          return;
+        }
 
-        // Fetch profile data
+        console.log("Current user:", session.user);
+
+        // First try to get the existing profile
         const { data: profile, error: profileError } = await supabase
           .from('profiles')
           .select('first_name')
-          .eq('id', user.id)
-          .single();
+          .eq('id', session.user.id)
+          .maybeSingle();
 
-        console.log("Profile query result:", { data: profile, error: profileError });
+        console.log("Profile fetch result:", { profile, error: profileError });
 
         if (profileError) {
-          console.error('Error fetching user profile:', profileError);
+          console.error('Error fetching profile:', profileError);
           toast({
             variant: "destructive",
             title: "Error",
             description: "Failed to load user profile",
           });
+          setLoading(false);
           return;
         }
 
+        // If no profile exists, create one
         if (!profile) {
-          console.log("No profile found for user");
-          // Create a profile if one doesn't exist
-          const { error: insertError } = await supabase
+          console.log("No profile found, creating new profile");
+          const { data: newProfile, error: insertError } = await supabase
             .from('profiles')
-            .insert([{ id: user.id, first_name: "User" }]);
+            .insert([{ 
+              id: session.user.id, 
+              first_name: "User",
+              email: session.user.email 
+            }])
+            .select()
+            .single();
 
           if (insertError) {
             console.error('Error creating profile:', insertError);
+            toast({
+              variant: "destructive",
+              title: "Error",
+              description: "Failed to create user profile",
+            });
+          } else {
+            console.log("New profile created:", newProfile);
+            setUserProfile({
+              first_name: newProfile.first_name || "User",
+              email: session.user.email || "",
+            });
           }
+        } else {
+          console.log("Setting existing profile:", profile);
+          setUserProfile({
+            first_name: profile.first_name || "User",
+            email: session.user.email || "",
+          });
         }
-
-        setUserProfile({
-          first_name: profile?.first_name || "User",
-          email: user.email || "",
-        });
       } catch (error) {
-        console.error('Error in fetchUserProfile:', error);
+        console.error('Unexpected error in fetchUserProfile:', error);
         toast({
           variant: "destructive",
           title: "Error",
-          description: "Failed to load user profile",
+          description: "An unexpected error occurred",
         });
       } finally {
         setLoading(false);
