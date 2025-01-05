@@ -6,7 +6,8 @@ import {
   FileText,
   Stethoscope,
   Plus,
-  Minus
+  Minus,
+  History
 } from "lucide-react";
 import DoctorProfile from "@/components/doctor-dashboard/DoctorProfile";
 import DoctorSchedule from "@/components/doctor-dashboard/DoctorSchedule";
@@ -16,6 +17,7 @@ import PatientRecords from "@/components/doctor-dashboard/patient/PatientRecords
 import Prescription from "@/components/doctor-dashboard/patient/Prescription";
 import { Navbar } from "@/components/Navbar";
 import { useState } from "react";
+import PastAppointments from "@/components/doctor-dashboard/PastAppointments";
 
 export default function DoctorDashboard() {
   const [openSection, setOpenSection] = useState<string | null>("appointments");
@@ -81,6 +83,10 @@ export default function DoctorDashboard() {
           <div className="flex flex-col space-y-2">
             <TabSection value="appointments" label="Appointments" icon={Calendar}>
               <DoctorAppointments />
+            </TabSection>
+
+            <TabSection value="past-appointments" label="Past Appointments" icon={History}>
+              <PastAppointments />
             </TabSection>
 
             <TabSection value="schedule" label="Schedule" icon={Clock}>
