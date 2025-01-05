@@ -122,7 +122,7 @@ export default function DoctorSchedule() {
             </div>
           </div>
 
-          <div className="flex-1 min-w-0 bg-white rounded-lg p-4">
+          <div className="flex-1 min-w-0 bg-white rounded-lg p-6 shadow-md border border-gray-100">
             {selectedDayIndex !== -1 && (
               <DayAvailability
                 day={schedule[selectedDayIndex].day}
