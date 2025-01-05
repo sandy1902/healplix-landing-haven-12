@@ -32,7 +32,7 @@ export default function QuickStats() {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <Card>
+      <Card className="border border-gray-200 hover:border-primary/50 transition-colors">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-sm">
             <Gift className="h-4 w-4" />
@@ -52,7 +52,7 @@ export default function QuickStats() {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="border border-gray-200 hover:border-primary/50 transition-colors">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-sm">
             <CalendarDays className="h-4 w-4" />
@@ -64,7 +64,7 @@ export default function QuickStats() {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="border border-gray-200 hover:border-primary/50 transition-colors">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-sm">
             <Users className="h-4 w-4" />
@@ -76,7 +76,7 @@ export default function QuickStats() {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="border border-gray-200 hover:border-primary/50 transition-colors">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-sm">
             <Heart className="h-4 w-4" />
