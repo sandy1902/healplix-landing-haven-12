@@ -134,6 +134,27 @@ export type Database = {
           },
         ]
       }
+      insurance_providers: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          type: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          type?: string
+        }
+        Relationships: []
+      }
       locations: {
         Row: {
           created_at: string
