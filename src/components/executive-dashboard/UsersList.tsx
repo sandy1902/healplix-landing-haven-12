@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { UserPlus, User, Calendar } from "lucide-react";
 import { AppointmentDialog } from "@/components/doctor/AppointmentDialog";
+import { Doctor } from "@/types/doctor";
 
 interface UserData {
   id: string;
@@ -14,19 +15,29 @@ interface UserData {
 }
 
 // Mock doctor data for the appointment dialog
-const mockDoctor = {
+const mockDoctor: Doctor = {
   id: "1",
   name: "Dr. Smith",
+  image: "/placeholder.svg",
+  qualification: "MBBS, MD",
   specialization: "General Physician",
   experience: "15 years",
   clinicName: "Health Plus Clinic",
-  clinicAddress: "123 Medical Street",
-  clinicVisit: { charges: 1000 },
-  videoConsultation: { charges: 800 },
+  location: "123 Medical Street",
   rating: 4.5,
-  totalRatings: 150,
-  availability: ["Mon", "Tue", "Wed", "Thu", "Fri"],
-  imageUrl: "/placeholder.svg"
+  email: "dr.smith@healthplus.com",
+  contactNumber: "+1 234 567 8900",
+  clinicLocation: "123 Medical Street, Medical District",
+  clinicTimings: "Mon-Fri: 9:00 AM - 5:00 PM",
+  services: ["General Consultation", "Health Checkup", "Vaccinations"],
+  videoConsultation: {
+    available: true,
+    charges: 800
+  },
+  clinicVisit: {
+    available: true,
+    charges: 1000
+  }
 };
 
 export default function UsersList() {
