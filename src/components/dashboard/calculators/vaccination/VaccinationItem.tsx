@@ -4,7 +4,6 @@ import { Calendar, Check, Info, Syringe } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
@@ -32,17 +31,15 @@ export function VaccinationItem({
         <Syringe className="h-5 w-5 text-blue-500" />
         <div>
           <span className="font-medium">{vaccination.name}</span>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Info className="h-4 w-4 ml-2 text-gray-400 inline" />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Recommended age: {vaccination.recommendedAge}</p>
-                <p>Due date: {vaccination.dueDate}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Info className="h-4 w-4 ml-2 text-gray-400 inline" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Recommended age: {vaccination.recommendedAge}</p>
+              <p>Due date: {vaccination.dueDate}</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
 
