@@ -6,14 +6,18 @@ export interface Doctor {
   specialization: string;
   experience: string;
   rating: number;
-  videoConsultation: boolean;
-  videoConsultationFee: number | null;
-  consultationFee: number;
-  availability: {
-    days: string[];
-    timeSlots: string[];
-  };
+  clinicName: string;
+  clinicLocation: string;
   location: string;
+  services?: string[];
+  videoConsultation: {
+    available: boolean;
+    charges: number;
+  };
+  clinicVisit: {
+    available: boolean;
+    charges: number;
+  };
   languages: string[];
   about: string;
 }

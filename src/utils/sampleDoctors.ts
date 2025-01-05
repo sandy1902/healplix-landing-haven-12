@@ -9,16 +9,20 @@ export const sampleDoctors: Doctor[] = [
     specialization: 'General Medicine',
     experience: '10+ years',
     rating: 4.8,
-    videoConsultation: true,
-    videoConsultationFee: 800,
-    consultationFee: 500,
-    availability: {
-      days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      timeSlots: ['09:00 AM', '10:00 AM', '11:00 AM', '02:00 PM', '03:00 PM', '04:00 PM'],
+    clinicName: 'Apollo Hospital',
+    clinicLocation: 'Room 302',
+    location: 'Bangalore',
+    videoConsultation: {
+      available: true,
+      charges: 800
     },
-    location: 'Apollo Hospital, Bangalore',
+    clinicVisit: {
+      available: true,
+      charges: 500
+    },
     languages: ['English', 'Hindi', 'Kannada'],
     about: 'Dr. John Smith is a highly experienced general physician with over 10 years of practice.',
+    services: ['General Checkup', 'Vaccination', 'Health Screening']
   },
   {
     id: '2',
@@ -28,16 +32,20 @@ export const sampleDoctors: Doctor[] = [
     specialization: 'Gynecologist',
     experience: '8+ years',
     rating: 4.9,
-    videoConsultation: true,
-    videoConsultationFee: 1000,
-    consultationFee: 800,
-    availability: {
-      days: ['Monday', 'Wednesday', 'Friday'],
-      timeSlots: ['10:00 AM', '11:00 AM', '12:00 PM', '04:00 PM', '05:00 PM'],
+    clinicName: 'Manipal Hospital',
+    clinicLocation: 'Room 105',
+    location: 'Bangalore',
+    videoConsultation: {
+      available: true,
+      charges: 1000
     },
-    location: 'Manipal Hospital, Bangalore',
+    clinicVisit: {
+      available: true,
+      charges: 800
+    },
     languages: ['English', 'Hindi', 'Telugu'],
     about: 'Dr. Divya Renuka is a dedicated gynecologist with expertise in women\'s health.',
+    services: ['Gynecology Consultation', 'Prenatal Care', 'Women\'s Health']
   },
   {
     id: '3',
@@ -47,15 +55,19 @@ export const sampleDoctors: Doctor[] = [
     specialization: 'Pediatrician',
     experience: '12+ years',
     rating: 4.7,
-    videoConsultation: false,
-    videoConsultationFee: null,
-    consultationFee: 600,
-    availability: {
-      days: ['Tuesday', 'Thursday', 'Saturday'],
-      timeSlots: ['09:00 AM', '10:00 AM', '11:00 AM', '03:00 PM', '04:00 PM'],
+    clinicName: 'Rainbow Children\'s Hospital',
+    clinicLocation: 'Room 203',
+    location: 'Bangalore',
+    videoConsultation: {
+      available: false,
+      charges: 0
     },
-    location: 'Rainbow Children\'s Hospital, Bangalore',
+    clinicVisit: {
+      available: true,
+      charges: 600
+    },
     languages: ['English', 'Hindi', 'Kannada'],
     about: 'Dr. Rajesh Kumar is a skilled pediatrician with extensive experience in child healthcare.',
-  },
+    services: ['Pediatric Consultation', 'Vaccination', 'Child Growth Monitoring']
+  }
 ];
