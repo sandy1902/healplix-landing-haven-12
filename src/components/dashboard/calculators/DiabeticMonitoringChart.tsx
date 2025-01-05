@@ -10,26 +10,25 @@ interface GlucoseReading {
   timestamp: string;
   fullDate: string;
   level: number;
-  note: string;
+  readingDate: string;
 }
 
 export default function DiabeticMonitoringChart() {
   const [readings, setReadings] = useState<GlucoseReading[]>([]);
   const [glucoseLevel, setGlucoseLevel] = useState("");
-  const [note, setNote] = useState("");
+  const [readingDate, setReadingDate] = useState(format(new Date(), 'yyyy-MM-dd'));
 
   const handleAddReading = () => {
     if (glucoseLevel) {
-      const now = new Date();
+      const selectedDate = new Date(readingDate);
       const newReading: GlucoseReading = {
-        timestamp: format(now, 'HH:mm'),
-        fullDate: format(now, 'MMM dd, yyyy'),
+        timestamp: format(selectedDate, 'HH:mm'),
+        fullDate: format(selectedDate, 'MMM dd, yyyy'),
         level: parseFloat(glucoseLevel),
-        note: note
+        readingDate: readingDate
       };
       setReadings([...readings, newReading]);
       setGlucoseLevel("");
-      setNote("");
     }
   };
 
@@ -56,13 +55,12 @@ export default function DiabeticMonitoringChart() {
         </div>
         <div className="flex-1">
           <label className="block text-sm font-medium mb-2">
-            Note (optional)
+            Reading Date
           </label>
           <Input
-            type="text"
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            placeholder="Add a note (e.g., Before breakfast)"
+            type="date"
+            value={readingDate}
+            onChange={(e) => setReadingDate(e.target.value)}
             className="w-full"
           />
         </div>
@@ -104,9 +102,6 @@ export default function DiabeticMonitoringChart() {
                       <p className="text-sm" style={{ color: getStatusColor(data.level) }}>
                         Level: {data.level} mg/dL
                       </p>
-                      {data.note && (
-                        <p className="text-sm text-gray-600">Note: {data.note}</p>
-                      )}
                     </div>
                   );
                 }
@@ -140,9 +135,6 @@ export default function DiabeticMonitoringChart() {
                   <div>
                     <span className="text-sm font-medium">{reading.fullDate}</span>
                     <span className="text-sm text-gray-600 ml-2">{reading.timestamp}</span>
-                    {reading.note && (
-                      <p className="text-xs text-gray-600 mt-1">{reading.note}</p>
-                    )}
                   </div>
                   <span
                     className="font-medium"
