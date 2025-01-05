@@ -34,14 +34,6 @@ export default function UsersList() {
     }
   ]);
 
-  const handleSubscriptionPayment = (userId: string) => {
-    // Here you would typically integrate with a payment gateway
-    toast({
-      title: "Processing Payment",
-      description: "Initiating subscription payment...",
-    });
-  };
-
   const handleViewUser = (userId: string) => {
     const user = users.find(u => u.id === userId);
     if (!user?.subscriptionPaid) {
@@ -87,23 +79,13 @@ export default function UsersList() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                {!user.subscriptionPaid ? (
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => handleSubscriptionPayment(user.id)}
-                  >
-                    Pay Subscription
-                  </Button>
-                ) : (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleViewUser(user.id)}
-                  >
-                    View Details
-                  </Button>
-                )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleViewUser(user.id)}
+                >
+                  View Details
+                </Button>
               </div>
             </div>
           ))}
