@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { AppointmentCard } from "./AppointmentCard";
@@ -16,11 +16,20 @@ export default function AppointmentList({ type }: { type: "upcoming" | "past" })
   const [showRatingDialog, setShowRatingDialog] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [selectedPatient, setSelectedPatient] = useState<string>("self");
+  const [userId, setUserId] = useState<string>("");
+
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUserId(user.id);
+      }
+    };
+    getCurrentUser();
+  }, []);
   
   const { appointments, loading, refetch } = useAppointments(
-    selectedPatient === 'self' 
-      ? (supabase.auth.getUser()).data.user?.id || '' 
-      : selectedPatient
+    selectedPatient === 'self' ? userId : selectedPatient
   );
 
   const handleShareRecords = (appointment: Appointment) => {
