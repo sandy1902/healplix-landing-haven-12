@@ -5,9 +5,7 @@ import MedicalRecords from "./MedicalRecords";
 import Dependents from "./Dependents";
 import Favorites from "./Favorites";
 import ProfileForm from "./ProfileForm";
-import BMICalculator from "./calculators/BMICalculator";
-import PregnancyCalculator from "./calculators/PregnancyCalculator";
-import SafePeriodCalculator from "./calculators/SafePeriodCalculator";
+import HealthCalculators from "./calculators/HealthCalculators";
 
 export function DashboardContent() {
   return (
@@ -43,16 +41,8 @@ export function DashboardContent() {
         </Card>
       </TabsContent>
 
-      <TabsContent value="bmi" className="mt-0">
-        <BMICalculator />
-      </TabsContent>
-
-      <TabsContent value="pregnancy" className="mt-0">
-        <PregnancyCalculator />
-      </TabsContent>
-
-      <TabsContent value="safe-period" className="mt-0">
-        <SafePeriodCalculator />
+      <TabsContent value="calculators" className="mt-0">
+        <HealthCalculators />
       </TabsContent>
     </div>
   );
