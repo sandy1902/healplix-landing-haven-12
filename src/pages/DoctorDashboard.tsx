@@ -1,6 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
-  UserCog, 
   Calendar, 
   Clock,
   DollarSign,
@@ -19,7 +18,7 @@ import { Navbar } from "@/components/Navbar";
 import { useState } from "react";
 
 export default function DoctorDashboard() {
-  const [openSection, setOpenSection] = useState<string | null>("profile");
+  const [openSection, setOpenSection] = useState<string | null>("appointments");
 
   const handleSectionClick = (section: string) => {
     setOpenSection(openSection === section ? null : section);
@@ -76,12 +75,10 @@ export default function DoctorDashboard() {
     <div className="min-h-screen bg-accent">
       <Navbar />
       <div className="container mx-auto py-24 px-4 space-y-6">
-        <Tabs defaultValue="profile" className="w-full">
+        <DoctorProfile />
+        
+        <Tabs defaultValue="appointments" className="w-full">
           <div className="flex flex-col space-y-2">
-            <TabSection value="profile" label="Profile" icon={UserCog}>
-              <DoctorProfile />
-            </TabSection>
-
             <TabSection value="appointments" label="Appointments" icon={Calendar}>
               <DoctorAppointments />
             </TabSection>
