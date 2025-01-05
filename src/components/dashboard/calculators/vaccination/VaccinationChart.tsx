@@ -6,6 +6,7 @@ import { VaccinationItem } from "./VaccinationItem";
 import { VaccinationSummary } from "./VaccinationSummary";
 import { IMAScheduleTable } from "./IMAScheduleTable";
 import { defaultVaccinations, type Vaccination } from "./defaultVaccinations";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export default function VaccinationChart() {
   const [vaccinations, setVaccinations] = useState<Vaccination[]>(defaultVaccinations);
@@ -74,16 +75,18 @@ export default function VaccinationChart() {
         onBirthDateChange={handleBirthDateChange}
       />
 
-      <div className="space-y-4">
-        {vaccinations.map((vaccination) => (
-          <VaccinationItem
-            key={vaccination.id}
-            vaccination={vaccination}
-            onDateChange={handleDateChange}
-            onToggleComplete={toggleVaccination}
-          />
-        ))}
-      </div>
+      <TooltipProvider>
+        <div className="space-y-4">
+          {vaccinations.map((vaccination) => (
+            <VaccinationItem
+              key={vaccination.id}
+              vaccination={vaccination}
+              onDateChange={handleDateChange}
+              onToggleComplete={toggleVaccination}
+            />
+          ))}
+        </div>
+      </TooltipProvider>
 
       <VaccinationSummary
         selectedChild={selectedChild}
