@@ -17,88 +17,82 @@ export function useProfile() {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      try {
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-        console.log("Session check:", { session, error: sessionError });
+      // Step 1: Check if user is logged in
+      console.log("🔍 Step 1: Checking if user is logged in...");
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
 
-        if (sessionError) {
-          console.error("Session error:", sessionError);
-          setLoading(false);
-          return;
-        }
+      if (sessionError) {
+        console.error("❌ Authentication Error:", sessionError.message);
+        setLoading(false);
+        return;
+      }
 
-        if (!session?.user) {
-          console.log("No active session or user found");
-          setLoading(false);
-          return;
-        }
+      if (!session?.user) {
+        console.log("❌ No user is logged in. Please log in first.");
+        setLoading(false);
+        return;
+      }
 
-        console.log("Current user:", session.user);
+      console.log("✅ User is logged in:", {
+        userId: session.user.id,
+        email: session.user.email
+      });
 
-        // First try to get the existing profile
-        const { data: profile, error: profileError } = await supabase
-          .from('profiles')
-          .select('first_name')
-          .eq('id', session.user.id)
-          .maybeSingle();
+      // Step 2: Try to fetch user's profile
+      console.log("🔍 Step 2: Fetching user profile...");
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('first_name')
+        .eq('id', session.user.id)
+        .maybeSingle();
 
-        console.log("Profile fetch result:", { profile, error: profileError });
-
-        if (profileError) {
-          console.error('Error fetching profile:', profileError);
-          toast({
-            variant: "destructive",
-            title: "Error",
-            description: "Failed to load user profile",
-          });
-          setLoading(false);
-          return;
-        }
-
-        // If no profile exists, create one
-        if (!profile) {
-          console.log("No profile found, creating new profile");
-          const { data: newProfile, error: insertError } = await supabase
-            .from('profiles')
-            .insert([{ 
-              id: session.user.id, 
-              first_name: "User",
-              email: session.user.email 
-            }])
-            .select()
-            .single();
-
-          if (insertError) {
-            console.error('Error creating profile:', insertError);
-            toast({
-              variant: "destructive",
-              title: "Error",
-              description: "Failed to create user profile",
-            });
-          } else {
-            console.log("New profile created:", newProfile);
-            setUserProfile({
-              first_name: newProfile.first_name || "User",
-              email: session.user.email || "",
-            });
-          }
-        } else {
-          console.log("Setting existing profile:", profile);
-          setUserProfile({
-            first_name: profile.first_name || "User",
-            email: session.user.email || "",
-          });
-        }
-      } catch (error) {
-        console.error('Unexpected error in fetchUserProfile:', error);
+      if (profileError) {
+        console.error("❌ Profile Fetch Error:", profileError.message);
         toast({
           variant: "destructive",
           title: "Error",
-          description: "An unexpected error occurred",
+          description: "Failed to load user profile",
         });
-      } finally {
         setLoading(false);
+        return;
       }
+
+      // Step 3: Handle profile data
+      if (!profile) {
+        console.log("🆕 No profile found. Creating new profile...");
+        const { data: newProfile, error: insertError } = await supabase
+          .from('profiles')
+          .insert([{ 
+            id: session.user.id, 
+            first_name: "User",
+            email: session.user.email 
+          }])
+          .select()
+          .single();
+
+        if (insertError) {
+          console.error("❌ Profile Creation Error:", insertError.message);
+          toast({
+            variant: "destructive",
+            title: "Error",
+            description: "Failed to create user profile",
+          });
+        } else {
+          console.log("✅ New profile created successfully:", newProfile);
+          setUserProfile({
+            first_name: newProfile.first_name || "User",
+            email: session.user.email || "",
+          });
+        }
+      } else {
+        console.log("✅ Existing profile found:", profile);
+        setUserProfile({
+          first_name: profile.first_name || "User",
+          email: session.user.email || "",
+        });
+      }
+
+      setLoading(false);
     };
 
     fetchUserProfile();

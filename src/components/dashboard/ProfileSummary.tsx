@@ -4,7 +4,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ProfileSummary() {
   const { userProfile, loading } = useProfile();
-  console.log("ProfileSummary render:", { userProfile, loading });
+  console.log("📊 ProfileSummary Status:", { 
+    loading,
+    hasProfile: !!userProfile.first_name,
+    profileData: userProfile
+  });
 
   if (loading) {
     return (
