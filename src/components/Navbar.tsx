@@ -101,7 +101,7 @@ export const Navbar = () => {
       // Force state update and navigation
       setIsAuthenticated(false);
       setFirstName("");
-      navigate('/login');
+      navigate('/login', { replace: true });
     } catch (error) {
       console.error('Error logging out:', error);
       toast({

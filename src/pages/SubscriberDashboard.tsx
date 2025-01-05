@@ -29,7 +29,8 @@ export default function UserDashboard() {
           title: "Session expired",
           description: "Please log in again",
         });
-        navigate("/login");
+        navigate("/login", { replace: true });
+        return;
       }
     };
 
@@ -40,7 +41,7 @@ export default function UserDashboard() {
       
       if (event === 'SIGNED_OUT' || !session) {
         console.log("User signed out or session ended, redirecting to login");
-        navigate("/login");
+        navigate("/login", { replace: true });
       }
     });
 
