@@ -29,14 +29,14 @@ export function TimeSlot({
           : 'bg-gray-50 border border-gray-200'
       }`}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col items-center space-y-2">
         <Label 
           htmlFor={`${day}-${time}`}
           className="text-base font-medium"
         >
           {time}
         </Label>
-        <div className="flex items-center gap-4 min-w-[150px]">
+        <div className="flex items-center gap-2">
           <Label className="text-sm text-gray-600">No</Label>
           <Slider
             id={`${day}-${time}`}
