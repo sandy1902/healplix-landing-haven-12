@@ -129,6 +129,9 @@ export default function HospitalSearch() {
     <div className="min-h-screen bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10">
       <Navbar />
       <div className="container mx-auto px-4 py-6 md:py-32">
+        <h1 className="text-3xl md:text-4xl font-bold text-center text-[#1A1F2C] mb-8">
+          Find a Hospital
+        </h1>
         <SearchFilters
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
