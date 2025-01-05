@@ -3,54 +3,54 @@ import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function DashboardTabs() {
   return (
-    <TabsList className="w-full justify-start overflow-x-auto bg-white py-8 px-4 rounded-lg mb-4">
+    <TabsList className="flex flex-col h-auto w-full sm:w-64 justify-start bg-white py-4 px-2 rounded-lg mb-4 space-y-2">
       <TabsTrigger 
         value="appointments" 
-        className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3"
+        className="w-full justify-start data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3 px-4"
       >
-        <Clock className="h-5 w-5" />
+        <Clock className="h-5 w-5 mr-3" />
         Appointments
       </TabsTrigger>
       <TabsTrigger 
         value="history" 
-        className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3"
+        className="w-full justify-start data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3 px-4"
       >
-        <History className="h-5 w-5" />
+        <History className="h-5 w-5 mr-3" />
         History
       </TabsTrigger>
       <TabsTrigger 
         value="records" 
-        className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3"
+        className="w-full justify-start data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3 px-4"
       >
-        <FileText className="h-5 w-5" />
+        <FileText className="h-5 w-5 mr-3" />
         Medical Records
       </TabsTrigger>
       <TabsTrigger 
         value="medical-history" 
-        className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3"
+        className="w-full justify-start data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3 px-4"
       >
-        <Stethoscope className="h-5 w-5" />
+        <Stethoscope className="h-5 w-5 mr-3" />
         Medical History
       </TabsTrigger>
       <TabsTrigger 
         value="dependents" 
-        className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3"
+        className="w-full justify-start data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3 px-4"
       >
-        <Users className="h-5 w-5" />
+        <Users className="h-5 w-5 mr-3" />
         Dependents
       </TabsTrigger>
       <TabsTrigger 
         value="favorites" 
-        className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3"
+        className="w-full justify-start data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3 px-4"
       >
-        <Heart className="h-5 w-5" />
+        <Heart className="h-5 w-5 mr-3" />
         Favorites
       </TabsTrigger>
       <TabsTrigger 
         value="calculators" 
-        className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3"
+        className="w-full justify-start data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3 px-4"
       >
-        <Calculator className="h-5 w-5" />
+        <Calculator className="h-5 w-5 mr-3" />
         Health Calculators
       </TabsTrigger>
     </TabsList>
