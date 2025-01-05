@@ -6,6 +6,7 @@ import ProfileImageUpload from "./profile/ProfileImageUpload";
 import CameraCapture from "./profile/CameraCapture";
 import ProfileForm from "./profile/ProfileForm";
 import { Badge } from "@/components/ui/badge";
+import { AlertTriangle } from "lucide-react";
 
 export default function ExecutiveProfile() {
   const { toast } = useToast();
@@ -44,6 +45,15 @@ export default function ExecutiveProfile() {
 
   return (
     <Card>
+      <div className="p-4 border-b border-border">
+        <Button 
+          variant="outline" 
+          className="bg-yellow-100 hover:bg-yellow-200 text-yellow-700 border-yellow-300"
+        >
+          <AlertTriangle className="w-4 h-4 mr-2" />
+          Pending Approval
+        </Button>
+      </div>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
