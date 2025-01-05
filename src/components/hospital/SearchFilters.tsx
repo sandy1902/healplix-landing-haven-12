@@ -50,7 +50,7 @@ export function SearchFilters({
   };
 
   return (
-    <div className="space-y-4 pt-8">
+    <div className="space-y-4 pt-16">
       <div className="flex items-center justify-between gap-4">
         <Input
           placeholder="Search hospitals by name..."
