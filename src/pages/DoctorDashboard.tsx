@@ -89,7 +89,7 @@ export default function DoctorDashboard() {
               <PastAppointments />
             </TabSection>
 
-            <TabSection value="schedule" label="Schedule" icon={Clock}>
+            <TabSection value="schedule" label="Schedule Marker" icon={Clock}>
               <DoctorSchedule />
             </TabSection>
 
