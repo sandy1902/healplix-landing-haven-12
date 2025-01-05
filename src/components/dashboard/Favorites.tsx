@@ -1,9 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Heart, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 
 interface Favorite {
   id: string;
@@ -13,77 +12,26 @@ interface Favorite {
 
 export default function Favorites() {
   const { toast } = useToast();
-  const [favorites, setFavorites] = useState<Favorite[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchFavorites();
-  }, []);
-
-  const fetchFavorites = async () => {
-    try {
-      const { data: user } = await supabase.auth.getUser();
-      if (!user.user) throw new Error('No user found');
-
-      const { data, error } = await supabase
-        .from('favorites')
-        .select(`
-          id,
-          doctor:profiles!favorites_doctor_id_fkey(
-            first_name,
-            last_name
-          )
-        `)
-        .eq('user_id', user.user.id);
-
-      if (error) throw error;
-
-      const formattedFavorites = data.map(fav => ({
-        id: fav.id,
-        name: `Dr. ${fav.doctor.first_name} ${fav.doctor.last_name}`,
-        type: "Doctor"
-      }));
-
-      setFavorites(formattedFavorites);
-    } catch (error) {
-      console.error('Error fetching favorites:', error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to fetch favorites. Please try again later.",
-      });
-    } finally {
-      setLoading(false);
+  const [favorites, setFavorites] = useState<Favorite[]>([
+    {
+      id: "1",
+      name: "Dr. John Smith",
+      type: "Doctor"
+    },
+    {
+      id: "2",
+      name: "Central Hospital",
+      type: "Hospital"
     }
+  ]);
+
+  const handleRemoveFavorite = (id: string) => {
+    setFavorites(favorites.filter((fav) => fav.id !== id));
+    toast({
+      title: "Favorite Removed",
+      description: "Item has been removed from favorites.",
+    });
   };
-
-  const handleRemoveFavorite = async (id: string) => {
-    try {
-      const { error } = await supabase
-        .from('favorites')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
-
-      setFavorites(favorites.filter((fav) => fav.id !== id));
-      toast({
-        title: "Favorite Removed",
-        description: "Item has been removed from favorites.",
-      });
-    } catch (error) {
-      console.error('Error removing favorite:', error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to remove favorite. Please try again later.",
-      });
-    }
-  };
-
-  if (loading) {
-    return <div>Loading favorites...</div>;
-  }
 
   return (
     <Card>

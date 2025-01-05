@@ -10,21 +10,11 @@ import { useState } from "react";
 
 interface UserMenuProps {
   firstName: string;
-  onLogout: () => Promise<void>;
+  onLogout: () => void;
 }
 
 export const UserMenu = ({ firstName, onLogout }: UserMenuProps) => {
   const [open, setOpen] = useState(false);
-
-  const handleLogout = async () => {
-    try {
-      await onLogout();
-    } catch (error) {
-      console.error('Error in UserMenu logout:', error);
-    } finally {
-      setOpen(false);
-    }
-  };
 
   return (
     <div 
@@ -42,14 +32,14 @@ export const UserMenu = ({ firstName, onLogout }: UserMenuProps) => {
             className="flex items-center gap-2 hover:text-primary font-poppins capitalize text-lg"
           >
             <User className="h-5 w-5" />
-            {firstName ? `Hello, ${firstName}` : "Hello, User"}
+            Hello, {firstName}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent 
           className="w-48 bg-white shadow-lg rounded-lg p-2"
           sideOffset={8}
         >
-          <DropdownMenuItem onClick={handleLogout}>
+          <DropdownMenuItem onClick={onLogout}>
             <span className="w-full flex items-center gap-2 font-poppins capitalize text-lg">
               <LogOut className="h-5 w-5" />
               Logout

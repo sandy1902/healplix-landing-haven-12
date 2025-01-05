@@ -11,44 +11,18 @@ import MedicalRecords from "@/components/dashboard/MedicalRecords";
 import Dependents from "@/components/dashboard/Dependents";
 import Favorites from "@/components/dashboard/Favorites";
 import { Navbar } from "@/components/Navbar";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
 
 export default function UserDashboard() {
   const navigate = useNavigate();
-  const { toast } = useToast();
   
+  // TODO: Replace with actual auth check
+  const isAuthenticated = true;
+
   useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      console.log("Checking auth in dashboard:", session);
-      
-      if (!session) {
-        console.log("No session found, redirecting to login");
-        toast({
-          title: "Session expired",
-          description: "Please log in again",
-        });
-        navigate("/login", { replace: true });
-        return;
-      }
-    };
-
-    checkAuth();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Auth state changed in dashboard:", event, session);
-      
-      if (event === 'SIGNED_OUT' || !session) {
-        console.log("User signed out or session ended, redirecting to login");
-        navigate("/login", { replace: true });
-      }
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [navigate, toast]);
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="min-h-screen bg-accent">

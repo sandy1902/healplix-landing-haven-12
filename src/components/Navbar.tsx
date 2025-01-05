@@ -26,22 +26,14 @@ export const Navbar = () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
         setIsAuthenticated(true);
-        const { data: profile, error } = await supabase
+        const { data: profile } = await supabase
           .from('profiles')
           .select('first_name')
           .eq('id', session.user.id)
           .single();
         
-        if (error) {
-          console.error('Error fetching profile:', error);
-          setFirstName("User");
-          return;
-        }
-        
-        if (profile && profile.first_name) {
-          setFirstName(profile.first_name);
-        } else {
-          setFirstName("User");
+        if (profile) {
+          setFirstName(profile.first_name || "User");
         }
       } else {
         setIsAuthenticated(false);
@@ -52,58 +44,35 @@ export const Navbar = () => {
     getUser();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log("Auth state changed:", event, session);
       if (event === 'SIGNED_IN' && session) {
         setIsAuthenticated(true);
-        const { data: profile, error } = await supabase
+        const { data: profile } = await supabase
           .from('profiles')
           .select('first_name')
           .eq('id', session.user.id)
           .single();
         
-        if (error) {
-          console.error('Error fetching profile:', error);
-          setFirstName("User");
-          return;
-        }
-        
-        if (profile && profile.first_name) {
-          setFirstName(profile.first_name);
-        } else {
-          setFirstName("User");
+        if (profile) {
+          setFirstName(profile.first_name || "User");
         }
       } else if (event === 'SIGNED_OUT') {
-        console.log("User signed out");
         setIsAuthenticated(false);
         setFirstName("");
-        navigate('/login');
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, []);
 
   const handleLogout = async () => {
     try {
-      console.log("Attempting to sign out...");
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error('Error during sign out:', error);
-        throw error;
-      }
-      
-      console.log("Sign out successful");
+      await supabase.auth.signOut();
       toast({
         title: "Logged out successfully",
         description: "You have been logged out of your account",
       });
-      
-      // Force state update and navigation
-      setIsAuthenticated(false);
-      setFirstName("");
-      navigate('/login', { replace: true });
+      navigate("/login");
     } catch (error) {
-      console.error('Error logging out:', error);
       toast({
         title: "Error logging out",
         description: "There was an error logging out. Please try again.",
