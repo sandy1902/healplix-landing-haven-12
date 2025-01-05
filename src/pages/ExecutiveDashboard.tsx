@@ -80,8 +80,8 @@ export default function ExecutiveDashboard() {
             </TabsTrigger>
           </TabsList>
 
-          <div className="bg-white/80 backdrop-blur-sm rounded-lg p-3 md:p-6 shadow-lg">
-            <TabsContent value="analytics" className="mt-0 space-y-6">
+          <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 md:p-8 shadow-lg space-y-4">
+            <TabsContent value="analytics" className="mt-0">
               <div className="grid grid-cols-1 gap-6">
                 <UserAnalytics />
               </div>
