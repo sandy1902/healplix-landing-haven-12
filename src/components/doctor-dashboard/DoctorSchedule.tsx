@@ -108,21 +108,21 @@ export default function DoctorSchedule() {
         <CardTitle className="text-2xl font-bold text-primary">Schedule & Availability</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="space-y-4">
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="w-full lg:w-auto space-y-4">
             <h3 className="text-lg font-semibold text-gray-700">Select Date</h3>
-            <div className="p-4 bg-accent rounded-lg">
+            <div className="bg-accent rounded-lg p-4 w-full lg:w-auto">
               <Calendar
                 mode="single"
                 selected={date}
                 onSelect={(newDate) => newDate && setDate(newDate)}
                 disabled={(date) => date < new Date()}
-                className="rounded-md border"
+                className="rounded-md border mx-auto"
               />
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="flex-1 space-y-6">
             {selectedDayIndex !== -1 && (
               <DayAvailability
                 day={schedule[selectedDayIndex].day}
@@ -134,8 +134,9 @@ export default function DoctorSchedule() {
             <h3 className="text-lg font-semibold text-gray-700">
               Time Slots for {format(date, 'EEEE, MMMM d')}
             </h3>
+            
             {selectedDayIndex !== -1 && schedule[selectedDayIndex].isAvailable && (
-              <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
+              <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
                 {schedule[selectedDayIndex].slots.map((slot, slotIndex) => (
                   <TimeSlot
                     key={slot.time}
