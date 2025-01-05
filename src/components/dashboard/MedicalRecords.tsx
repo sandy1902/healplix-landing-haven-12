@@ -1,11 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Upload, Camera } from "lucide-react";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { CameraModal } from "./CameraModal";
 import { RecordsList } from "./RecordsList";
 import { MedicalRecord } from "./types";
+import { UploadButtons } from "./medical-records/UploadButtons";
 
 export default function MedicalRecords() {
   const { toast } = useToast();
@@ -127,16 +126,10 @@ export default function MedicalRecords() {
     <Card>
       <CardHeader className="space-y-4">
         <CardTitle>Medical Records</CardTitle>
-        <div className="flex flex-col space-y-2 w-40 mx-auto">
-          <Button variant="secondary" size="sm" onClick={handleUploadClick}>
-            <Upload className="h-4 w-4 mr-2" />
-            Upload Record
-          </Button>
-          <Button variant="secondary" size="sm" onClick={startCamera}>
-            <Camera className="h-4 w-4 mr-2" />
-            Capture Image
-          </Button>
-        </div>
+        <UploadButtons 
+          onUploadClick={handleUploadClick}
+          onCameraClick={startCamera}
+        />
       </CardHeader>
       <CardContent>
         <input
