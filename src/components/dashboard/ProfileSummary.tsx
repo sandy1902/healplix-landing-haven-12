@@ -108,54 +108,56 @@ export default function ProfileSummary() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col md:flex-row items-center gap-6 p-8 bg-white rounded-lg shadow-lg animate-fade-up">
-        <div className="relative">
-          <Avatar className="h-32 w-32 border-4 border-secondary/20">
-            <AvatarImage src={imagePreview || "/placeholder.svg"} className="object-cover" />
-            <AvatarFallback className="bg-secondary/10 text-secondary text-2xl">UN</AvatarFallback>
-          </Avatar>
-          <div className="absolute -bottom-3 -right-3 flex gap-2">
-            <Button
-              type="button"
-              size="icon"
-              variant="secondary"
-              className="h-8 w-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <Upload className="h-4 w-4" />
-            </Button>
-            <Button
-              type="button"
-              size="icon"
-              variant="secondary"
-              className="h-8 w-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
-              onClick={showCamera ? stopCamera : startCamera}
-            >
-              <Camera className="h-4 w-4" />
-            </Button>
+      <div className="flex flex-col items-center p-8 bg-white rounded-lg shadow-lg animate-fade-up">
+        <div className="flex flex-col items-center gap-6 w-full">
+          <div className="relative">
+            <Avatar className="h-32 w-32 border-4 border-secondary/20">
+              <AvatarImage src={imagePreview || "/placeholder.svg"} className="object-cover" />
+              <AvatarFallback className="bg-secondary/10 text-secondary text-2xl">UN</AvatarFallback>
+            </Avatar>
+            <div className="absolute -bottom-3 -right-3 flex gap-2">
+              <Button
+                type="button"
+                size="icon"
+                variant="secondary"
+                className="h-8 w-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <Upload className="h-4 w-4" />
+              </Button>
+              <Button
+                type="button"
+                size="icon"
+                variant="secondary"
+                className="h-8 w-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
+                onClick={showCamera ? stopCamera : startCamera}
+              >
+                <Camera className="h-4 w-4" />
+              </Button>
+            </div>
+            <input
+              type="file"
+              ref={fileInputRef}
+              className="hidden"
+              accept="image/*"
+              onChange={handleImageUpload}
+            />
           </div>
-          <input
-            type="file"
-            ref={fileInputRef}
-            className="hidden"
-            accept="image/*"
-            onChange={handleImageUpload}
-          />
-        </div>
-        
-        <div className="text-center md:text-left flex-grow">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-3xl font-bold text-primary">Welcome, User Name</h1>
-            <Button 
-              variant="outline"
-              className="flex items-center gap-2"
-              onClick={() => setIsEditing(!isEditing)}
-            >
-              <UserCog className="h-4 w-4" />
-              {isEditing ? "Save Profile" : "Edit Profile"}
-            </Button>
+          
+          <div className="text-center flex-grow">
+            <div className="flex flex-col items-center gap-4">
+              <h1 className="text-3xl font-bold text-primary">Welcome, User Name</h1>
+              <p className="text-gray-500">user@example.com</p>
+              <Button 
+                variant="outline"
+                className="flex items-center gap-2"
+                onClick={() => setIsEditing(!isEditing)}
+              >
+                <UserCog className="h-4 w-4" />
+                {isEditing ? "Save Profile" : "Edit Profile"}
+              </Button>
+            </div>
           </div>
-          <p className="text-gray-500">user@example.com</p>
         </div>
       </div>
 

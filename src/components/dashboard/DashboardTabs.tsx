@@ -1,4 +1,4 @@
-import { Clock, History, FileText, Gift, Calculator, Stethoscope, UserPlus, Heart } from "lucide-react";
+import { Clock, History, FileText, Gift, Calculator, Stethoscope, UserPlus, Heart, Bell } from "lucide-react";
 import { Tabs } from "@/components/ui/tabs";
 import { useState } from "react";
 import AppointmentList from "./AppointmentList";
@@ -9,6 +9,7 @@ import { TabSection } from "./tabs/TabSection";
 import { RewardsTab } from "./tabs/RewardsTab";
 import Dependents from "./Dependents";
 import Favorites from "./Favorites";
+import Notifications from "./Notifications";
 
 export function DashboardTabs() {
   const [openSection, setOpenSection] = useState<string | null>(null);
@@ -88,6 +89,16 @@ export function DashboardTabs() {
           onToggle={() => handleSectionClick('rewards')}
         >
           <RewardsTab />
+        </TabSection>
+
+        <TabSection
+          value="notifications"
+          label="Notifications"
+          icon={Bell}
+          isOpen={openSection === 'notifications'}
+          onToggle={() => handleSectionClick('notifications')}
+        >
+          <Notifications />
         </TabSection>
 
         <TabSection
