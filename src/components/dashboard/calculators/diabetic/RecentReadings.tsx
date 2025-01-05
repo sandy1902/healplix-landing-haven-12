@@ -23,15 +23,15 @@ export function RecentReadings({ readings }: RecentReadingsProps) {
         {[...readings].reverse().slice(0, 5).map((reading, index) => (
           <div
             key={index}
-            className="flex justify-between items-center p-2 rounded"
+            className="flex flex-col md:flex-row justify-between items-start md:items-center p-3 rounded"
             style={{ backgroundColor: `${getStatusColor(reading.level)}15` }}
           >
-            <div>
+            <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-2">
               <span className="text-sm font-medium">{reading.fullDate}</span>
-              <span className="text-sm text-gray-600 ml-2">{reading.timestamp}</span>
+              <span className="text-sm text-gray-600">{reading.timestamp}</span>
             </div>
             <span
-              className="font-medium"
+              className="font-medium mt-1 md:mt-0"
               style={{ color: getStatusColor(reading.level) }}
             >
               {reading.level} mg/dL

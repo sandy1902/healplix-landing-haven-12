@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { format, addDays, subDays } from "date-fns";
-import { Plus } from "lucide-react";
-import { GlucoseReadingForm } from "./GlucoseReadingForm";
+import { ReadingInputRow } from "./ReadingInputRow";
+import { ReadingControls } from "./ReadingControls";
 import { GlucoseChart } from "./GlucoseChart";
 import { RecentReadings } from "./RecentReadings";
 
@@ -76,29 +75,26 @@ export default function DiabeticMonitoringChart() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 p-4">
       <div className="space-y-4">
-        <GlucoseReadingForm
-          readingInputs={readingInputs}
-          onInputChange={handleInputChange}
-          onPreviousDay={handlePreviousDay}
-          onNextDay={handleNextDay}
-          onRemoveRow={handleRemoveRow}
-        />
+        {readingInputs.map((input) => (
+          <ReadingInputRow
+            key={input.id}
+            id={input.id}
+            glucoseLevel={input.glucoseLevel}
+            readingDate={input.readingDate}
+            showRemove={readingInputs.length > 1}
+            onInputChange={handleInputChange}
+            onPreviousDay={handlePreviousDay}
+            onNextDay={handleNextDay}
+            onRemoveRow={handleRemoveRow}
+          />
+        ))}
         
-        <div className="flex gap-2">
-          <Button 
-            onClick={handleAddRow}
-            variant="outline"
-            className="flex-1"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Add More Readings
-          </Button>
-          <Button onClick={handleAddReadings} className="flex-1">
-            Save All Readings
-          </Button>
-        </div>
+        <ReadingControls
+          onAddRow={handleAddRow}
+          onSaveReadings={handleAddReadings}
+        />
       </div>
 
       <Card className="p-4">

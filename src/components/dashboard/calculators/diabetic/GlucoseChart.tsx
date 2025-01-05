@@ -20,9 +20,9 @@ export function GlucoseChart({ readings }: GlucoseChartProps) {
   };
 
   return (
-    <div className="h-[300px] w-full">
+    <div className="h-[300px] w-full overflow-x-auto">
       <ChartContainer
-        className="h-full"
+        className="h-full min-w-[600px]"
         config={{
           line: {
             theme: {

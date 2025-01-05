@@ -3,7 +3,7 @@ import { Plus, Minus } from "lucide-react";
 import BMICalculator from "./BMICalculator";
 import PregnancyCalculator from "./PregnancyCalculator";
 import SafePeriodCalculator from "./SafePeriodCalculator";
-import DiabeticMonitoringChart from "./DiabeticMonitoringChart";
+import DiabeticMonitoringChart from "./diabetic/DiabeticMonitoringChart";
 import VaccinationChart from "./vaccination/VaccinationChart";
 import { IMAScheduleTable } from "./vaccination/IMAScheduleTable";
 
