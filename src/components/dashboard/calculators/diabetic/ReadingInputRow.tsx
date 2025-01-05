@@ -9,8 +9,6 @@ interface ReadingInputRowProps {
   readingDate: string;
   showRemove: boolean;
   onInputChange: (id: string, field: 'glucoseLevel' | 'readingDate', value: string) => void;
-  onPreviousDay: (id: string) => void;
-  onNextDay: (id: string) => void;
   onRemoveRow: (id: string) => void;
 }
 
@@ -20,6 +18,7 @@ export function ReadingInputRow({
   readingDate,
   showRemove,
   onInputChange,
+  onRemoveRow,
 }: ReadingInputRowProps) {
   return (
     <div className="flex flex-col md:flex-row gap-4">

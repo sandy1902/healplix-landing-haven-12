@@ -45,22 +45,6 @@ export default function DiabeticMonitoringChart() {
     ));
   };
 
-  const handlePreviousDay = (id: string) => {
-    const input = readingInputs.find(i => i.id === id);
-    if (input) {
-      const currentDate = new Date(input.readingDate);
-      handleInputChange(id, 'readingDate', format(subDays(currentDate, 1), 'yyyy-MM-dd'));
-    }
-  };
-
-  const handleNextDay = (id: string) => {
-    const input = readingInputs.find(i => i.id === id);
-    if (input) {
-      const currentDate = new Date(input.readingDate);
-      handleInputChange(id, 'readingDate', format(addDays(currentDate, 1), 'yyyy-MM-dd'));
-    }
-  };
-
   const handleAddReadings = () => {
     const validReadings = readingInputs.filter(input => input.glucoseLevel);
     const newReadings = validReadings.map(input => ({
@@ -85,8 +69,6 @@ export default function DiabeticMonitoringChart() {
             readingDate={input.readingDate}
             showRemove={readingInputs.length > 1}
             onInputChange={handleInputChange}
-            onPreviousDay={handlePreviousDay}
-            onNextDay={handleNextDay}
             onRemoveRow={handleRemoveRow}
           />
         ))}
