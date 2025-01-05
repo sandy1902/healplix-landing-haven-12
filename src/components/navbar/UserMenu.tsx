@@ -17,8 +17,13 @@ export const UserMenu = ({ firstName, onLogout }: UserMenuProps) => {
   const [open, setOpen] = useState(false);
 
   const handleLogout = async () => {
-    await onLogout();
-    setOpen(false);
+    try {
+      await onLogout();
+    } catch (error) {
+      console.error('Error in UserMenu logout:', error);
+    } finally {
+      setOpen(false);
+    }
   };
 
   return (

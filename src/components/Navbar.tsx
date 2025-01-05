@@ -52,6 +52,7 @@ export const Navbar = () => {
     getUser();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log("Auth state changed:", event, session);
       if (event === 'SIGNED_IN' && session) {
         setIsAuthenticated(true);
         const { data: profile, error } = await supabase
@@ -72,6 +73,7 @@ export const Navbar = () => {
           setFirstName("User");
         }
       } else if (event === 'SIGNED_OUT') {
+        console.log("User signed out");
         setIsAuthenticated(false);
         setFirstName("");
         navigate('/login');
@@ -83,13 +85,22 @@ export const Navbar = () => {
 
   const handleLogout = async () => {
     try {
+      console.log("Attempting to sign out...");
       const { error } = await supabase.auth.signOut();
-      if (error) throw error;
+      if (error) {
+        console.error('Error during sign out:', error);
+        throw error;
+      }
       
+      console.log("Sign out successful");
       toast({
         title: "Logged out successfully",
         description: "You have been logged out of your account",
       });
+      
+      // Force state update and navigation
+      setIsAuthenticated(false);
+      setFirstName("");
       navigate('/login');
     } catch (error) {
       console.error('Error logging out:', error);
