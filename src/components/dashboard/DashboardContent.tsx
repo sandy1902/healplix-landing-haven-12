@@ -5,6 +5,7 @@ import MedicalRecords from "./MedicalRecords";
 import Dependents from "./Dependents";
 import Favorites from "./Favorites";
 import ProfileForm from "./ProfileForm";
+import HealthCalculators from "./calculators/HealthCalculators";
 
 export function DashboardContent() {
   return (
@@ -38,6 +39,10 @@ export function DashboardContent() {
             <ProfileForm />
           </CardContent>
         </Card>
+      </TabsContent>
+
+      <TabsContent value="calculators" className="mt-0">
+        <HealthCalculators />
       </TabsContent>
     </div>
   );

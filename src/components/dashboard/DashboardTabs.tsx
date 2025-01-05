@@ -1,4 +1,4 @@
-import { Clock, History, FileText, UserCog, Users, Heart } from "lucide-react";
+import { Clock, History, FileText, UserCog, Users, Heart, Calculator } from "lucide-react";
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function DashboardTabs() {
@@ -45,6 +45,13 @@ export function DashboardTabs() {
       >
         <UserCog className="h-5 w-5" />
         Profile Settings
+      </TabsTrigger>
+      <TabsTrigger 
+        value="calculators" 
+        className="flex items-center gap-2 data-[state=active]:bg-secondary data-[state=active]:text-white text-lg py-3"
+      >
+        <Calculator className="h-5 w-5" />
+        Calculators
       </TabsTrigger>
     </TabsList>
   );
