@@ -30,27 +30,46 @@ export const SignupForm = () => {
       return;
     }
 
-    const { data, error } = await supabase.auth.signUp({
-      email: formData.email,
-      password: formData.password,
-      options: {
-        data: {
-          phone_number: formData.phone,
-          role: formData.role,
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            phone_number: formData.phone,
+            role: formData.role,
+          },
         },
-      },
-    });
-
-    if (error) {
-      toast({
-        title: "Error signing up",
-        description: error.message,
-        variant: "destructive",
       });
-    } else {
+
+      if (error) {
+        // Check specifically for user_already_exists error
+        if (error.message.includes("User already registered")) {
+          toast({
+            title: "Account already exists",
+            description: "This email is already registered. Please try logging in instead.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Error signing up",
+            description: error.message,
+            variant: "destructive",
+          });
+        }
+        return;
+      }
+
       toast({
         title: "Success",
         description: "Check your email for the confirmation link!",
+      });
+    } catch (error) {
+      console.error("Signup error:", error);
+      toast({
+        title: "Error signing up",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
       });
     }
   };
