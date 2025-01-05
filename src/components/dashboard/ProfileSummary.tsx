@@ -104,11 +104,11 @@ export default function ProfileSummary() {
       fileInputRef.current.click();
     }
   };
-  
+
   return (
     <div className="space-y-6">
-      <div className="flex flex-col items-center p-8 bg-white rounded-lg shadow-lg animate-fade-up">
-        <div className="flex flex-col items-center gap-6 w-full">
+      <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg animate-fade-up">
+        <div className="flex flex-col items-center gap-4 w-full">
           <div className="relative">
             <Avatar className="h-32 w-32 border-4 border-secondary/20">
               <AvatarImage src={imagePreview || "/placeholder.svg"} className="object-cover" />
@@ -144,7 +144,7 @@ export default function ProfileSummary() {
           </div>
           
           <div className="text-center flex-grow">
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-3">
               <h1 className="text-xl font-bold text-primary">Welcome, User Name</h1>
               <p className="text-gray-500">user@example.com</p>
               <Button 
