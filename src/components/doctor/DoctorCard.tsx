@@ -1,12 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { UserCircle } from "lucide-react";
+import { UserCircle, Video } from "lucide-react";
 import { Doctor } from "@/types/doctor";
 import { useState } from "react";
 import { DoctorProfileDialog } from "./DoctorProfileDialog";
 import { DoctorBasicInfo } from "./DoctorBasicInfo";
 import { ClinicInfo } from "./ClinicInfo";
 import { ConsultationOptions } from "./ConsultationOptions";
+import { Badge } from "../ui/badge";
 
 interface DoctorCardProps {
   doctor: Doctor;
@@ -23,6 +24,13 @@ export function DoctorCard({ doctor, onBookAppointment }: DoctorCardProps) {
           <div className="flex flex-col gap-3 md:gap-4">
             <DoctorBasicInfo doctor={doctor} />
             <ClinicInfo doctor={doctor} />
+
+            {doctor.videoConsultation.available && (
+              <Badge variant="outline" className="w-fit flex items-center gap-2 border-[#9b87f5] text-xs md:text-sm">
+                <Video className="h-3 w-3 md:h-4 md:w-4 text-[#9b87f5]" /> 
+                Video Consultation Available
+              </Badge>
+            )}
 
             <div className="flex flex-col gap-3 md:gap-4 w-full">
               <Button 
