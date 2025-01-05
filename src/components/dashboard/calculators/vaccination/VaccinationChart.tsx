@@ -4,7 +4,6 @@ import { format, addMonths } from "date-fns";
 import { VaccinationForm } from "./VaccinationForm";
 import { VaccinationItem } from "./VaccinationItem";
 import { VaccinationSummary } from "./VaccinationSummary";
-import { IMAScheduleTable } from "./IMAScheduleTable";
 import { defaultVaccinations, type Vaccination } from "./defaultVaccinations";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
@@ -97,10 +96,6 @@ export default function VaccinationChart() {
           nextVaccinationName={nextVaccination?.name}
           nextVaccinationDate={nextVaccination?.dueDate}
         />
-      </Card>
-
-      <Card className="p-6">
-        <IMAScheduleTable />
       </Card>
     </div>
   );
