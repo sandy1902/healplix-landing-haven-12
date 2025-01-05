@@ -123,15 +123,15 @@ export default function MedicalRecords() {
   };
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader className="space-y-4">
-        <CardTitle>Medical Records</CardTitle>
+        <CardTitle className="text-center sm:text-left">Medical Records</CardTitle>
         <UploadButtons 
           onUploadClick={handleUploadClick}
           onCameraClick={startCamera}
         />
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 sm:px-6">
         <input
           type="file"
           ref={fileInputRef}
