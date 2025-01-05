@@ -4,15 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Facebook, Twitter, Instagram, Linkedin, Search, LayoutDashboard } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileMenu } from "./navbar/MobileMenu";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const [showDashboardDropdown, setShowDashboardDropdown] = useState(false);
   const isMobile = useIsMobile();
 
   const toggleMenu = () => {
@@ -74,49 +70,74 @@ export const Navbar = () => {
                 </Link>
 
                 {/* Search Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button 
-                      variant="ghost" 
-                      className="flex items-center gap-2 hover:text-primary font-poppins capitalize text-lg"
-                    >
-                      <Search className="h-5 w-5" />
-                      Search
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-48">
-                    <DropdownMenuItem>
-                      <Link to="/search-doctors" className="w-full">Find a Doctor</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link to="/search-hospitals" className="w-full">Find a Hospital</Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <div 
+                  className="relative"
+                  onMouseEnter={() => setShowSearchDropdown(true)}
+                  onMouseLeave={() => setShowSearchDropdown(false)}
+                >
+                  <Button 
+                    variant="ghost" 
+                    className="flex items-center gap-2 hover:text-primary font-poppins capitalize text-lg"
+                  >
+                    <Search className="h-5 w-5" />
+                    Search
+                  </Button>
+                  
+                  {showSearchDropdown && (
+                    <div className="absolute left-0 top-full mt-2 w-48 bg-white shadow-lg rounded-lg p-2 z-50">
+                      <Link 
+                        to="/search-doctors" 
+                        className="block w-full px-4 py-2 text-base font-poppins capitalize hover:bg-gray-100 rounded-md"
+                      >
+                        Find a Doctor
+                      </Link>
+                      <Link 
+                        to="/search-hospitals" 
+                        className="block w-full px-4 py-2 text-base font-poppins capitalize hover:bg-gray-100 rounded-md"
+                      >
+                        Find a Hospital
+                      </Link>
+                    </div>
+                  )}
+                </div>
 
                 {/* Dashboards Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button 
-                      variant="ghost" 
-                      className="flex items-center gap-2 hover:text-primary font-poppins capitalize text-lg"
-                    >
-                      <LayoutDashboard className="h-5 w-5" />
-                      Dashboards
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56">
-                    <DropdownMenuItem>
-                      <Link to="/dashboard" className="w-full">Subscriber Dashboard</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link to="/doctor-dashboard" className="w-full">Doctor Dashboard</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link to="/executive-dashboard" className="w-full">Executive Dashboard</Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <div 
+                  className="relative"
+                  onMouseEnter={() => setShowDashboardDropdown(true)}
+                  onMouseLeave={() => setShowDashboardDropdown(false)}
+                >
+                  <Button 
+                    variant="ghost" 
+                    className="flex items-center gap-2 hover:text-primary font-poppins capitalize text-lg"
+                  >
+                    <LayoutDashboard className="h-5 w-5" />
+                    Dashboards
+                  </Button>
+                  
+                  {showDashboardDropdown && (
+                    <div className="absolute left-0 top-full mt-2 w-56 bg-white shadow-lg rounded-lg p-2 z-50">
+                      <Link 
+                        to="/dashboard" 
+                        className="block w-full px-4 py-2 text-base font-poppins capitalize hover:bg-gray-100 rounded-md"
+                      >
+                        Subscriber Dashboard
+                      </Link>
+                      <Link 
+                        to="/doctor-dashboard" 
+                        className="block w-full px-4 py-2 text-base font-poppins capitalize hover:bg-gray-100 rounded-md"
+                      >
+                        Doctor Dashboard
+                      </Link>
+                      <Link 
+                        to="/executive-dashboard" 
+                        className="block w-full px-4 py-2 text-base font-poppins capitalize hover:bg-gray-100 rounded-md"
+                      >
+                        Executive Dashboard
+                      </Link>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
