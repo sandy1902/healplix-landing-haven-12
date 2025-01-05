@@ -87,11 +87,6 @@ export default function UsersList() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <span className={`text-sm ${
-                  user.subscriptionStatus === "active" ? "text-green-600" : "text-red-600"
-                }`}>
-                  {user.subscriptionStatus === "active" ? "Subscribed" : "Not Subscribed"}
-                </span>
                 {!user.subscriptionPaid ? (
                   <Button
                     variant="secondary"
