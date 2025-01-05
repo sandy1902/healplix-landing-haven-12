@@ -8,18 +8,18 @@ const specialties = [
   },
   {
     icon: "/lovable-uploads/0d5b3abf-46be-468a-8b88-06fb1cd51517.png",
-    title: "Dental Care",
+    title: "Cardiology",
+    doctors: "25+ Doctors"
+  },
+  {
+    icon: "/lovable-uploads/0d5b3abf-46be-468a-8b88-06fb1cd51517.png",
+    title: "Neurology",
     doctors: "20+ Doctors"
   },
   {
     icon: "/lovable-uploads/0d5b3abf-46be-468a-8b88-06fb1cd51517.png",
-    title: "Urology Care",
-    doctors: "20+ Doctors"
-  },
-  {
-    icon: "/lovable-uploads/0d5b3abf-46be-468a-8b88-06fb1cd51517.png",
-    title: "Neurology Care",
-    doctors: "10+ Doctors"
+    title: "Urology",
+    doctors: "15+ Doctors"
   }
 ];
 
