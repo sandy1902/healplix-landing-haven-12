@@ -1,84 +1,22 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Facebook, Twitter, Instagram, Linkedin, LogOut, Search, User } from "lucide-react";
+import { Menu, X, Facebook, Twitter, Instagram, Linkedin, Search, LayoutDashboard } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileMenu } from "./navbar/MobileMenu";
-import { SearchDropdown } from "./navbar/SearchDropdown";
-import { UserMenu } from "./navbar/UserMenu";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [firstName, setFirstName] = useState("");
   const isMobile = useIsMobile();
-  const navigate = useNavigate();
-  const { toast } = useToast();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-  };
-
-  useEffect(() => {
-    const getUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        setIsAuthenticated(true);
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('first_name')
-          .eq('id', session.user.id)
-          .single();
-        
-        if (profile) {
-          setFirstName(profile.first_name || "User");
-        }
-      } else {
-        setIsAuthenticated(false);
-        setFirstName("");
-      }
-    };
-
-    getUser();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        setIsAuthenticated(true);
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('first_name')
-          .eq('id', session.user.id)
-          .single();
-        
-        if (profile) {
-          setFirstName(profile.first_name || "User");
-        }
-      } else if (event === 'SIGNED_OUT') {
-        setIsAuthenticated(false);
-        setFirstName("");
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      await supabase.auth.signOut();
-      toast({
-        title: "Logged out successfully",
-        description: "You have been logged out of your account",
-      });
-      navigate("/login");
-    } catch (error) {
-      toast({
-        title: "Error logging out",
-        description: "There was an error logging out. Please try again.",
-        variant: "destructive",
-      });
-    }
   };
 
   return (
@@ -134,31 +72,58 @@ export const Navbar = () => {
                 <Link to="/about-us" className="text-gray-700 hover:text-primary capitalize text-lg">
                   About Us
                 </Link>
-                <Link to="/contact" className="text-gray-700 hover:text-primary capitalize text-lg">
-                  Contact Us
-                </Link>
-                
-                {isAuthenticated ? (
-                  <>
-                    <SearchDropdown />
-                    <UserMenu firstName={firstName} onLogout={handleLogout} />
-                  </>
-                ) : (
-                  <Link 
-                    to="/login" 
-                    className="text-gray-700 hover:text-primary capitalize text-lg flex items-center gap-2"
-                  >
-                    <User className="h-5 w-5" />
-                    Login/Signup
-                  </Link>
-                )}
+
+                {/* Search Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      className="flex items-center gap-2 hover:text-primary font-poppins capitalize text-lg"
+                    >
+                      <Search className="h-5 w-5" />
+                      Search
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-48">
+                    <DropdownMenuItem>
+                      <Link to="/search-doctors" className="w-full">Find a Doctor</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link to="/search-hospitals" className="w-full">Find a Hospital</Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                {/* Dashboards Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      className="flex items-center gap-2 hover:text-primary font-poppins capitalize text-lg"
+                    >
+                      <LayoutDashboard className="h-5 w-5" />
+                      Dashboards
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    <DropdownMenuItem>
+                      <Link to="/dashboard" className="w-full">Subscriber Dashboard</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link to="/doctor-dashboard" className="w-full">Doctor Dashboard</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link to="/executive-dashboard" className="w-full">Executive Dashboard</Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             )}
           </div>
         </div>
       </nav>
 
-      <MobileMenu isOpen={isOpen} onClose={toggleMenu} isAuthenticated={isAuthenticated} />
+      <MobileMenu isOpen={isOpen} onClose={toggleMenu} isAuthenticated={false} />
     </div>
   );
 };
