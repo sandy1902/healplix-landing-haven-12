@@ -4,6 +4,7 @@ import { format, addMonths } from "date-fns";
 import { VaccinationForm } from "./VaccinationForm";
 import { VaccinationItem } from "./VaccinationItem";
 import { VaccinationSummary } from "./VaccinationSummary";
+import { IMAScheduleTable } from "./IMAScheduleTable";
 import { defaultVaccinations, type Vaccination } from "./defaultVaccinations";
 
 export default function VaccinationChart() {
@@ -65,7 +66,7 @@ export default function VaccinationChart() {
   const nextVaccination = vaccinations.find(v => !v.completed);
 
   return (
-    <Card className="p-6">
+    <Card className="p-6 space-y-8">
       <VaccinationForm
         selectedChild={selectedChild}
         childBirthDate={childBirthDate}
@@ -92,6 +93,10 @@ export default function VaccinationChart() {
         nextVaccinationName={nextVaccination?.name}
         nextVaccinationDate={nextVaccination?.dueDate}
       />
+
+      <div className="pt-6 border-t">
+        <IMAScheduleTable />
+      </div>
     </Card>
   );
 }
