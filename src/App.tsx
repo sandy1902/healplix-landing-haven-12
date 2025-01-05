@@ -9,6 +9,7 @@ import HospitalSearch from "./pages/HospitalSearch";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
 import { Toaster } from "./components/ui/toaster";
+import { BottomNav } from "./components/BottomNav";
 import "./App.css";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/search-doctors" element={<DoctorSearch />} />
         <Route path="/search-hospitals" element={<HospitalSearch />} />
       </Routes>
+      <BottomNav />
       <Toaster />
     </Router>
   );
