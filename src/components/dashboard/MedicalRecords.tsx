@@ -125,7 +125,7 @@ export default function MedicalRecords() {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="space-y-4">
         <CardTitle>Medical Records</CardTitle>
         <div className="flex gap-2">
           <Button variant="secondary" onClick={handleUploadClick}>
