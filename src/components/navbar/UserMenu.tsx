@@ -10,11 +10,16 @@ import { useState } from "react";
 
 interface UserMenuProps {
   firstName: string;
-  onLogout: () => void;
+  onLogout: () => Promise<void>;
 }
 
 export const UserMenu = ({ firstName, onLogout }: UserMenuProps) => {
   const [open, setOpen] = useState(false);
+
+  const handleLogout = async () => {
+    await onLogout();
+    setOpen(false);
+  };
 
   return (
     <div 
@@ -39,7 +44,7 @@ export const UserMenu = ({ firstName, onLogout }: UserMenuProps) => {
           className="w-48 bg-white shadow-lg rounded-lg p-2"
           sideOffset={8}
         >
-          <DropdownMenuItem onClick={onLogout}>
+          <DropdownMenuItem onClick={handleLogout}>
             <span className="w-full flex items-center gap-2 font-poppins capitalize text-lg">
               <LogOut className="h-5 w-5" />
               Logout

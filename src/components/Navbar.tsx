@@ -58,21 +58,25 @@ export const Navbar = () => {
       } else if (event === 'SIGNED_OUT') {
         setIsAuthenticated(false);
         setFirstName("");
+        navigate('/login');
       }
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [navigate]);
 
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut();
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
       toast({
         title: "Logged out successfully",
         description: "You have been logged out of your account",
       });
-      navigate("/login");
+      navigate('/login');
     } catch (error) {
+      console.error('Error logging out:', error);
       toast({
         title: "Error logging out",
         description: "There was an error logging out. Please try again.",
