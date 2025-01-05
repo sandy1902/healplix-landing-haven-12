@@ -55,12 +55,15 @@ export default function SafePeriodCalculator() {
         </div>
         <Button onClick={calculateFertileWindow} className="w-full">Calculate Fertile Window</Button>
         {fertileWindow && (
-          <div className="mt-4 text-center">
-            <p className="text-lg font-semibold">Fertile Window:</p>
-            <p className="text-md text-muted-foreground">
-              From: {fertileWindow.start}<br />
-              To: {fertileWindow.end}
-            </p>
+          <div className="mt-4 space-y-2">
+            <div className="text-center p-4 rounded-lg bg-[#F2FCE2]">
+              <p className="text-lg font-semibold text-[#0EA5E9]">Fertile Window Start:</p>
+              <p className="text-md font-medium text-[#1A1F2C]">{fertileWindow.start}</p>
+            </div>
+            <div className="text-center p-4 rounded-lg bg-[#D3E4FD]">
+              <p className="text-lg font-semibold text-[#0EA5E9]">Fertile Window End:</p>
+              <p className="text-md font-medium text-[#1A1F2C]">{fertileWindow.end}</p>
+            </div>
           </div>
         )}
       </CardContent>

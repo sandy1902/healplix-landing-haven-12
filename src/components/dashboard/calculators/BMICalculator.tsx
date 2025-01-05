@@ -53,9 +53,15 @@ export default function BMICalculator() {
         </div>
         <Button onClick={calculateBMI} className="w-full">Calculate BMI</Button>
         {bmi !== null && (
-          <div className="mt-4 text-center">
-            <p className="text-lg font-semibold">Your BMI: {bmi}</p>
-            <p className="text-md text-muted-foreground">Category: {category}</p>
+          <div className="mt-4 space-y-2">
+            <div className="text-center p-4 rounded-lg bg-[#F2FCE2]">
+              <p className="text-lg font-semibold text-[#0EA5E9]">Your BMI:</p>
+              <p className="text-md font-medium text-[#1A1F2C]">{bmi}</p>
+            </div>
+            <div className="text-center p-4 rounded-lg bg-[#D3E4FD]">
+              <p className="text-lg font-semibold text-[#0EA5E9]">Category:</p>
+              <p className="text-md font-medium text-[#1A1F2C]">{category}</p>
+            </div>
           </div>
         )}
       </CardContent>
