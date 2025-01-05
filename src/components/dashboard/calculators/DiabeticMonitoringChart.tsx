@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ChartContainer } from "@/components/ui/chart";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine } from "recharts";
 import { format, addDays, subDays } from "date-fns";
-import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, X } from "lucide-react";
 
 interface GlucoseReading {
   timestamp: string;
@@ -14,35 +14,65 @@ interface GlucoseReading {
   readingDate: string;
 }
 
+interface ReadingInput {
+  id: string;
+  glucoseLevel: string;
+  readingDate: string;
+}
+
 export default function DiabeticMonitoringChart() {
   const [readings, setReadings] = useState<GlucoseReading[]>([]);
-  const [glucoseLevel, setGlucoseLevel] = useState("");
-  const [readingDate, setReadingDate] = useState(format(new Date(), 'yyyy-MM-dd'));
-  const [showNewRow, setShowNewRow] = useState(false);
+  const [readingInputs, setReadingInputs] = useState<ReadingInput[]>([
+    { id: '1', glucoseLevel: '', readingDate: format(new Date(), 'yyyy-MM-dd') }
+  ]);
 
-  const handleAddReading = () => {
-    if (glucoseLevel) {
-      const selectedDate = new Date(readingDate);
-      const newReading: GlucoseReading = {
-        timestamp: format(selectedDate, 'HH:mm'),
-        fullDate: format(selectedDate, 'MMM dd, yyyy'),
-        level: parseFloat(glucoseLevel),
-        readingDate: readingDate
-      };
-      setReadings([...readings, newReading]);
-      setGlucoseLevel("");
-      setShowNewRow(false);
+  const handleAddRow = () => {
+    const newId = (readingInputs.length + 1).toString();
+    setReadingInputs([
+      ...readingInputs,
+      { id: newId, glucoseLevel: '', readingDate: format(new Date(), 'yyyy-MM-dd') }
+    ]);
+  };
+
+  const handleRemoveRow = (id: string) => {
+    if (readingInputs.length > 1) {
+      setReadingInputs(readingInputs.filter(input => input.id !== id));
     }
   };
 
-  const handleNextDay = () => {
-    const currentDate = new Date(readingDate);
-    setReadingDate(format(addDays(currentDate, 1), 'yyyy-MM-dd'));
+  const handleInputChange = (id: string, field: keyof ReadingInput, value: string) => {
+    setReadingInputs(readingInputs.map(input => 
+      input.id === id ? { ...input, [field]: value } : input
+    ));
   };
 
-  const handlePreviousDay = () => {
-    const currentDate = new Date(readingDate);
-    setReadingDate(format(subDays(currentDate, 1), 'yyyy-MM-dd'));
+  const handleAddReadings = () => {
+    const validReadings = readingInputs.filter(input => input.glucoseLevel);
+    const newReadings = validReadings.map(input => ({
+      timestamp: format(new Date(input.readingDate), 'HH:mm'),
+      fullDate: format(new Date(input.readingDate), 'MMM dd, yyyy'),
+      level: parseFloat(input.glucoseLevel),
+      readingDate: input.readingDate
+    }));
+
+    setReadings([...readings, ...newReadings]);
+    setReadingInputs([{ id: '1', glucoseLevel: '', readingDate: format(new Date(), 'yyyy-MM-dd') }]);
+  };
+
+  const handlePreviousDay = (id: string) => {
+    const input = readingInputs.find(i => i.id === id);
+    if (input) {
+      const currentDate = new Date(input.readingDate);
+      handleInputChange(id, 'readingDate', format(subDays(currentDate, 1), 'yyyy-MM-dd'));
+    }
+  };
+
+  const handleNextDay = (id: string) => {
+    const input = readingInputs.find(i => i.id === id);
+    if (input) {
+      const currentDate = new Date(input.readingDate);
+      handleInputChange(id, 'readingDate', format(addDays(currentDate, 1), 'yyyy-MM-dd'));
+    }
   };
 
   const getStatusColor = (level: number) => {
@@ -53,63 +83,77 @@ export default function DiabeticMonitoringChart() {
 
   return (
     <div className="space-y-4">
-      {showNewRow ? (
-        <div className="flex gap-4 items-end">
-          <div className="flex-1">
-            <label className="block text-sm font-medium mb-2">
-              Blood Glucose Level (mg/dL)
-            </label>
-            <Input
-              type="number"
-              value={glucoseLevel}
-              onChange={(e) => setGlucoseLevel(e.target.value)}
-              placeholder="Enter blood glucose level"
-              className="w-full"
-            />
-          </div>
-          <div className="flex-1">
-            <label className="block text-sm font-medium mb-2">
-              Reading Date
-            </label>
-            <div className="flex gap-2">
-              <Button 
-                variant="outline" 
-                size="icon"
-                onClick={handlePreviousDay}
-                className="shrink-0"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
+      <div className="space-y-4">
+        {readingInputs.map((input, index) => (
+          <div key={input.id} className="flex gap-4 items-end">
+            <div className="flex-1">
+              <label className="block text-sm font-medium mb-2">
+                Blood Glucose Level (mg/dL)
+              </label>
               <Input
-                type="date"
-                value={readingDate}
-                onChange={(e) => setReadingDate(e.target.value)}
+                type="number"
+                value={input.glucoseLevel}
+                onChange={(e) => handleInputChange(input.id, 'glucoseLevel', e.target.value)}
+                placeholder="Enter blood glucose level"
                 className="w-full"
               />
+            </div>
+            <div className="flex-1">
+              <label className="block text-sm font-medium mb-2">
+                Reading Date
+              </label>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  size="icon"
+                  onClick={() => handlePreviousDay(input.id)}
+                  className="shrink-0"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <Input
+                  type="date"
+                  value={input.readingDate}
+                  onChange={(e) => handleInputChange(input.id, 'readingDate', e.target.value)}
+                  className="w-full"
+                />
+                <Button 
+                  variant="outline" 
+                  size="icon"
+                  onClick={() => handleNextDay(input.id)}
+                  className="shrink-0"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+            {readingInputs.length > 1 && (
               <Button 
                 variant="outline" 
                 size="icon"
-                onClick={handleNextDay}
+                onClick={() => handleRemoveRow(input.id)}
                 className="shrink-0"
               >
-                <ChevronRight className="h-4 w-4" />
+                <X className="h-4 w-4" />
               </Button>
-            </div>
+            )}
           </div>
-          <Button onClick={handleAddReading} className="mb-0">
-            Add Reading
+        ))}
+        
+        <div className="flex gap-2">
+          <Button 
+            onClick={handleAddRow}
+            variant="outline"
+            className="flex-1"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Add More Readings
+          </Button>
+          <Button onClick={handleAddReadings} className="flex-1">
+            Save All Readings
           </Button>
         </div>
-      ) : (
-        <Button 
-          onClick={() => setShowNewRow(true)}
-          variant="outline"
-          className="w-full py-6 border-dashed"
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          Add New Reading
-        </Button>
-      )}
+      </div>
 
       <Card className="p-4">
         <div className="h-[300px] w-full">
