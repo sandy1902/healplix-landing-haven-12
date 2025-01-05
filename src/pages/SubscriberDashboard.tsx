@@ -6,7 +6,6 @@ import ProfileSummary from "@/components/dashboard/ProfileSummary";
 import QuickStats from "@/components/dashboard/QuickStats";
 import { Navbar } from "@/components/Navbar";
 import { DashboardTabs } from "@/components/dashboard/DashboardTabs";
-import { DashboardContent } from "@/components/dashboard/DashboardContent";
 
 export default function UserDashboard() {
   const navigate = useNavigate();
@@ -40,7 +39,6 @@ export default function UserDashboard() {
         <div className="animate-fade-up" style={{ animationDelay: "200ms" }}>
           <Tabs defaultValue="appointments" className="w-full">
             <DashboardTabs />
-            <DashboardContent />
           </Tabs>
         </div>
       </div>
