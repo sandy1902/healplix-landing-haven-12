@@ -127,12 +127,12 @@ export default function MedicalRecords() {
     <Card>
       <CardHeader className="space-y-4">
         <CardTitle>Medical Records</CardTitle>
-        <div className="flex gap-2">
-          <Button variant="secondary" onClick={handleUploadClick}>
+        <div className="flex flex-col space-y-2 w-40">
+          <Button variant="secondary" size="sm" onClick={handleUploadClick}>
             <Upload className="h-4 w-4 mr-2" />
             Upload Record
           </Button>
-          <Button variant="secondary" onClick={startCamera}>
+          <Button variant="secondary" size="sm" onClick={startCamera}>
             <Camera className="h-4 w-4 mr-2" />
             Capture Image
           </Button>
