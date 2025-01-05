@@ -66,7 +66,7 @@ export default function VaccinationChart() {
   const nextVaccination = vaccinations.find(v => !v.completed);
 
   return (
-    <div className="space-y-8">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <Card className="p-6">
         <VaccinationForm
           selectedChild={selectedChild}
@@ -74,9 +74,11 @@ export default function VaccinationChart() {
           onChildNameChange={setSelectedChild}
           onBirthDateChange={handleBirthDateChange}
         />
+      </Card>
 
+      <Card className="p-6">
         <TooltipProvider>
-          <div className="space-y-4 mt-6">
+          <div className="space-y-4">
             {vaccinations.map((vaccination) => (
               <VaccinationItem
                 key={vaccination.id}
@@ -87,7 +89,9 @@ export default function VaccinationChart() {
             ))}
           </div>
         </TooltipProvider>
+      </Card>
 
+      <Card className="p-6">
         <VaccinationSummary
           selectedChild={selectedChild}
           childBirthDate={childBirthDate}
