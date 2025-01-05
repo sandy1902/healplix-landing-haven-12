@@ -2,72 +2,87 @@ import { Doctor } from "@/types/doctor";
 
 export const sampleDoctors: Doctor[] = [
   {
-    id: '1',
-    name: 'Dr. John Smith',
-    image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop",
-    qualification: 'MBBS, MD',
-    specialization: 'General Medicine',
-    experience: '10+ years',
+    id: "1",
+    name: "Dr. Sarah Wilson",
+    image: "/lovable-uploads/90596b33-e062-4036-af14-0be9f996722e.png",
+    qualification: "MBBS, MD - Cardiology",
+    specialization: "Cardiologist",
+    experience: "15 years",
     rating: 4.8,
-    clinicName: 'UK Hospital',
-    clinicLocation: 'Room 302',
-    location: 'Bangalore',
-    videoConsultation: {
-      available: true,
-      charges: 800
-    },
-    clinicVisit: {
-      available: true,
-      charges: 500
-    },
-    languages: ['English', 'Hindi', 'Kannada'],
-    about: 'Dr. John Smith is a highly experienced general physician with over 10 years of practice.',
-    services: ['General Checkup', 'Vaccination', 'Health Screening']
-  },
-  {
-    id: '2',
-    name: 'Dr. Divya Renuka',
-    image: "/lovable-uploads/c3793d63-2d96-4945-8d81-b3c6b8dc672a.png",
-    qualification: 'MBBS, MS',
-    specialization: 'Gynecologist',
-    experience: '8+ years',
-    rating: 4.9,
-    clinicName: 'Manipal Hospital',
-    clinicLocation: 'Room 105',
-    location: 'Bangalore',
+    clinicName: "UK Hospital",
+    clinicLocation: "123 Medical Center Drive, Los Angeles",
+    location: "Los Angeles",
     videoConsultation: {
       available: true,
       charges: 1000
     },
     clinicVisit: {
       available: true,
-      charges: 800
+      charges: 1500
     },
-    languages: ['English', 'Hindi', 'Telugu'],
-    about: 'Dr. Divya Renuka is a dedicated gynecologist with expertise in women\'s health.',
-    services: ['Gynecology Consultation', 'Prenatal Care', 'Women\'s Health']
+    languages: ["English", "Spanish"],
+    about: "Dr. Sarah Wilson is a highly experienced cardiologist with expertise in treating various heart conditions.",
+    services: [
+      "Cardiac Consultation",
+      "ECG",
+      "Stress Test",
+      "Echocardiogram"
+    ]
   },
   {
-    id: '3',
-    name: 'Dr. Rajesh Kumar',
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070&auto=format&fit=crop",
-    qualification: 'MBBS, DNB',
-    specialization: 'Pediatrician',
-    experience: '12+ years',
+    id: "2",
+    name: "Dr. Michael Chen",
+    image: "/lovable-uploads/90596b33-e062-4036-af14-0be9f996722e.png",
+    qualification: "MBBS, MD - Dermatology",
+    specialization: "Dermatologist",
+    experience: "12 years",
     rating: 4.7,
-    clinicName: 'Rainbow Children\'s Hospital',
-    clinicLocation: 'Room 203',
-    location: 'Bangalore',
+    clinicName: "UK Hospital",
+    clinicLocation: "456 Medical Plaza, San Francisco",
+    location: "San Francisco",
     videoConsultation: {
-      available: false,
-      charges: 0
+      available: true,
+      charges: 800
     },
     clinicVisit: {
       available: true,
-      charges: 600
+      charges: 1200
     },
-    languages: ['English', 'Hindi', 'Kannada'],
-    about: 'Dr. Rajesh Kumar is a skilled pediatrician with extensive experience in child healthcare.',
-    services: ['Pediatric Consultation', 'Vaccination', 'Child Growth Monitoring']
+    languages: ["English", "Mandarin"],
+    about: "Dr. Michael Chen is a board-certified dermatologist specializing in both medical and cosmetic dermatology.",
+    services: [
+      "Skin Consultation",
+      "Acne Treatment",
+      "Skin Cancer Screening",
+      "Cosmetic Procedures"
+    ]
+  },
+  {
+    id: "3",
+    name: "Dr. Emily Rodriguez",
+    image: "/lovable-uploads/90596b33-e062-4036-af14-0be9f996722e.png",
+    qualification: "MBBS, MD - Neurology",
+    specialization: "Neurologist",
+    experience: "10 years",
+    rating: 4.9,
+    clinicName: "UK Hospital",
+    clinicLocation: "789 Healthcare Avenue, Chicago",
+    location: "Chicago",
+    videoConsultation: {
+      available: true,
+      charges: 900
+    },
+    clinicVisit: {
+      available: true,
+      charges: 1300
+    },
+    languages: ["English", "Spanish"],
+    about: "Dr. Emily Rodriguez is a skilled neurologist with expertise in treating various neurological disorders.",
+    services: [
+      "Neurological Consultation",
+      "EEG",
+      "EMG",
+      "Nerve Conduction Studies"
+    ]
   }
 ];
