@@ -15,6 +15,16 @@ export const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  const toggleSearchDropdown = () => {
+    setShowSearchDropdown(!showSearchDropdown);
+    setShowDashboardDropdown(false);
+  };
+
+  const toggleDashboardDropdown = () => {
+    setShowDashboardDropdown(!showDashboardDropdown);
+    setShowSearchDropdown(false);
+  };
+
   return (
     <div className="fixed top-0 left-0 right-0 z-50">
       {/* Top Bar */}
@@ -70,14 +80,11 @@ export const Navbar = () => {
                 </Link>
 
                 {/* Search Dropdown */}
-                <div 
-                  className="relative"
-                  onMouseEnter={() => setShowSearchDropdown(true)}
-                  onMouseLeave={() => setShowSearchDropdown(false)}
-                >
+                <div className="relative">
                   <Button 
                     variant="ghost" 
                     className="flex items-center gap-2 hover:text-primary font-poppins capitalize text-lg"
+                    onClick={toggleSearchDropdown}
                   >
                     <Search className="h-5 w-5" />
                     Search
@@ -102,14 +109,11 @@ export const Navbar = () => {
                 </div>
 
                 {/* Dashboards Dropdown */}
-                <div 
-                  className="relative"
-                  onMouseEnter={() => setShowDashboardDropdown(true)}
-                  onMouseLeave={() => setShowDashboardDropdown(false)}
-                >
+                <div className="relative">
                   <Button 
                     variant="ghost" 
                     className="flex items-center gap-2 hover:text-primary font-poppins capitalize text-lg"
+                    onClick={toggleDashboardDropdown}
                   >
                     <LayoutDashboard className="h-5 w-5" />
                     Dashboards
