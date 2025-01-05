@@ -87,20 +87,32 @@ export function IMAScheduleTable() {
       <div className="grid gap-4">
         {vaccineSchedule.map((schedule, index) => (
           <Card key={index} className="p-4">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-blue-500" />
-                <h4 className="font-semibold">{schedule.age}</h4>
+            <div className="flex flex-col space-y-3">
+              <div className="border-b pb-2">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-blue-500" />
+                  <h4 className="font-semibold">Age: {schedule.age}</h4>
+                </div>
               </div>
               
-              <div className="flex items-start gap-2">
-                <Syringe className="h-4 w-4 text-blue-500 mt-1" />
-                <p className="text-sm">{schedule.vaccines.join(", ")}</p>
+              <div className="border-b pb-2">
+                <div className="flex items-start gap-2">
+                  <Syringe className="h-4 w-4 text-blue-500 mt-1" />
+                  <div>
+                    <h5 className="font-medium mb-1">Vaccines:</h5>
+                    <p className="text-sm">{schedule.vaccines.join(", ")}</p>
+                  </div>
+                </div>
               </div>
               
-              <div className="flex items-start gap-2">
-                <Info className="h-4 w-4 text-blue-500 mt-1" />
-                <p className="text-sm text-muted-foreground">{schedule.notes}</p>
+              <div>
+                <div className="flex items-start gap-2">
+                  <Info className="h-4 w-4 text-blue-500 mt-1" />
+                  <div>
+                    <h5 className="font-medium mb-1">Notes:</h5>
+                    <p className="text-sm text-muted-foreground">{schedule.notes}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </Card>
