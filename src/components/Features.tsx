@@ -1,8 +1,31 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Heart, Brain, Droplet, User, Baby, Scissors, TestTube, ChevronRight, Stethoscope, Eye, 
-  Ear, Dna, Bone, Activity, UserRound, Microscope } from "lucide-react";
+  Ear, Dna, Bone, Activity, UserRound, Microscope, Calendar, Building2, Stethoscope as SurgeryIcon, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
+
+const services = [
+  {
+    icon: Calendar,
+    title: "Appointment Bookings",
+    description: "Book appointments with our specialists online"
+  },
+  {
+    icon: Building2,
+    title: "IP Admission",
+    description: "Streamlined inpatient admission process"
+  },
+  {
+    icon: SurgeryIcon,
+    title: "Surgery Guidance",
+    description: "Expert guidance for surgical procedures"
+  },
+  {
+    icon: CreditCard,
+    title: "Cashless Assistance",
+    description: "Hassle-free insurance claim processing"
+  }
+];
 
 const mainSpecialties = [
   {
@@ -85,10 +108,35 @@ const SpecialtyCard = ({ icon: Icon, title }: { icon: any; title: string }) => (
   </div>
 );
 
+const ServiceCard = ({ icon: Icon, title, description }: { icon: any; title: string; description: string }) => (
+  <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-all duration-300">
+    <div className="w-12 h-12 mx-auto mb-4 bg-[#f0f9ff] rounded-full flex items-center justify-center">
+      <Icon className="w-6 h-6 text-[#1e3a8a]" />
+    </div>
+    <h3 className="text-lg font-semibold text-[#1e3a8a] mb-2">{title}</h3>
+    <p className="text-sm text-gray-600">{description}</p>
+  </div>
+);
+
 export const Features = () => {
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
+        {/* Services Section */}
+        <div className="mb-16">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#1e3a8a]">
+              Our Services
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map((service, index) => (
+              <ServiceCard key={index} {...service} />
+            ))}
+          </div>
+        </div>
+
+        {/* Specialties Section */}
         <div className="text-center mb-8">
           <h2 className="text-2xl md:text-3xl font-bold text-[#1e3a8a]">
             Our Specialties
