@@ -23,7 +23,7 @@ const services = [
   {
     icon: CreditCard,
     title: "Cashless Assistance",
-    description: "Hassle-free insurance claim processing"
+    description: "Hassle-free insurance claim assistance"
   }
 ];
 
