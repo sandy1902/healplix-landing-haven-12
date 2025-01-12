@@ -22,7 +22,7 @@ export const DoctorCard = ({ doctor, index }: DoctorCardProps) => {
         </div>
         <h3 className="font-bold text-lg text-[#1A1F2C] mb-2">{doctor.name}</h3>
         <p className="text-[#7E69AB] text-sm mb-1">{doctor.qualification}</p>
-        <p className="text-[#9b87f5] text-sm font-medium">{doctor.speciality}</p>
+        <p className="text-[#9b87f5] text-sm font-medium">{doctor.specialization}</p>
       </CardContent>
     </Card>
   );
