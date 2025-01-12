@@ -12,38 +12,42 @@ const doctors: Doctor[] = [
     name: "Dr. Sarah Wilson",
     qualification: "MBBS, MD",
     speciality: "Cardiologist",
-    image: "/lovable-uploads/90596b33-e062-4036-af14-0be9f996722e.png"
+    image: "/lovable-uploads/0f34eb7c-2e0a-4f28-a8b6-f1f533395d1f.png"
   },
   {
     name: "Dr. Michael Chen",
     qualification: "MBBS, MS",
     speciality: "Orthopedic Surgeon",
-    image: "/lovable-uploads/90596b33-e062-4036-af14-0be9f996722e.png"
+    image: "/lovable-uploads/0f34eb7c-2e0a-4f28-a8b6-f1f533395d1f.png"
   },
   {
     name: "Dr. Emily Rodriguez",
     qualification: "MBBS, DNB",
     speciality: "Pediatrician",
-    image: "/lovable-uploads/90596b33-e062-4036-af14-0be9f996722e.png"
+    image: "/lovable-uploads/0f34eb7c-2e0a-4f28-a8b6-f1f533395d1f.png"
   },
   {
     name: "Dr. James Anderson",
     qualification: "MBBS, DM",
     speciality: "Neurologist",
-    image: "/lovable-uploads/90596b33-e062-4036-af14-0be9f996722e.png"
+    image: "/lovable-uploads/0f34eb7c-2e0a-4f28-a8b6-f1f533395d1f.png"
   }
 ];
 
 export const FeaturedDoctors = () => {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-white overflow-hidden">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12 text-[#1A1F2C]">
           Meet Our Professional Doctors
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory">
           {doctors.map((doctor, index) => (
-            <Card key={index} className="border-0 bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+            <Card 
+              key={index} 
+              className="flex-none w-[280px] border-0 bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300 snap-center animate-fade-up"
+              style={{ animationDelay: `${index * 150}ms` }}
+            >
               <CardContent className="p-6 flex flex-col items-center text-center">
                 <div className="w-24 h-24 rounded-full overflow-hidden mb-4">
                   <img 
