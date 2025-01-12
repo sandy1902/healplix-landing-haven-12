@@ -18,50 +18,58 @@ const mainSpecialties = [
     title: "Nephrology"
   },
   {
-    icon: User,
-    title: "Urology"
+    icon: Bone,
+    title: "Orthopedics"
   },
   {
     icon: Baby,
     title: "Pediatrics"
   },
   {
-    icon: Scissors,
-    title: "Laparoscopic Surgery"
-  },
-  {
-    icon: Baby,
-    title: "Fertility Care"
-  },
-  {
     icon: TestTube,
     title: "Oncology"
+  },
+  {
+    icon: User,
+    title: "Urology"
+  },
+  {
+    icon: Scissors,
+    title: "Laparoscopic Surgery"
   }
 ];
 
 const allSpecialties = [
-  ...mainSpecialties,
-  { icon: Stethoscope, title: "Gastro\nEnterology" },
-  { icon: Activity, title: "Hepatology" },
-  { icon: Scissors, title: "Laser" },
-  { icon: Bone, title: "Rheuma\ntology" },
-  { icon: Ear, title: "ENT" },
-  { icon: Eye, title: "Eye" },
-  { icon: Microscope, title: "Radiology" },
-  { icon: UserRound, title: "Dermatology" },
-  { icon: Scissors, title: "Plastic Surgery" },
-  { icon: Baby, title: "Neonatology" },
-  { icon: Brain, title: "Neurosurgery" },
-  { icon: UserRound, title: "Gynecology" },
-  { icon: Baby, title: "Obstetrics" },
-  { icon: Dna, title: "Endocrinology" },
-  { icon: Stethoscope, title: "General Medicine" },
-  { icon: Droplet, title: "Diabetology" },
-  { icon: Brain, title: "Psychiatry" },
-  { icon: Stethoscope, title: "Chest Physician" },
-  { icon: Bone, title: "Spine Surgery" },
-  { icon: Activity, title: "Vascular Surgery" },
   { icon: Activity, title: "Breast" },
+  { icon: Heart, title: "Cardiology" },
+  { icon: Stethoscope, title: "Chest Physician" },
+  { icon: UserRound, title: "Dermatology" },
+  { icon: Droplet, title: "Diabetology" },
+  { icon: Ear, title: "ENT" },
+  { icon: Dna, title: "Endocrinology" },
+  { icon: Eye, title: "Eye" },
+  { icon: Baby, title: "Fertility Care" },
+  { icon: Stethoscope, title: "Gastro\nEnterology" },
+  { icon: Stethoscope, title: "General Medicine" },
+  { icon: UserRound, title: "Gynecology" },
+  { icon: Activity, title: "Hepatology" },
+  { icon: Scissors, title: "Laparoscopic Surgery" },
+  { icon: Scissors, title: "Laser" },
+  { icon: Droplet, title: "Nephrology" },
+  { icon: Baby, title: "Neonatology" },
+  { icon: Brain, title: "Neurology" },
+  { icon: Brain, title: "Neurosurgery" },
+  { icon: Baby, title: "Obstetrics" },
+  { icon: TestTube, title: "Oncology" },
+  { icon: Bone, title: "Orthopedics" },
+  { icon: Baby, title: "Pediatrics" },
+  { icon: Scissors, title: "Plastic Surgery" },
+  { icon: Brain, title: "Psychiatry" },
+  { icon: Microscope, title: "Radiology" },
+  { icon: Bone, title: "Rheuma\ntology" },
+  { icon: Bone, title: "Spine Surgery" },
+  { icon: User, title: "Urology" },
+  { icon: Activity, title: "Vascular Surgery" }
 ];
 
 const SpecialtyCard = ({ icon: Icon, title }: { icon: any; title: string }) => (
