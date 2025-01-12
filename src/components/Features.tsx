@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Heart, Brain, Droplet, User, Baby, Scissors, TestTube, ChevronRight, Stethoscope, Eye, 
-  Ear, Dna, Pill, Lungs, Bone, Activity, UserRound, Microscope } from "lucide-react";
+  Ear, Dna, Bone, Activity, UserRound, Microscope } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const mainSpecialties = [
@@ -58,7 +58,7 @@ const allSpecialties = [
   { icon: Stethoscope, title: "General Medicine" },
   { icon: Droplet, title: "Diabetology" },
   { icon: Brain, title: "Psychiatry" },
-  { icon: Lungs, title: "Chest Physician" },
+  { icon: Stethoscope, title: "Chest Physician" },
   { icon: Bone, title: "Spine Surgery" },
   { icon: Activity, title: "Vascular Surgery" },
   { icon: Activity, title: "Breast" },
