@@ -1,24 +1,40 @@
 import { Button } from "@/components/ui/button";
+import { Heart, Brain, Droplet, Male, Baby, Scissors } from "lucide-react";
 
 const specialties = [
   {
-    icon: "/lovable-uploads/0d5b3abf-46be-468a-8b88-06fb1cd51517.png",
-    title: "Internal Medicine",
-    doctors: "30+ Doctors"
-  },
-  {
-    icon: "/lovable-uploads/0d5b3abf-46be-468a-8b88-06fb1cd51517.png",
+    icon: Heart,
     title: "Cardiology",
     doctors: "25+ Doctors"
   },
   {
-    icon: "/lovable-uploads/0d5b3abf-46be-468a-8b88-06fb1cd51517.png",
+    icon: Brain,
     title: "Neurology",
     doctors: "20+ Doctors"
   },
   {
-    icon: "/lovable-uploads/0d5b3abf-46be-468a-8b88-06fb1cd51517.png",
+    icon: Droplet,
+    title: "Nephrology",
+    doctors: "15+ Doctors"
+  },
+  {
+    icon: Male,
     title: "Urology",
+    doctors: "18+ Doctors"
+  },
+  {
+    icon: Baby,
+    title: "Pediatrics",
+    doctors: "30+ Doctors"
+  },
+  {
+    icon: Scissors,
+    title: "Laparoscopic Surgery",
+    doctors: "12+ Doctors"
+  },
+  {
+    icon: Baby,
+    title: "Fertility Care",
     doctors: "15+ Doctors"
   }
 ];
@@ -36,19 +52,28 @@ export const Features = () => {
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {specialties.map((specialty, index) => (
-            <div key={index} className="bg-white rounded-lg p-8 text-center shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-20 h-20 mx-auto mb-6 bg-[#f0f9ff] rounded-full flex items-center justify-center">
-                <img src={specialty.icon} alt={specialty.title} className="w-12 h-12" />
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {specialties.map((specialty, index) => {
+            const IconComponent = specialty.icon;
+            return (
+              <div 
+                key={index} 
+                className="bg-white rounded-lg p-6 text-center shadow-lg hover:shadow-xl transition-shadow animate-scale-in"
+              >
+                <div className="w-16 h-16 mx-auto mb-4 bg-[#f0f9ff] rounded-full flex items-center justify-center">
+                  <IconComponent className="w-8 h-8 text-[#1e3a8a]" />
+                </div>
+                <h3 className="text-xl font-bold text-[#1e3a8a] mb-2">{specialty.title}</h3>
+                <p className="text-gray-600 mb-4">{specialty.doctors}</p>
+                <Button 
+                  variant="outline" 
+                  className="w-full border-[#1e3a8a] text-[#1e3a8a] hover:bg-[#1e3a8a] hover:text-white"
+                >
+                  MAKE AN APPOINTMENT
+                </Button>
               </div>
-              <h3 className="text-xl font-bold text-[#1e3a8a] mb-2">{specialty.title}</h3>
-              <p className="text-gray-600 mb-6">{specialty.doctors}</p>
-              <Button variant="outline" className="w-full border-[#1e3a8a] text-[#1e3a8a] hover:bg-[#1e3a8a] hover:text-white">
-                MAKE AN APPOINTMENT
-              </Button>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
