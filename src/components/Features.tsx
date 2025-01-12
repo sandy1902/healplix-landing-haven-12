@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Heart, Brain, Droplet, Male, Baby, Scissors } from "lucide-react";
+import { Heart, Brain, Droplet, User, Baby, Scissors } from "lucide-react";
 
 const specialties = [
   {
@@ -18,7 +18,7 @@ const specialties = [
     doctors: "15+ Doctors"
   },
   {
-    icon: Male,
+    icon: User,
     title: "Urology",
     doctors: "18+ Doctors"
   },
