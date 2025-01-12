@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 interface Doctor {
   name: string;
@@ -46,11 +45,13 @@ export const FeaturedDoctors = () => {
           {doctors.map((doctor, index) => (
             <Card key={index} className="border-0 bg-white/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
               <CardContent className="p-6 flex flex-col items-center text-center">
-                <Avatar className="h-24 w-24 mb-4">
-                  <AvatarFallback className="bg-[#9b87f5]/10 text-[#9b87f5] text-xl">
-                    {doctor.name.split(' ').map(n => n[0]).join('')}
-                  </AvatarFallback>
-                </Avatar>
+                <div className="w-24 h-24 rounded-full overflow-hidden mb-4">
+                  <img 
+                    src={doctor.image} 
+                    alt={doctor.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
                 <h3 className="font-bold text-lg text-[#1A1F2C] mb-2">{doctor.name}</h3>
                 <p className="text-[#7E69AB] text-sm mb-1">{doctor.qualification}</p>
                 <p className="text-[#9b87f5] text-sm font-medium">{doctor.speciality}</p>
