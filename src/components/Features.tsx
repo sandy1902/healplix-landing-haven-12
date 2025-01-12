@@ -34,8 +34,12 @@ const mainSpecialties = [
     title: "Urology"
   },
   {
-    icon: Scissors,
-    title: "Laparoscopic Surgery"
+    icon: Eye,
+    title: "Eye"
+  },
+  {
+    icon: Microscope,
+    title: "Radiology"
   }
 ];
 
