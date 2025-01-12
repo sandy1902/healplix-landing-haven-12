@@ -5,6 +5,7 @@ import { Testimonials } from "@/components/Testimonials";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { BottomNav } from "@/components/BottomNav";
+import { StatisticsSection } from "@/components/statistics/StatisticsSection";
 
 const Index = () => {
   return (
@@ -13,6 +14,7 @@ const Index = () => {
       <Hero />
       <Features />
       <HowItWorks />
+      <StatisticsSection />
       <Testimonials />
       <Footer />
       <BottomNav />
