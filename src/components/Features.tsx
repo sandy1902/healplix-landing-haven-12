@@ -65,11 +65,11 @@ const allSpecialties = [
 ];
 
 const SpecialtyCard = ({ icon: Icon, title }: { icon: any; title: string }) => (
-  <div className="bg-white rounded-lg p-4 text-center shadow-sm hover:shadow-md transition-shadow animate-scale-in cursor-pointer">
-    <div className="w-12 h-12 mx-auto mb-2 bg-[#f0f9ff] rounded-full flex items-center justify-center">
-      <Icon className="w-6 h-6 text-[#1e3a8a]" />
+  <div className="bg-white rounded-lg p-3 text-center shadow-sm hover:shadow-md transition-shadow animate-scale-in cursor-pointer">
+    <div className="w-10 h-10 mx-auto mb-2 bg-[#f0f9ff] rounded-full flex items-center justify-center">
+      <Icon className="w-5 h-5 text-[#1e3a8a]" />
     </div>
-    <h3 className="text-sm font-medium text-[#1e3a8a]">{title}</h3>
+    <h3 className="text-xs font-medium text-[#1e3a8a]">{title}</h3>
   </div>
 );
 
@@ -83,7 +83,7 @@ export const Features = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 md:gap-4">
           {mainSpecialties.map((specialty, index) => (
             <SpecialtyCard key={index} {...specialty} />
           ))}
@@ -104,7 +104,7 @@ export const Features = () => {
               <DialogHeader>
                 <DialogTitle className="text-2xl font-bold text-center mb-6">All Medical Specialties</DialogTitle>
               </DialogHeader>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
                 {allSpecialties.map((specialty, index) => (
                   <SpecialtyCard key={index} {...specialty} />
                 ))}
