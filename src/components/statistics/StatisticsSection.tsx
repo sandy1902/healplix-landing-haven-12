@@ -22,7 +22,7 @@ export const StatisticsSection = () => {
   return (
     <div className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16">
           <StatItem
             icon={<Users className="w-8 h-8 text-primary" />}
             value="10K+"
