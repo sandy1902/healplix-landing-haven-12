@@ -26,7 +26,7 @@ const allSpecialties = [
   { icon: Brain, title: "Neurology" },
   { icon: Brain, title: "Neurosurgery" },
   { icon: Baby, title: "Obstetrics" },
-  { icon: TestTube, title: "Oncology" },
+  { icon: Microscope, title: "Oncology" },
   { icon: Bone, title: "Orthopedics" },
   { icon: Baby, title: "Pediatrics" },
   { icon: Scissors, title: "Plastic Surgery" },
@@ -34,7 +34,7 @@ const allSpecialties = [
   { icon: Microscope, title: "Radiology" },
   { icon: Bone, title: "Rheuma\ntology" },
   { icon: Bone, title: "Spine Surgery" },
-  { icon: User, title: "Urology" },
+  { icon: UserRound, title: "Urology" },
   { icon: Activity, title: "Vascular Surgery" }
 ];
 
