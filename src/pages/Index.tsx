@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { BottomNav } from "@/components/BottomNav";
 import { StatisticsSection } from "@/components/statistics/StatisticsSection";
+import { FeaturedDoctors } from "@/components/doctors/FeaturedDoctors";
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
       <Hero />
       <Features />
       <HowItWorks />
+      <FeaturedDoctors />
       <StatisticsSection />
       <Testimonials />
       <Footer />
