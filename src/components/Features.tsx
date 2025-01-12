@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Heart, Brain, Droplet, User, Baby, Scissors } from "lucide-react";
+import { Heart, Brain, Droplet, User, Baby, Scissors, TestTube, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const specialties = [
   {
@@ -29,6 +30,10 @@ const specialties = [
   {
     icon: Baby,
     title: "Fertility Care"
+  },
+  {
+    icon: TestTube,
+    title: "Oncology"
   }
 ];
 
@@ -57,6 +62,18 @@ export const Features = () => {
               </div>
             );
           })}
+        </div>
+
+        <div className="flex justify-center mt-8">
+          <Link to="/search-doctors">
+            <Button 
+              variant="ghost" 
+              className="text-primary hover:text-primary/90 flex items-center gap-2"
+            >
+              See All Specialties
+              <ChevronRight className="w-4 h-4" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
