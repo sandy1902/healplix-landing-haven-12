@@ -1,62 +1,57 @@
 import { Button } from "@/components/ui/button";
-import { Heart, Brain, Droplet, User, Baby, Scissors } from "lucide-react";
 
 const specialties = [
   {
-    icon: Heart,
-    title: "Cardiology"
+    title: "Cardiology",
+    imagePath: "/lovable-uploads/70758108-0f7d-4f9b-90a5-a5f5a3280bae.png"
   },
   {
-    icon: Brain,
-    title: "Neurology"
+    title: "Neurology",
+    imagePath: "/lovable-uploads/70758108-0f7d-4f9b-90a5-a5f5a3280bae.png"
   },
   {
-    icon: Droplet,
-    title: "Nephrology"
+    title: "Nephrology",
+    imagePath: "/lovable-uploads/70758108-0f7d-4f9b-90a5-a5f5a3280bae.png"
   },
   {
-    icon: User,
-    title: "Urology"
+    title: "Urology",
+    imagePath: "/lovable-uploads/70758108-0f7d-4f9b-90a5-a5f5a3280bae.png"
   },
   {
-    icon: Baby,
-    title: "Pediatrics"
+    title: "Pediatrics",
+    imagePath: "/lovable-uploads/70758108-0f7d-4f9b-90a5-a5f5a3280bae.png"
   },
   {
-    icon: Scissors,
-    title: "Laparoscopic Surgery"
+    title: "Laparoscopic Surgery",
+    imagePath: "/lovable-uploads/70758108-0f7d-4f9b-90a5-a5f5a3280bae.png"
   },
   {
-    icon: Baby,
-    title: "Fertility Care"
+    title: "Fertility Care",
+    imagePath: "/lovable-uploads/70758108-0f7d-4f9b-90a5-a5f5a3280bae.png"
   }
 ];
 
 export const Features = () => {
   return (
-    <section className="py-12 bg-white">
+    <section className="py-8 bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1e3a8a]">
-            Our Specialties
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
-          {specialties.map((specialty, index) => {
-            const IconComponent = specialty.icon;
-            return (
-              <div 
-                key={index} 
-                className="bg-white rounded-lg p-4 text-center shadow-sm hover:shadow-md transition-shadow animate-scale-in cursor-pointer"
-              >
-                <div className="w-12 h-12 mx-auto mb-2 bg-[#f0f9ff] rounded-full flex items-center justify-center">
-                  <IconComponent className="w-6 h-6 text-[#1e3a8a]" />
-                </div>
-                <h3 className="text-sm font-medium text-[#1e3a8a]">{specialty.title}</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {specialties.map((specialty, index) => (
+            <div 
+              key={index} 
+              className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer flex items-center gap-3"
+            >
+              <div className="w-10 h-10 flex-shrink-0">
+                <img 
+                  src={specialty.imagePath} 
+                  alt={specialty.title}
+                  className="w-full h-full object-contain"
+                />
               </div>
-            );
-          })}
+              <h3 className="text-sm font-medium text-[#1e3a8a] text-left flex-grow">{specialty.title}</h3>
+              <span className="text-gray-400">&gt;</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
