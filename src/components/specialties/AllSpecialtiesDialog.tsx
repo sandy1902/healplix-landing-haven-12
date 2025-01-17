@@ -1,42 +1,42 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Activity, Heart, Stethoscope, UserRound, Droplet, Ear, Dna, Eye, Baby, 
+  Scissors, Brain, Bone, Microscope } from "lucide-react";
 import { Link } from "react-router-dom";
+import { SpecialtyCard } from "./SpecialtyCard";
 
-const specialtiesByCategory = {
-  "General Medicine": [
-    "General Medicine",
-    "Family Medicine",
-    "Internal Medicine",
-  ],
-  "Surgery": [
-    "General Surgery",
-    "Laparoscopic Surgery",
-    "Plastic Surgery",
-    "Vascular Surgery",
-  ],
-  "Specialized Care": [
-    "Cardiology",
-    "Neurology",
-    "Orthopedics",
-    "Gynecology",
-    "Pediatrics",
-    "Dermatology",
-  ],
-  "Diagnostic": [
-    "Radiology",
-    "Pathology",
-    "Laboratory Medicine",
-  ],
-  "Others": [
-    "ENT",
-    "Eye",
-    "Dental",
-    "Psychiatry",
-    "Physiotherapy",
-  ]
-};
+const allSpecialties = [
+  { icon: Activity, title: "Breast" },
+  { icon: Heart, title: "Cardiology" },
+  { icon: Stethoscope, title: "Chest Physician" },
+  { icon: UserRound, title: "Dermatology" },
+  { icon: Droplet, title: "Diabetology" },
+  { icon: Ear, title: "ENT" },
+  { icon: Dna, title: "Endocrinology" },
+  { icon: Eye, title: "Eye" },
+  { icon: Baby, title: "Fertility Care" },
+  { icon: Stethoscope, title: "Gastro\nEnterology" },
+  { icon: Stethoscope, title: "General Medicine" },
+  { icon: UserRound, title: "Gynecology" },
+  { icon: Activity, title: "Hepatology" },
+  { icon: Scissors, title: "Laparoscopic Surgery" },
+  { icon: Scissors, title: "Laser" },
+  { icon: Droplet, title: "Nephrology" },
+  { icon: Baby, title: "Neonatology" },
+  { icon: Brain, title: "Neurology" },
+  { icon: Brain, title: "Neurosurgery" },
+  { icon: Baby, title: "Obstetrics" },
+  { icon: Microscope, title: "Oncology" },
+  { icon: Bone, title: "Orthopedics" },
+  { icon: Baby, title: "Pediatrics" },
+  { icon: Scissors, title: "Plastic Surgery" },
+  { icon: Brain, title: "Psychiatry" },
+  { icon: Microscope, title: "Radiology" },
+  { icon: Bone, title: "Rheuma\ntology" },
+  { icon: Bone, title: "Spine Surgery" },
+  { icon: UserRound, title: "Urology" },
+  { icon: Activity, title: "Vascular Surgery" }
+];
 
 export const AllSpecialtiesDialog = () => (
   <Dialog>
@@ -53,36 +53,11 @@ export const AllSpecialtiesDialog = () => (
       <DialogHeader>
         <DialogTitle className="text-2xl font-bold text-center mb-6">All Medical Specialties</DialogTitle>
       </DialogHeader>
-      
-      <Tabs defaultValue="General Medicine" className="w-full">
-        <TabsList className="w-full flex flex-wrap justify-start gap-2 bg-transparent h-auto p-0">
-          {Object.keys(specialtiesByCategory).map((category) => (
-            <TabsTrigger
-              key={category}
-              value={category}
-              className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-white"
-            >
-              {category}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-
-        {Object.entries(specialtiesByCategory).map(([category, specialties]) => (
-          <TabsContent key={category} value={category} className="mt-6">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {specialties.map((specialty) => (
-                <div
-                  key={specialty}
-                  className="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-                >
-                  <h3 className="text-sm font-medium text-[#1e3a8a] text-center">{specialty}</h3>
-                </div>
-              ))}
-            </div>
-          </TabsContent>
+      <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
+        {allSpecialties.map((specialty, index) => (
+          <SpecialtyCard key={index} {...specialty} />
         ))}
-      </Tabs>
-
+      </div>
       <div className="mt-6 flex justify-center">
         <Link to="/search-doctors">
           <Button className="bg-primary text-white hover:bg-primary/90">
