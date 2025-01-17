@@ -1,28 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Facebook, Twitter, Instagram, Linkedin, Search, LayoutDashboard } from "lucide-react";
+import { Menu, X, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileMenu } from "./navbar/MobileMenu";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [showSearchDropdown, setShowSearchDropdown] = useState(false);
-  const [showDashboardDropdown, setShowDashboardDropdown] = useState(false);
   const isMobile = useIsMobile();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-  };
-
-  const toggleSearchDropdown = () => {
-    setShowSearchDropdown(!showSearchDropdown);
-    setShowDashboardDropdown(false);
-  };
-
-  const toggleDashboardDropdown = () => {
-    setShowDashboardDropdown(!showDashboardDropdown);
-    setShowSearchDropdown(false);
   };
 
   return (
@@ -71,78 +60,25 @@ export const Navbar = () => {
                 </Button>
               </div>
             ) : (
-              <div className="flex items-center space-x-6 font-poppins">
-                <Link to="/" className="text-gray-700 hover:text-primary capitalize text-lg">
-                  Home
-                </Link>
-                <Link to="/about-us" className="text-gray-700 hover:text-primary capitalize text-lg">
-                  About Us
-                </Link>
-
-                {/* Search Dropdown */}
-                <div className="relative">
-                  <Button 
-                    variant="ghost" 
-                    className="flex items-center gap-2 hover:text-primary font-poppins capitalize text-lg"
-                    onClick={toggleSearchDropdown}
-                  >
-                    <Search className="h-5 w-5" />
-                    Search
-                  </Button>
-                  
-                  {showSearchDropdown && (
-                    <div className="absolute left-0 top-full mt-2 w-48 bg-white shadow-lg rounded-lg p-2 z-50">
-                      <Link 
-                        to="/search-doctors" 
-                        className="block w-full px-4 py-2 text-base font-poppins capitalize hover:bg-gray-100 rounded-md"
-                      >
-                        Find a Doctor
-                      </Link>
-                      <Link 
-                        to="/search-hospitals" 
-                        className="block w-full px-4 py-2 text-base font-poppins capitalize hover:bg-gray-100 rounded-md"
-                      >
-                        Find a Hospital
-                      </Link>
-                    </div>
-                  )}
-                </div>
-
-                {/* Dashboards Dropdown */}
-                <div className="relative">
-                  <Button 
-                    variant="ghost" 
-                    className="flex items-center gap-2 hover:text-primary font-poppins capitalize text-lg"
-                    onClick={toggleDashboardDropdown}
-                  >
-                    <LayoutDashboard className="h-5 w-5" />
-                    Dashboards
-                  </Button>
-                  
-                  {showDashboardDropdown && (
-                    <div className="absolute left-0 top-full mt-2 w-56 bg-white shadow-lg rounded-lg p-2 z-50">
-                      <Link 
-                        to="/dashboard" 
-                        className="block w-full px-4 py-2 text-base font-poppins capitalize hover:bg-gray-100 rounded-md"
-                      >
-                        Subscriber Dashboard
-                      </Link>
-                      <Link 
-                        to="/doctor-dashboard" 
-                        className="block w-full px-4 py-2 text-base font-poppins capitalize hover:bg-gray-100 rounded-md"
-                      >
-                        Doctor Dashboard
-                      </Link>
-                      <Link 
-                        to="/executive-dashboard" 
-                        className="block w-full px-4 py-2 text-base font-poppins capitalize hover:bg-gray-100 rounded-md"
-                      >
-                        Executive Dashboard
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              </div>
+              <Tabs defaultValue="home" className="w-auto">
+                <TabsList className="bg-accent">
+                  <TabsTrigger value="home" asChild>
+                    <Link to="/" className="text-sm">Home</Link>
+                  </TabsTrigger>
+                  <TabsTrigger value="about" asChild>
+                    <Link to="/about-us" className="text-sm">About Us</Link>
+                  </TabsTrigger>
+                  <TabsTrigger value="search-doctors" asChild>
+                    <Link to="/search-doctors" className="text-sm">Find Doctor</Link>
+                  </TabsTrigger>
+                  <TabsTrigger value="search-hospitals" asChild>
+                    <Link to="/search-hospitals" className="text-sm">Find Hospital</Link>
+                  </TabsTrigger>
+                  <TabsTrigger value="dashboard" asChild>
+                    <Link to="/dashboard" className="text-sm">Dashboard</Link>
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
             )}
           </div>
         </div>
