@@ -12,6 +12,7 @@ export default function ProfileForm() {
     age: '',
     gender: '',
     dob: '',
+    phoneNumber: '',
     address: '',
     city: '',
     district: '',
@@ -89,6 +90,16 @@ export default function ProfileForm() {
             id="dob" 
             type="date" 
             value={formData.dob}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="space-y-4">
+          <Label htmlFor="phoneNumber">Contact Number</Label>
+          <Input 
+            id="phoneNumber" 
+            type="tel" 
+            placeholder="Enter contact number"
+            value={formData.phoneNumber}
             onChange={handleChange}
           />
         </div>
