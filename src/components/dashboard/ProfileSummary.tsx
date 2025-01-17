@@ -3,10 +3,13 @@ import { useToast } from "@/components/ui/use-toast";
 import { ProfileImage } from "./profile/ProfileImage";
 import { ProfileInfo } from "./profile/ProfileInfo";
 import { QuickStats } from "./profile/QuickStats";
+import ProfileForm from "./ProfileForm";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 export default function ProfileSummary() {
   const { toast } = useToast();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [showEditProfile, setShowEditProfile] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,10 +34,7 @@ export default function ProfileSummary() {
   };
 
   const handleEditProfile = () => {
-    toast({
-      title: "Edit Profile",
-      description: "Profile editing functionality coming soon.",
-    });
+    setShowEditProfile(true);
   };
 
   return (
@@ -59,6 +59,12 @@ export default function ProfileSummary() {
           <QuickStats />
         </div>
       </div>
+
+      <Dialog open={showEditProfile} onOpenChange={setShowEditProfile}>
+        <DialogContent className="max-w-3xl">
+          <ProfileForm />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
